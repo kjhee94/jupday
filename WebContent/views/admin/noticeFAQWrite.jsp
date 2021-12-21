@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +15,7 @@
 <link rel="stylesheet" href="/assets/commons/adminCommon.css">
 <link rel="stylesheet" href="/assets/css/adminWrite.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/assets/js/adminNavigation.js"></script>
+<script src="/assets/js/ui.js"></script>
 </head>
 
 <body>

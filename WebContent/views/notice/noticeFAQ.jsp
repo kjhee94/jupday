@@ -15,8 +15,7 @@
 <link rel="stylesheet" href="/assets/commons/common.css">
 <!-- <link rel="stylesheet" href="/assets/commons/notice.css"> -->
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/assets/js/header.js"></script>
-<script src="/assets/js/notice2.js"></script>
+<script src="/assets/js/ui.js"></script>
 
 <style>
 	#content {
@@ -48,8 +47,13 @@
 	.question-box>i {
 	   font-size: 18px;
 	   margin-right: 30px;
-	   
+	   transform : rotate(0deg);
+	   transition: all 0.25s;
 	}
+	.fa-chevron-down.on {
+		transform : rotate(-180deg);
+	}
+	
 	.question-box>p {
 		margin-top: 5px;
 		display: inline-block;
@@ -97,87 +101,87 @@
 	         <div class="answer-box" id="ans-2">
 	            	<p>[줍데이크루]에 들어가신 후 <br>
 	            	원하시는 크루를 생성해주시면 됩니다. :)</p>
-	            </div>
+	         </div>
 	      </div>
 	         
 	      <div class="faq-box">  
 	         <div class="question-box" id="que-3">
 	            <i class="fas fa-chevron-down" id="que-3-toggle"></i> 
 	               <p>비밀번호를 변경하려면 어떻게 해야 하나요?</p>
-	            <div class="answer-box" id="ans-3">
-	            	<p>[마이페이지]에 들어가시면 비밀번호를 변경할 수 있습니다.</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-3">
+            	<p>[마이페이지]에 들어가시면 비밀번호를 변경할 수 있습니다.</p>
+            </div>
 	      </div>     
 
 	      <div class="faq-box">  	      
 	         <div class="question-box" id="que-4">
 	            <i class="fas fa-chevron-down" id="que-4-toggle"></i> 
 	               <p>크루 생성시 어떻게 해야 하나요?</p>
-	            <div class="answer-box" id="ans-4">
-	            	<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-4">
+            	<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
+            </div>
 	      </div>
 	      
 	      <div class="faq-box">  	      
 	         <div class="question-box" id="que-5">
 	            <i class="fas fa-chevron-down" id="que-5-toggle"></i> 
 	               <p>크루장은 회원탈퇴를 어떻게 하나요?</p>
-	            <div class="answer-box" id="ans-5">
-	            	<p>탈퇴시 [크루장]이 아닌 상태여야하기에 [크루탈퇴]를 하시거나 [크루삭제] 후 탈퇴가 가능합니다.</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-5">
+            	<p>탈퇴시 [크루장]이 아닌 상태여야하기에 [크루탈퇴]를 하시거나 [크루삭제] 후 탈퇴가 가능합니다.</p>
+            </div>
 	      </div>
 	       
 	      <div class="faq-box">  	         
 	         <div class="question-box" id="que-6">
 	            <i class="fas fa-chevron-down" id="que-6-toggle"></i> 
 	               <p>캠페인을 직접 열 수 있나요?</p>
-	            <div class="answer-box" id="ans-6">
-	            	<p>원하신다면 직접 주최가 가능합니다.</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-6">
+            	<p>원하신다면 직접 주최가 가능합니다.</p>
+            </div>
 	      </div>
 	      
 	     <div class="faq-box">   
 	         <div class="question-box" id="que-7">
 	            <i class="fas fa-chevron-down" id="que-7-toggle"></i>
-	                <p>크루 가입시 어떻게 해야 하나요?</p>
-	            </div>
-	            <div class="answer-box" id="ans-7">
-	            	<p>원하는 크루를 검색해서 가입하기 버튼을 누른 뒤 크루장의 승인을 받으면 크루에 가입할 수 있습니다.</p>
-	            </div>
+                <p>크루 가입시 어떻게 해야 하나요?</p>
+            </div>
+            <div class="answer-box" id="ans-7">
+            	<p>원하는 크루를 검색해서 가입하기 버튼을 누른 뒤 크루장의 승인을 받으면 크루에 가입할 수 있습니다.</p>
+            </div>
 		 </div>	         
 
 	      <div class="faq-box">  
 	         <div class="question-box" id="que-8">
 	          <i class="fas fa-chevron-down" id="que-8-toggle"></i> 
 	               <p>질문8</p>
-	            <div class="answer-box" id="ans-8">
-	            	<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-6">
+            	<p>원하신다면 직접 주최가 가능합니다.</p>
+            </div>
   		  </div>	         
   		  
 	      <div class="faq-box">  
 	         <div class="question-box" id="que-9">
 	         <i class="fas fa-chevron-down" id="que-9-toggle"></i> 
 	               <p>9번 질문</p>
-	            <div class="answer-box" id="ans-9">
-	            	<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-6">
+            	<p>원하신다면 직접 주최가 가능합니다.</p>
+            </div>
 	   	  </div>
 	   	  
 	   	  <div class="faq-box">      
 	         <div class="question-box" id="que-10">
 	        <i class="fas fa-chevron-down" id="que-10-toggle"></i> 
 	               <p>10번 질문</p>
-	            <div class="answer-box" id="ans-10">
-	            	<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-	            </div>
 	         </div>
+	         <div class="answer-box" id="ans-6">
+            	<p>원하신다면 직접 주최가 가능합니다.</p>
+            </div>
 		  </div>         
       	</div>
       </div>   

@@ -18,8 +18,8 @@
 <link rel="stylesheet" href="/assets/css/main.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/assets/js/header.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/ui.js"></script>
+<script src="/assets/js/swiper.js"></script>
 </head>
 
 <body>
