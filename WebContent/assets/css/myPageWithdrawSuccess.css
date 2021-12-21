@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.user-info {
+	height: 900px;
+}
+
+.wd-info {
+	heigth: 200px;
+	margin: 40px;
+	text-align: center;
+	color: #2A2A2A;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+h3 {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 30px;
+}
+
+.wd-info>p {
+	margin: 20px;
+}
+
+.user-info div:last-child {
+	border-top: 0.5px solid #D8D8D8;
+	display: flex;
+	justify-content: center;
+}
+.btn-m {
+	background-color: #5EB656;
+	margin: 20px;
+}
