@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+.user-info {
+	height: 900px;
+}
+
+.info {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+.manage-crew {
+	width: 50%;
+	height: 100%;
+	position:relative;
+}
+.join-crew {
+	width: 50%;
+	height: 100%;
+	position:relative;
+}
+.tit-manage-crew {
+	margin-top: 34px;
+	margin-bottom: 42px;
+	font-size: 25px;
+}
+.tit-join-crew {
+	margin-top: 34px;
+	margin-bottom: 42px;
+	font-size: 25px;
+}
+.manage-crew-img {
+	border: 1px solid black;
+	width: 100px;
+	height: 100px;
+}
+.manage-crew-name{
+	width: 200px;
+	height: 50px;
+	vertical-align :middle;
+	padding-left: 30px;
+}
+.manage-crew-sysdate {
+	width: 200px;
+	height: 50px;
+	vertical-align :middle;
+	padding-left: 30px;
+	font-size: 14px;
+	color: #AAAAAA;
+}
+
+.join-crew-img {
+	border: 1px solid black;
+	width: 100px;
+	height: 100px;
+	
+}
+.join-crew-name{
+	width: 200px;
+	height: 50px;
+	vertical-align :middle;
+	padding-left: 30px;
+}
+.join-crew-sysdate {
+	width: 200px;
+	height: 50px;
+	vertical-align :middle;
+	padding-left: 30px;
+	font-size: 14px;
+	color: #AAAAAA;
+}
+.btn-s {
+	background-color: #5EB656;
+	position:absolute;
+	bottom:0;
+	right:0;
+	margin-right: 60px; 
+}
+div {
+	font-family: 'Noto Sans KR', sans-serif;
+	vertical-align :middle;
+	color: #2A2A2A;
+}
