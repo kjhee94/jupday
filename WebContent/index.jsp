@@ -18,8 +18,8 @@
 <link rel="stylesheet" href="/assets/css/main.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/assets/js/header.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/ui.js"></script>
+<script src="/assets/js/swiper.js"></script>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 					<p class="main-txt-s">달리면서 실천하는 지구 살리기</p>
 					<p class="main-txt-b">오늘도 줍:데이</p>
 					<button class="main-btn">
-						<a href="">일지 작성하기</a>
+						<a href="/views/review/reviewWriteForm.jsp">일지 작성하기</a>
 					</button>
 				</div>
 			</div>

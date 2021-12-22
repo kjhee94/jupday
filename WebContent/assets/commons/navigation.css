@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+#navigation {
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    background-color: #1d5b22;
+    z-index: 999;
+}
+
+#logo {
+    width: 100%;
+    height: 120px;
+    text-align: center;
+    padding-right: 15px;
+ 
+}
+#logo>img {
+	height: 35px;
+	margin-top: 40px;
+}
+
+.gnb-list {
+    width: 100%;
+    overflow: hidden;
+}
+
+.top_nav:last-child {
+    margin-top: 45px;
+}
+
+.top_nav > li span {
+    color: #637B65;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 30px;
+}
+
+.mdl_nav > li {
+    width: 100%;
+    height: 50px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+	line-height: 50px;
+    color: #99AC98;
+    margin-left: 30px;
+    position: relative;
+    display: inline-block;
+    cursor : pointer;
+}
+
+.mdl_nav > li > i {
+	font-size: 12px;
+	position: absolute;
+	right: 60px;
+	top: 20px;
+}
+
+.sub_nav {
+   width: 100%;
+    display: none;
+   height: auto;
+   overflow: hidden;
+    background-color: #184D1C;
+}
+
+.sub_nav li {
+   width: 100%;
+    height: 50px;
+   line-height: 50px;   
+   cursor : pointer;
+   
+}
+
+.sub_nav li a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    color: #99AC98;
+    margin-left: 30px;
+    transition: ease 0.3s;    
+    
+}
+
+.sub_nav li:hover {
+    background-color: #124016;
+    transition: ease 0.3s;
+}
+.sub_nav li:hover a {
+    color: #fff;
+    transition: ease 0.3s;
+}
+
+.fas fa-chevron-down.on {
+	transform : rotate(-180deg);
+	}

@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="/assets/css/reviewSelectAllListPage.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="/assets/js/header.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/ui.js"></script>
+<script src="/assets/js/swiper.js"></script>
 </head>
 
 <body>
@@ -145,7 +145,7 @@
 			
 			<div class="box-write-search">
 				<button class="btn-rec">
-					<a href="./crewWriteFeed.jsp">글쓰기</a>
+					<a href="./reviewWriteForm.jsp">글쓰기</a>
 				</button>
 				
 				<div class="box-search">
@@ -185,6 +185,137 @@
 						<p class="review-date">2021.11.29</p>				
 					</div>
 				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div class="box-one-review">
+					<div class="box-img">
+						<a href="./crewOnePage.jsp">
+							<img alt="" src="">
+						</a>
+					</div>
+					<div class="box-txt">
+						<p>여의도 플로깅 후기입니다</p>
+						<p class="review-writer">연신내 독감자</p>
+						<div class="review-info">
+							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-comment"></i><span>5</span>
+						</div>
+						<p class="review-date">2021.11.29</p>				
+					</div>
+				</div>
+				
+				<div id="page_wrap">
+                   <ul class="page_ul">
+                       <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
+                       <li><a href="" class="page_active">1</a></li>
+                       <li><a href="">2</a></li>
+                       <li><a href="">3</a></li>
+                       <li><a href="">4</a></li>
+                       <li><a href="">5</a></li>
+                       <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+                   	</ul>
+               	</div>
 			</div>
 			
 		</div>

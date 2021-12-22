@@ -1,7 +1,7 @@
 /**
  * 
  */
-
+/*
 	$(document).ready(function() {
     //네비게이션 토글
 
@@ -23,4 +23,19 @@
         }
     });
 });
+*/
         		 
+	
+    $(document).ready(function() {
+
+
+        $(".question-box").click(function()
+        {
+          
+          $(".answer-box").not($(this).next(".answer-box").slideToggle(500)).slideUp();
+          $("i", this).addClass("fa-chevron-up");
+          $(".question-box > i").not($("i", this)).removeClass("fa-chevron-up");
+       
+          
+        });
+      });
