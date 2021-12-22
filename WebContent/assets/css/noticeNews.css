@@ -38,6 +38,7 @@
 
 .container {
     width: 100%;
+    height: auto;
     clear: both;
 }
 .container table {
@@ -69,18 +70,15 @@
 	color: #2A2A2A;
 	text-align: center;
 }
-.text-ellipsis {
-	width: 300px;
-	white-space: nowrap; 
-	overflow: hidden;
-	text-overflow: ellipsis;
+.container table tr td a {
+	color: #2A2A2A;
 }
+
 .subject {
-	width: 250px;
 	text-align: left;
 	padding-left: 20px;
 }
 
-.page_wrap {
+#page_wrap {
 	padding-bottom: 80px;
 }

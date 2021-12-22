@@ -61,14 +61,14 @@ $(document).ready(function(){
 	//noticeFAQ slideDown
     $(".question-box").click(function(){
 		if($(this).next(".answer-box").css("display") == "none") {
-			$(this).next(".answer-box").slideDown(500);
+			$(this).next(".answer-box").slideDown(250);
 			$(this).find(".fa-chevron-down").addClass("on");
 			
-			$(".answer-box").not($(this).next(".answer-box")).slideUp(500);
+			$(".answer-box").not($(this).next(".answer-box")).slideUp(250);
 			$(".fa-chevron-down").not($(this).find(".fa-chevron-down")).removeClass("on");
 		}
 		else {
-			$(this).next(".answer-box").slideUp(500);
+			$(this).next(".answer-box").slideUp(250);
 			$(this).find(".fa-chevron-down").removeClass("on");
 		}
     });
