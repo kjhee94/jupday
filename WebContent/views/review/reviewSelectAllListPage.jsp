@@ -171,7 +171,7 @@
 			<div class="box-review">
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -188,7 +188,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -205,7 +205,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -222,7 +222,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -239,7 +239,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -256,7 +256,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -273,7 +273,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>
@@ -290,7 +290,7 @@
 				
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./crewOnePage.jsp">
+						<a href="./reviewSelectContent.jsp">
 							<img alt="" src="">
 						</a>
 					</div>

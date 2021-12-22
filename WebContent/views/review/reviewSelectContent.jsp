@@ -9,14 +9,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="/assets/commons/default.css">
 <link rel="stylesheet" href="/assets/commons/header.css">
 <link rel="stylesheet" href="/assets/commons/footer.css">
 <link rel="stylesheet" href="/assets/commons/common.css">
+<link rel="stylesheet" href="/assets/css/crewOneFeed.css">
+<link rel="stylesheet" href="/assets/css/reviewWriteForm.css">
 <link rel="stylesheet" href="/assets/css/reviewSelectContent.css">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/assets/js/ui.js"></script>
 
@@ -41,56 +40,125 @@
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
 		<div id="content">
-			<div id="review_main">
-				<div class="review_text">
-					<p class="review_text_s">Jup:Day</p>
-					<br>
-					<p class="review_text_l">줍데이 리뷰 </p>
-					<br>
-					<!-- 이부분이 안잡힘, div를 줬어도 오락가락함 -->
-				</div>
+			<div class=box-title>
+				<p class="tit-small">J U P : D A Y</p>
+				<p class="tit-big">줍데이리뷰</p>
 			</div>
 		
 			<div id="review_writing">
-				<div id="readForm">
-					<form>
-						<h4>한달 플로깅</h4>
-						<%-- <%=board.get() %> 여기다가 이거 집어넣고--%>
-						<br>
-						<h6>연신내독감자</h6>
-						<%-- <%=board.get() %> 여기다가 이거 집어넣고--%>
-						<br>
-						<div class="reading-zone">
-							<div class="image-zone">
-							</div>
-							<div class="text-zone">
-							</div>
+				<div class="write-top">
+					<div class="box-subject">
+						<p>한달 플로깅 일지</p>
+					</div>
+					<div class="box-writer">
+						<div class="user-img">
+							<img alt="" src="/assets/images/profile.png">
 						</div>
-						
-						<!-- 이거는 아코디언 bootstrap, 파일과 지도를 볼 수 있게 올라갔다 내려가는 구조 -->
-					 	<div class="accordion accordion-flush" id="accordionFlushExample">
-						  <div class="accordion-item">
-						    <h2 class="accordion-header" id="flush-headingOne">
-						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-						       	 지도 삽입
-						      </button>
-						    </h2>
-						    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-						      <div class="accordion-body">
-						      	<!-- 여기다 지도 API를 넣을 예정, 아직까지도 로컬 서버를 찾아오지 못해서 고생중(망할 선 질문자 놈들이 해결했으면 어떻게 했는지 알려는 줘야지 ㅂㄷㅂㄷ -->
-						      </div>
-						    </div>
-						  </div>
+						<div class="user-name">
+							<p>연신내독감자</p>
+							<span>2021.11.23</span>
 						</div>
-						
-						
-						<a href="/review/reviewWriteForm.jsp" class="btn-write">수정</a>
-						<input type="submit" class="btn-submit" value="목록"/>
-						
-					</form>
+					</div>
+				</div>
+				
+				<div class="write-content">
+					<div class="box-content">
+						<div class="box-content-img">
+							<img alt="" src="/assets/images/플로깅리뷰7.jpg">
+						</div>
+						<p>
+						먼저, 텍스트 밑줄 기능이 개선됐다. 
+						영어 알파벳 p, q, j, y 와 같이 글자의 일부 획이 눈에 보이지는 않지만 실제로는 존재하는 가로 기준선 아래로 내려가는 디센더(Descender) 글자라도 텍스트 아래에 일정한 공간을 두고 밑줄이 그어질 수 있도록 했다. 
+						기존에는 텍스트 밑줄이 기준선에 맞춰 그어져, 디센더 글자는 밑줄 아래로 일부 획이 넘어가 디자인 상 세련되지 못했다. 
+						지금은 속성창의 텍스트 세션에서 기능을 바로 선택하거나, 단축기(CMD+U와 CTRL+U)를 사용하면, 텍스트에 밑줄을 넣을 수 있다.
+						또, 오브젝트 종류와 관계없이 획(스트로크, Stoke)의 위치와 정렬도 조정할 수 있다. 
+						과거에는 직사각형과 타원의 경우에는 인사이드 획만 수정했고, 경로(path), 선(lines), 불리언(Boolean) 등은 센터 획을 수정할 수 있었다. 
+						이번 업데이트로 아웃사이드, 인사이드, 센터 획 등을 모두 조절할 수 있다. 
+						이를 통해, 디자이너는 오브젝트의 테두리를 더욱 정교하게 다듬을 수 있다.
+						디자인 사양(베타) 기능도 강화됐다. 
+						디자인 사양(베타)는 디자이너와 개발자가 어도비 XD에서 링크공유를 통해 실시간 커뮤니케이션할 수 있는 프로토 타입이다. 
+						이번 업데이트를 통해, 개발자는 아트 보드의 순서, 흐름, 색상, 글자 스타일 등 각 디자인을 개발하는데 필요한 정보를 바로 얻을 수 있다. 
+						또, 디자인 사양(베타)은 한국어, 일본어, 프랑스어, 독일어 등 어도비 XD CC가 지원하는 모든 언어로 제공된다. 
+						디자이너는 이제 디자인 사양 웹 링크에서 해당 언어를 설정하면 되며, 개발자는 자신이 브라우저에서 설정한 언어로 공유 받은 사양을 확인할 수 있다.
+						</p>
+					</div>
 					
+					<div class="box-map">
+						<div class="map-top">
+							<i class="fas fa-map-marked-alt"></i>
+							<span>지도 보기</span>
+							<i class="fas fa-chevron-down"></i>
+						</div>
+						<div class="map-content">
+							<!-- 여기가 지도html부분 -->
+						</div>
+					</div>
+					
+					<div class="box-icon">
+						<i class="far fa-heart"></i><span>좋아요 11</span>
+						<i class="far fa-comment"></i><span>댓글 3</span>
+					</div>
+				</div>
+				
+				<div class="box-comment">
+				
+					<div class="box-one-comment">
+						<div class="user-img">
+							<img alt="" src="/assets/images/profile.png">
+						</div>
+						<div class="right-comment">
+							<div class="user-comment">
+								<p>최강주희<span>2021-12-06</span></p>
+							</div>
+							<div class="txt-comment">
+								<p>우와 너무 멋져요 자극받고갑니다!</p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="box-one-comment">
+						<div class="user-img">
+							<img alt="" src="/assets/images/profile.png">
+						</div>
+						<div class="right-comment">
+							<div class="user-comment">
+								<p>연신내핵주먹<span>2021-12-06</span></p>
+							</div>
+							<div class="txt-comment">
+								<p>한강이 플로깅하기 좋군요 참고하겠습니다 고마워요!</p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="box-one-comment">
+						<div class="user-img">
+							<img alt="" src="/assets/images/profile.png">
+						</div>
+						<div class="right-comment">
+							<div class="user-comment">
+								<p>난폭한오렌지<span>2021-12-06</span></p>
+							</div>
+							<div class="txt-comment">
+								<p>와ㅠㅠ대단하세요ㅠㅠㅠㅠㅠ</p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="box-write-comment">
+						<div class="user-nick">
+							<p>연신내 독감자</p>
+						</div>
+						<textarea placeholder="댓글을 입력하세요"></textarea>
+						<button>등록</button>
+					</div>
+				</div>
+				
+				<div class="list-btn">
+					<button class="btn-m btn-update"><a href="./crewUpdateFeed.jsp">수정</a></button>
+					<button class="btn-m btn-golist"><a href="./crewOnePage.jsp">목록</a></button>
 				</div>
 			</div>
+			
 		</div> 
 	
 		<!-- footer -->

@@ -29,7 +29,7 @@
 				<p class="tit-big">오늘도 내가 해냄</p>
 			</div>
 			
-			<div class="feed-top">
+			<div class="write-top">
 				<div class="box-subject">
 					<p>오늘 신한은행 앞에 타코야끼 트럭 있나요?</p>
 				</div>
@@ -44,7 +44,8 @@
 				</div>
 			</div>
 			
-			<div class="feed-content">
+			<div class="write-content">
+				<box-content-img>
 				<div class="box-content">
 					<p>붕어빵은 있는거 같은데 타코야끼가 안보이네요.. 혹시 사장님이 자리 옮기셨나요.. 아시는 분들은 댓글 달아주세요ㅠㅠㅠㅠㅠㅠ</p>
 				</div>
