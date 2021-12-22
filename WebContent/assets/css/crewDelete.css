@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.box-noti {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	padding: 30px 0;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 16px;
+	border-bottom: 1px solid #AAAAAA;
+}
+.txt-head {
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 5px;
+}
+.box-radio {
+	margin-top: 30px;
+}
+.box-radio>input {
+	width: 16px;
+	height: 16px;
+	vertical-align:-2px;
+}
+
+.box-btn {
+	text-align: center;
+	margin-top: 20px;
+}
+.btn-m {
+	background-color: #FF6464;
+}
