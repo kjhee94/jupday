@@ -58,10 +58,9 @@ $(document).ready(function(){
 	});
 	
 	
-	//noticeFAQ slide
+	//noticeFAQ slideDown
     $(".question-box").click(function(){
-		if($(this).next(".answer-box").css("display") == "none") 
-		{
+		if($(this).next(".answer-box").css("display") == "none") {
 			$(this).next(".answer-box").slideDown(500);
 			$(this).find(".fa-chevron-down").addClass("on");
 			
@@ -73,5 +72,18 @@ $(document).ready(function(){
 			$(this).find(".fa-chevron-down").removeClass("on");
 		}
     });
+    
+    
+    //review map slideDown
+    $(".map-top").click(function(){
+    	
+    	if($(this).next(".map-content").css("display")=="none"){
+    		$(this).next(".map-content").slideDown(500);
+    		$(this).find(".fa-chevron-down").addClass("on");
+    	}else {
+    		$(this).next(".map-content").slideUp(500);
+    		$(this).find(".fa-chevron-down").removeClass("on");
+    	}
+	});
 });
 

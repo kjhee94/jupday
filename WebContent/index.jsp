@@ -37,7 +37,7 @@
 					<p class="main-txt-s">달리면서 실천하는 지구 살리기</p>
 					<p class="main-txt-b">오늘도 줍:데이</p>
 					<button class="main-btn">
-						<a href="">일지 작성하기</a>
+						<a href="/views/review/reviewWriteForm.jsp">일지 작성하기</a>
 					</button>
 				</div>
 			</div>
