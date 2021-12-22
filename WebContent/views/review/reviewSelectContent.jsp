@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>JUP:DAY | 줍데이리뷰</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
@@ -154,8 +154,8 @@
 				</div>
 				
 				<div class="list-btn">
-					<button class="btn-m btn-update"><a href="./crewUpdateFeed.jsp">수정</a></button>
-					<button class="btn-m btn-golist"><a href="./crewOnePage.jsp">목록</a></button>
+					<button class="btn-m btn-update"><a href="./reviewUpdateForm.jsp">수정</a></button>
+					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
 				</div>
 			</div>
 			

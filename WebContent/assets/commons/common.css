@@ -138,6 +138,9 @@ select:focus {
 textarea:focus {
 	outline: none;
 }
+textarea {
+	white-space: pre-wrap;
+}
 
 
 /*검색창 디자인*/

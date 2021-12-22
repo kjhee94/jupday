@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>리뷰 작성</title>
+<title>JUP:DAY | 리뷰 작성</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
@@ -40,7 +40,7 @@
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
-				<p class="tit-big">줍데이리뷰 작성</p>
+				<p class="tit-big">리뷰 작성</p>
 			</div>
 		
 			<div id="review_writing">
