@@ -28,7 +28,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				m.setAuthority_Id(rset.getInt("authority_Id"));//1
+				m.setAuthority_Id(rset.getString("authority_Id"));//1
 				m.setUserId(rset.getString("userId"));//2
 				m.setUserPwd(rset.getString("userPwd"));//3
 				m.setNick(rset.getString("nick"));//4
@@ -191,7 +191,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				m.setAuthority_Id(rset.getInt("authority_Id"));
+				m.setAuthority_Id(rset.getString("authority_Id"));
 				m.setUserId(rset.getString("userId"));
 				m.setUserPwd(rset.getString("userPwd"));
 				m.setNick(rset.getString("nick"));
