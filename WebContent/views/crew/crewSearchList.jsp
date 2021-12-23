@@ -22,7 +22,7 @@
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
-			
+		
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
