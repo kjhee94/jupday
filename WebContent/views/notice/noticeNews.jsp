@@ -33,8 +33,12 @@
          
          <div class="notice-top">
          	 <div class="box-button">
-				<button class="btn-notice on">공지사항</button>
-				<button class="btn-campaine">캠페인 안내</button>
+				<button class="btn-notice">
+					<a href="./noticeNews.jsp">공지사항</a>
+				</button>
+				<button class="btn-campaign">
+					<a href="./noticeCampaign.jsp">캠페인 안내</a>
+				</button>
 			 </div>
 		 </div>
 		
@@ -155,55 +159,7 @@
 			    </div>
 			</div>
 		</div>
-		 
-        <div class="area-campaine">
-        	<div class="box-search">
-				<form action="">
-					<div class="select-search">
-						<select>
-							<option>검색필터</option>
-							<option>글제목</option>
-							<option>글내용</option>
-						</select>
-						<i class="fas fa-chevron-down icon-arrow"></i>
-					</div>
-					<div class="input-search">
-						<i class="fas fa-search icon-search"></i>
-						<input type="text" name="keyword" placeholder="검색어을 검색하세요">
-					</div>
-					<input type="submit" class="btn-rec" value="검색">
-				</form>
-			 </div>
-			 
-			 <div class="box-campaine-list">
-			 	<div class="box-campaine">
-			 		<div class="img-campaine">
-			 			<img alt="" src="">
-			 		</div>
-			 		<div class="txt-campaine">
-			 			<p>캠페인제목</p>
-			 			<p>2021.11.05</p>
-			 		</div>
-			 	</div>
-			 	
-			 	
-			 	
-			 </div>
-			 
-			 <div id="page_wrap">
-			        <ul class="page_ul">
-			            <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-			            <li><a href="" class="page_active">1</a></li>
-			            <li><a href="">2</a></li>
-			            <li><a href="">3</a></li>
-			            <li><a href="">4</a></li>
-			            <li><a href="">5</a></li>
-			            <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
-			        </ul>
-			    </div>
-        </div>
-         
-         
+		
       </div>
       
       <!-- footer -->

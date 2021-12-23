@@ -85,5 +85,30 @@ $(document).ready(function(){
     		$(this).find(".fa-chevron-down").removeClass("on");
     	}
 	});
+    
+    
+    //notice btn 전환
+//	$(".btn-notice").click(function(){
+//		$(".btn-campaign").removeClass("check");
+//		$(".area-campaign").css('display', 'none');
+//		
+//	    $(this).addClass("check");
+//	    $(".area-notice").css('display', 'block');
+//	    
+//	});
+//	$(".btn-campaign").click(function(){
+//	    $(".btn-notice").removeClass("check");
+//	    $(".area-notice").css('display', 'none');
+//	    
+//	    $(this).addClass("check");
+//		$(".area-campaign").css('display', 'block');
+//	});
+    
+    
+    //Admin 네비게이션 토글
+//    $(".mdl_nav > li").click(function() {
+//        $(this).next(".sub_nav").slideToggle();
+//
+//    });
 });
 
