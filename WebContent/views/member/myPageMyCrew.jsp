@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JUP:DAY | 나의 크루</title>
+<title>나의 크루</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,10 +18,24 @@
 </head>
 <body>
 
+<!--
+<c:choose>
+
+<c:when test="">
+	<c:forEach>
+	</c:forEach>
+</c:when>
+<c:otherwise>
+
+</c:otherwise>
+
+</c:choose>
+ -->
 	
 	
 	<div id="wrap">
 		<%@ include file="/views/commons/header/header.jsp"%>
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class="user-info">
 				<div class=box-title>
@@ -33,10 +47,26 @@
 						<div class="manage-crew">
 							<div class="tit-manage-crew">운영 크루</div>
 							<table>
+								<!-- 
+								if(데이터 있을떄) {
+									for() {
+										<tr>
+										
+										</tr>
+									}
+								} else {
+								<tr>
+									<td colspan="3">
+									크루가 업습니다.
+									</td>
+								</tr>
+								}
+								 -->
+							 	<!-- jstl core library : c:forEach -->
 								<tr>
 									<td rowspan="2" class="manage-crew-img">image</td>
 									<td class="manage-crew-name"> < % = % ></td>
-									<td rowspan="2" class="manage-crew-set"><button class="btn-s"><a href="/view/">크루 설정</a></button></td>
+									<td rowspan="2" class="manage-crew-set"><button class="btn-s"><a href="">크루 설정</a></button></td>
 								</tr>
 								<tr>
 									<td class="manage-crew-sysdate"> < % = % ></td>
@@ -64,6 +94,11 @@
 		<%@ include file="/views/commons/footer/footer.jsp"%>
 	</div>
 	
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 
 </body>
 </html>

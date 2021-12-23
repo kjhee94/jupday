@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JUP:DAY | 나의 리뷰</title>
+<title>나의 리뷰</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,7 @@
 	
 	<div id="wrap">
 		<%@ include file="/views/commons/header/header.jsp"%>
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class="user-info">
 				<div class=box-title>
@@ -49,7 +50,11 @@
 		</div>
 		<%@ include file="/views/commons/footer/footer.jsp"%>
 	</div>
-	
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 
 </body>
 </html>

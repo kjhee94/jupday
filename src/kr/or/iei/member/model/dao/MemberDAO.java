@@ -28,14 +28,13 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				//m.setUserNo(rset.getInt("userNo"));//1
-				m.setAuthority_Id(rset.getInt("authority_Id"));//2
-				m.setUserId(rset.getString("userId"));//3
-				m.setUserPwd(rset.getString("userPwd"));//4
-				m.setNick(rset.getString("nick"));//5
-				m.setEmail(rset.getString("email"));//6
-				m.setP_Image(rset.getString("p_Image"));//7
-				m.setEnrollDate(rset.getDate("enrollDate"));//8
+				m.setAuthority_Id(rset.getInt("authority_Id"));//1
+				m.setUserId(rset.getString("userId"));//2
+				m.setUserPwd(rset.getString("userPwd"));//3
+				m.setNick(rset.getString("nick"));//4
+				m.setEmail(rset.getString("email"));//5
+				m.setP_Image(rset.getString("p_Image"));//6
+				m.setEnrollDate(rset.getDate("enrollDate"));//7
 			}
 			
 		} catch (SQLException e) { 
@@ -129,5 +128,146 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+	public int updatePwdMember(String userId, String pwd, String newPwd, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET userPwd=? WHERE userId=? AND userPwd=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, newPwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, pwd);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
+	public int updateOneMember(Member m, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET p_image=?, nick=?, email=? WHERE userId=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getP_Image());
+			pstmt.setString(2, m.getNick());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
+	public Member refreshOneMember(String userId, Connection conn) {
+		PreparedStatement pstmt = null;
+		Member m = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM MEMBER WHERE USERID=? AND END_YN='N'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member();
+				m.setAuthority_Id(rset.getInt("authority_Id"));
+				m.setUserId(rset.getString("userId"));
+				m.setUserPwd(rset.getString("userPwd"));
+				m.setNick(rset.getString("nick"));
+				m.setEmail(rset.getString("email"));
+				m.setP_Image(rset.getString("p_Image"));
+				m.setEnrollDate(rset.getDate("enrollDate"));
+				m.setEnd_YN(rset.getString("end_YN").charAt(0));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return m;
+	}
+
+	public int deleteOneMember(String userId, String userPwd, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET END_YN='Y' WHERE USERID=? AND USERPWD=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result>0) {
+				
+			} else {
+				result = -1;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
+	public boolean selectEmailCheck(String email, Connection conn) {
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		boolean result = false;
+		
+		String query= "select email from Member WHERE email=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) 
+			{
+				result= true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+
+	
+	
 
 }

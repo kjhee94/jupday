@@ -16,7 +16,6 @@ public interface MemberService {
 	 */
 	public Member selectOneMember(String userId, String userPwd);
 	
-	
 	/**
 	 * 작성자: 남진구
 	 * @param m
@@ -24,17 +23,8 @@ public interface MemberService {
 	 * 작성일: 2021.12.13
 	 */
 	//신규 회원가입시
+	
 	public int insertOneMember(Member m);
-	
-	//회원 정보 수정
-	public int udateOneMember(Member m);
-	
-	//회원 정보를 탈퇴할때 사용 (userNo를 바탕으로 처리)
-	public int deleteOneMember(int userNo);
-	
-	//회원정보를 DB에서 갱신해올때 사용
-	public Member refreshOneMember(int userNo);
-	
 	//아이디 중복 체크
 	/**
 	 * 작성자: 남진구
@@ -53,4 +43,52 @@ public interface MemberService {
 	 */
 	public boolean selectNickCheck(String nick);
 
+	
+	
+	
+	//회원의 비밀번호 변경
+	/**
+	 * 작성자 : 김서후
+	 * @param userId, pwd, newPwd
+	 * @return int
+	 * 작성일:2021.12.21
+	 */
+	public int updatePwdMember(String userId, String pwd, String newPwd);
+
+	//회원의 회원정보 변경
+	/**
+	 * 작성자 : 김서후
+	 * @param m
+	 * @return int
+	 * 작성일:2021.12.21
+	 */
+	public int updateOneMember(Member m);
+	
+	//회원정보를 DB에서 갱신해올때 사용
+	/**
+	 * 작성자: 김서후
+	 * @param userId
+	 * @return Member
+	 * 작성일 : 2021.12.21
+	 */
+	public Member refreshOneMember(String userId);
+	
+	//회원 정보를 탈퇴할때 사용 (userNo를 바탕으로 처리)
+	/**
+	 * 작성자: 김서후
+	 * @param userId
+	 * @return Member
+	 * 작성일 : 2021.12.21
+	 */
+	public int deleteOneMember(String userId, String userPwd);
+
+	//이메일 중복 확인
+	//인증 로직 미구현시 사용
+	/**
+	 * 작성자: 김서후
+	 * @param email
+	 * @return boolean
+	 * 작성일 : 2021.12.22
+	 */
+	public boolean selectEmailCheck(String email);
 }

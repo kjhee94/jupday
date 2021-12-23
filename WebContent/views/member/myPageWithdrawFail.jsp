@@ -9,8 +9,8 @@
 <body>
 
 	<script>
-		alert("회원가입에 실패하였습니다.\n지속적인 문제 발생시 관리자에게 문의해주세요.")
-		location.replace("/views/member/memberJoinus.jsp");
+		alert("회원 탈퇴에 실패하였습니다.\n지속적인 문제 발생시 관리자에게 문의해주세요")
+		location.replace("/views/member/myPageWithdraw.jsp");
 	</script>
 
 </body>
