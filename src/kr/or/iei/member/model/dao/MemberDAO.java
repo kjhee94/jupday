@@ -28,14 +28,13 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				//m.setUserNo(rset.getInt("userNo"));//1
-				m.setAuthority_Id(rset.getInt("authority_Id"));//2
-				m.setUserId(rset.getString("userId"));//3
-				m.setUserPwd(rset.getString("userPwd"));//4
-				m.setNick(rset.getString("nick"));//5
-				m.setEmail(rset.getString("email"));//6
-				m.setP_Image(rset.getString("p_Image"));//7
-				m.setEnrollDate(rset.getDate("enrollDate"));//8
+				m.setAuthority_Id(rset.getInt("authority_Id"));//1
+				m.setUserId(rset.getString("userId"));//2
+				m.setUserPwd(rset.getString("userPwd"));//3
+				m.setNick(rset.getString("nick"));//4
+				m.setEmail(rset.getString("email"));//5
+				m.setP_Image(rset.getString("p_Image"));//6
+				m.setEnrollDate(rset.getDate("enrollDate"));//7
 			}
 			
 		} catch (SQLException e) { 
@@ -55,7 +54,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		//MEMBER_SEQ.NEXTVAL,SYSDATE,'N'는 고정값이라 위치 홀더를 쓰지 않는다.
-		String query= "INSERT INTO MEMBER VALUES(MEMBER_SEQ.NEXTVAL,DEFAULT,?,?,?,?,NULL,SYSDATE,'N')";
+		String query= "INSERT INTO MEMBER VALUES(DEFAULT,?,?,?,?,NULL,SYSDATE,'N')";
 
 		
 		try {
@@ -129,5 +128,6 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
 
 }
