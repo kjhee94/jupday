@@ -15,7 +15,7 @@
 	<%if(result==null){ %>
 	
 		<form action="/member/nickCheck.do" method="get">
-			<input type="text" name="nick" placeholder="중복 확인할  닉네임을 입력하세요"/>
+			<input type="text" name="nick" placeholder="중복 확인할 닉네임을 입력하세요"/>
 			<input type="submit" value="중복확인"/>
 		</form>
 		
@@ -25,7 +25,7 @@
 		<%String nick=(String)request.getAttribute("nick"); %>
 		
 	 	<form action="/member/nickCheck.do" method="get">
-			<input type="text" id="userNick3"  name="nick" value="<%=nick%>" placeholder="중복 확인할  ID를 입력하세요"/>
+			<input type="text" id="userNick3"  name="nick" value="<%=nick%>" placeholder="중복 확인할 ID를 입력하세요"/>
 			<input type="submit" value="중복확인"/>
 		</form>
 	
