@@ -129,8 +129,6 @@ public class MemberDAO {
 		return result;
 	}
 
-<<<<<<< HEAD
-=======
 	public int updatePwdMember(String userId, String pwd, String newPwd, Connection conn) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -271,6 +269,5 @@ public class MemberDAO {
 
 	
 	
->>>>>>> 78af0bbba65759db287648e5f7484c3efbda1e3a
 
 }
