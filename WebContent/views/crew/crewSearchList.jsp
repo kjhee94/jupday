@@ -175,8 +175,19 @@
 						</div>
 					</div>
 				</div>
-	
 			</div>
+			
+			<div id="page_wrap">
+		        <ul class="page_ul">
+		            <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
+		            <li><a href="" class="page_active">1</a></li>
+		            <li><a href="">2</a></li>
+		            <li><a href="">3</a></li>
+		            <li><a href="">4</a></li>
+		            <li><a href="">5</a></li>
+		            <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+		        </ul>
+		    </div>
 		</div>
 		
 		<!-- footer -->
