@@ -37,22 +37,23 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+
 	@Override
-	public int udateOneMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteOneMember(String userId, String userPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.deleteOneMember(userId, userPwd, conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
 	}
 
 	@Override
-	public int deleteOneMember(int userNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Member refreshOneMember(int userNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member refreshOneMember(String userId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.refreshOneMember(userId, conn);
+		JDBCTemplate.close(conn); 
+		return m;
 	}
 
 	@Override
@@ -72,4 +73,35 @@ public class MemberServiceImpl implements MemberService {
 		
 		return result;
 	}
+
+	@Override
+	public int updatePwdMember(String userId, String pwd, String newPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.updatePwdMember(userId, pwd, newPwd, conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int updateOneMember(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.updateOneMember(m, conn);
+		if(result>0) JDBCTemplate.getConnection();
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public boolean selectEmailCheck(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		boolean result=mDAO.selectEmailCheck(email,conn);
+		JDBCTemplate.close(conn);	
+		return result;
+	}
+	
+
+
 }

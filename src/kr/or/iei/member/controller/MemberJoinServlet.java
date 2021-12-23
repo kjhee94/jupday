@@ -68,11 +68,14 @@ public class MemberJoinServlet extends HttpServlet {
 			response.sendRedirect("/views/member/memberJoinFail.jsp");
 		}
 		
+		
 		//System.out.println(userId); 이상무
 		//System.out.println(userPwd); 이상무
 		//System.out.println(nick);  이상무
 		//System.out.println(email); 이상무
 
+		
+		
 	}
 
 

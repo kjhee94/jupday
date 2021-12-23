@@ -8,9 +8,18 @@
 </head>
 <body>
 
+	<%
+	boolean updateResult = (boolean)request.getAttribute("updateResult");
+	%>
+	
 	<script>
-		alert("회원가입에 실패하였습니다.\n지속적인 문제 발생시 관리자에게 문의해주세요.")
-		location.replace("/views/member/memberJoinus.jsp");
+	<% if(updateResult) { %>
+		alert('회원정보 변경을 성공했습니다.');
+	<% } else { %>
+		alert('회원정보 변경을 실패했습니다 \n지속적인 문제 발생시 관리자에게 문의해주세요.');
+	<% } %>
+	
+	location.replace("/member/myPage.do");
 	</script>
 
 </body>

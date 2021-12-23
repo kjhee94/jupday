@@ -49,26 +49,28 @@ public class MemberLoginServlet extends HttpServlet {
 		MemberService mService = new MemberServiceImpl();
 		Member m = mService.selectOneMember(userId, userPwd);//로그인에대한 정보가 있는 없는지 담겨있는곳
 		
-        //리턴값은 Member 객체 이거나 혹은 null
-
-		if(m!=null) {//로그인이 성공했다면
-			HttpSession session = request.getSession(true);
-			session.setAttribute("member", m);
-			
-			//로그인 성공시 페이지 이동
-			response.sendRedirect("/");
-			//로그인을 성공하게 되면, sendRedirect를 통하여 메인페이지로 이동 시켜주어라
-			//이때 sendRedirect는 사용자의 URL을 변경시켜주는 response 객체의 메소드
+		       //리턴값은 Member 객체 이거나 혹은 null
 		
-		}else {//로그인이 실패할시
-			//response.sendRedirect("/views/member/memberLoginFail.jsp");
-			
-			//RequestDispatcher를 이용하면 URL을 변경하지 않고 이동할 수 있다.
-			//이때 pageContext.forward처럼 request와 response 객체를 가지고 이동할 수 있다.
-			
-			RequestDispatcher view = request.getRequestDispatcher("/views/member/memberLoginFail.jsp");
-			view.forward(request, response);
-		}
+				if(m!=null) {//로그인이 성공했다면
+					HttpSession session = request.getSession(true);
+					session.setAttribute("member", m);
+					
+					//로그인 성공시 페이지 이동
+					response.sendRedirect("/");
+					//로그인을 성공하게 되면, sendRedirect를 통하여 메인페이지로 이동 시켜주어라
+					//이때 sendRedirect는 사용자의 URL을 변경시켜주는 response 객체의 메소드
+				
+				}else {//로그인이 실패할시
+					//response.sendRedirect("/views/member/memberLoginFail.jsp");
+					
+					//RequestDispatcher를 이용하면 URL을 변경하지 않고 이동할 수 있다.
+					//이때 pageContext.forward처럼 request와 response 객체를 가지고 이동할 수 있다.
+					
+					RequestDispatcher view = request.getRequestDispatcher("/views/member/memberLoginFail.jsp");
+					view.forward(request, response);
+				}
+
+		
 	}
 
 	/**

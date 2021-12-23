@@ -5,7 +5,6 @@ import java.sql.Date;
 public class Member {
 	
 	//총 8개 MEMBER FIELD
-	private int userNo;//1
 	private int authority_Id;//2
 	private String userId;//3
 	private String userPwd;//4
@@ -16,6 +15,14 @@ public class Member {
 	private char end_YN;//9
 	
 	
+	//회원정보수정시 필요한 항목
+	public Member(String nick, String email, String p_Image) {
+		super();
+		this.nick = nick;
+		this.email = email;
+		this.p_Image = p_Image;
+	}
+
 	//DEFAULT CONSTRUCTOR
 	public Member() {
 		super();
@@ -23,10 +30,9 @@ public class Member {
 	}
 
 	//CONSTRUCTOR
-	public Member(int userNo, int authority_Id, String userId, String userPwd, String nick, String email,
+	public Member(int authority_Id, String userId, String userPwd, String nick, String email,
 			String p_Image, Date enrollDate, char end_YN) {
 		super();
-		this.userNo = userNo;//1
 		this.authority_Id = authority_Id;//2
 		this.userId = userId;//3
 		this.userPwd = userPwd;//4
@@ -49,18 +55,12 @@ public class Member {
 	//TOSTRING
 	@Override
 	public String toString() {
-		return "Member [userNo=" + userNo + ", authority_Id=" + authority_Id + ", userId=" + userId + ", userPwd="
+		return "Member [authority_Id=" + authority_Id + ", userId=" + userId + ", userPwd="
 				+ userPwd + ", nick=" + nick + ", email=" + email + ", p_Image=" + p_Image + ", enrollDate="
 				+ enrollDate + ", end_YN=" + end_YN + "]";
 	}
 	
 	//SETTER GETTER
-	public int getUserNo() {
-		return userNo;
-	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
 	public int getAuthority_Id() {
 		return authority_Id;
 	}
@@ -109,4 +109,8 @@ public class Member {
 	public void setEnd_YN(char end_YN) {
 		this.end_YN = end_YN;
 	}
+	
+	
+	
+
 }
