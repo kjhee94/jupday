@@ -8,4 +8,6 @@ public interface AdminMemberService {
 	
 	public ArrayList<Member> selectAllMemberList(String authorityId);
 
+	public int updateMemberEndYN(String userId, char endYN);
+
 }

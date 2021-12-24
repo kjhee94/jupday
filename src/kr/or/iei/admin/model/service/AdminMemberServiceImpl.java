@@ -20,4 +20,15 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 		return list;
 	}
 
+	@Override
+	public int updateMemberEndYN(String userId, char endYN) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adDAO.updateMemberEndYN(userId,endYN,conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }
