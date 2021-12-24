@@ -17,7 +17,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                	<a href="./memberManageList.jsp">· 회원 정보 관리</a>
+                                	<a href="/views/admin/memberManageList.jsp">· 회원 정보 관리</a>
                                	</li>
                             </ul>
                         </ul>
@@ -36,7 +36,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="./crewManageList.jsp">· 크루 삭제 관리</a>
+                                    <a href="/views/admin/crewManageList.jsp">· 크루 삭제 관리</a>
                                 </li>
                             </ul>
                         </ul>
@@ -49,7 +49,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="./reviewManageList.jsp">· 리뷰게시판 관리</a>
+                                    <a href="/views/admin/reviewManageList.jsp">· 리뷰게시판 관리</a>
                                 </li>
                             </ul>
                         </ul>
@@ -62,13 +62,13 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="./noticeManageList.jsp">· 공지사항 관리</a>
+                                    <a href="/views/admin/noticeManageList.jsp">· 공지사항 관리</a>
                                 </li>
                                 <li>
-                                    <a href="./noticeCampaignManageList.jsp">· 캠페인 안내 관리</a>
+                                    <a href="/views/admin/noticeCampaignManageList.jsp">· 캠페인 안내 관리</a>
                                 </li>
                                 <li>
-                                    <a href="./noticeFAQManageList.jsp">· 자주 묻는 질문 관리</a>
+                                    <a href="/views/admin/noticeFAQManageList.jsp">· 자주 묻는 질문 관리</a>
                                 </li>
                             </ul>
                         </ul>

@@ -17,8 +17,8 @@ public class JDBCTemplate {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			//conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");//★바꿔주기.
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jub_test2","jub_test2");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe",
+                    "jupday","jupday");
 
 			conn.setAutoCommit(false);
 			
