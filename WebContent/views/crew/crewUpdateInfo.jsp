@@ -28,7 +28,7 @@
 				<p class="tit-big">크루 정보 수정</p>
 			</div>
 			
-			<form id="updateCrewInfo">
+			<form id="crewInfo">
 				<div class="box-name">
 					<span>크루명</span>
 					<input type="text" id="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="오늘도 내가 해냄">
