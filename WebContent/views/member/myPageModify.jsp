@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.file.model.vo.MemberFileData"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,16 +24,48 @@
 
 	<script>
 	<!--nick 중복체크 확인 -->
-		function nickCheck()
-		{
+		function nickCheck(){
 			window.open("/views/member/nickCheck.jsp","_blank","width=500px, height=150px");
 		}
-		function emailCheck()
-		{
+		function emailCheck(){
 			window.open("/views/member/emailCheck.jsp","_blank","width=500px, height=150px");
 		}
+		
+		
    </script>
+   
 
+  <script>
+	
+	var imgFile = $('#file').val();
+	var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+	var maxSize = 5 * 1024 * 1024;
+	var fileSize;
+	$(document).ready(function() {
+		$("#profileUpload").click(function() {
+			if($('#file').val() == '') {
+				alert("사용하시려는 이미지를 선택하여 주세요.");
+			    $("#file").focus();
+			    return false;
+			}
+		
+			if(imgFile != "" && imgFile != null) {
+				fileSize = document.getElementById("file").files[0].size;
+			    
+			    if(!imgFile.match(fileForm)) {
+			    	alert("이미지 파일만 업로드 가능합니다.");
+			        return false;
+			    } else if(fileSize = maxSize) {
+			    	alert("프로필 사진의 크기는 5MB까지 가능합니다.");
+			        return false;
+			    }
+			} 
+			
+		})
+	})
+	
+	</script>
+ 
 
 
 	<div id="wrap">
@@ -45,20 +78,44 @@
  					<p class="tit-small">J U P : D A Y</p>
 					<p class="tit-big">회원 정보 수정</p>
 				</div>
-				<form action="/member/memberUpdate.do" method="post">
+				<form action="/file/profileUpdate.do" method="post" enctype="multipart/form-data">
 					<table class="info">
 						<tr>
 							<td>사진</td>
-							<td class="profile-img"><img class="profile-img2" src="/assets/images/profile.png"></td>
-							<td>
-								<p class="">회원님을 알릴 수 있는 사진을 등록해 주세요.<br>
-								등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</p>
+							<td class="profile-img">
+							<%
+								System.out.println(m);
+								if(m.getP_Image() == null || m.getP_Image() =="") {
+									System.out.println("Null");
+							%>
+							
+									<img class="profile-img2" src="/assets/images/profile.png">
+							<%
+								} else {
+									System.out.println("Not Null");
+							%>
+									<img class="profile-img2" src="/upload/<%=m.getP_Image() %>.png">
+							<%
+								}
+							%>
 							</td>
 							<td>
-								<button class="btn-s" onclick="document.getElementById('btn-s').click();"><a href="/member/profileUpdate.do">사진 변경</a></button>
-								<input type="file" id="btn-s" class="btn-s" style="display:none">
+								<p>
+								회원님을 알릴 수 있는 사진을 등록해 주세요.<br>
+								등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.
+								</p>
+							</td>
+							<td>
+								<!-- <form action="/file/profileUpdate.do" method="post" enctype="multipart/form-data"> -->
+								<!-- <button type="submit" class="btn-s" name="file" onclick="document.getElementById('btn-s').click();"><a href="#">사진 변경</a></button> /member/profileUpdate.do
+								<input type="file" id="btn-s" name="file" class="btn-s" style="display:none">-->
+<%-- 								<input type="text" class="input-style" id="nick" name="nick" onclick="nickCheck();" placeholder="닉네임을 입력해주세요." value="<%=m.getNick() %>" readonly>
+ --%>								
+								<input type="file" class="btn-p" name="file" id="file" accept="image/*" value="업로드" >
+								<!-- </form> -->
 							</td>
 						</tr>
+						<!-- <form action="/member/memberUpdate.do" method="post"> -->
 						<tr>
 							<td>아이디</td>
 							<td colspan="3"> <%=m.getUserId() %></td>
@@ -78,6 +135,7 @@
 								<input type="submit" class="btn-m" value="수정하기">
 							</td>
 						</tr>
+						<!-- </form> -->
 					</table>
 				</form>
 			</div>
@@ -88,7 +146,7 @@
 			<script>
 				location.replace("/views/member/memberLogin.jsp");
 			</script>
-		<%}  %>
+		<% }  %>
 
 
 

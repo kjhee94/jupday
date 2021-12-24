@@ -9,18 +9,19 @@
 <body>
 
 	<%
-	boolean updateResult = (boolean)request.getAttribute("result");
+		boolean result = (boolean)request.getAttribute("result");
 	%>
 	
+
 	<script>
-	<% if(updateResult) { %>
-		alert('회원정보 변경을 성공했습니다.');
-	<% } else { %>
-		alert('회원정보 변경을 실패했습니다 \n지속적인 문제 발생시 관리자에게 문의해주세요.');
-	<% } %>
-	
-	location.replace("/member/myPage.do");
+	<%if(result) {%>
+		alert('정상적으로 처리가 완료되었습니다. :)');
+	<%}else {%>
+		alert('정상적으로 처리되지않았습니다.');
+	<%} %>
+	location.replace("/admin/MemberManageList.do");
 	</script>
+
 
 </body>
 </html>
