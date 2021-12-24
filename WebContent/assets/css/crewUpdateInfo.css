@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-#updateCrewInfo>div {
+#crewInfo>div {
 	width: 100%;
 	border-bottom: 0.5px solid #D8D8D8;
 }
