@@ -59,7 +59,7 @@ public class AdminMemberDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE MEMBER SET end_YN=? WHERE userId=?";
+		String query = "UPDATE MEMBER SET end_YN=? WHERE userId=? AND authority_id!='root'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
