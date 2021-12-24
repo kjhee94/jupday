@@ -17,9 +17,8 @@ public class JDBCTemplate {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			/*conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe",
-					                            "jupday","jupday");//★바꿔주기.
-*/			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "jub_test2","jub_test2");//★김서후 개인 db연동 흔적입니다
+			//conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");//★바꿔주기.
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jub_test2","jub_test2");
 
 			conn.setAutoCommit(false);
 			

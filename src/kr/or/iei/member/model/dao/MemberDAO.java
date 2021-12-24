@@ -28,7 +28,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				m.setAuthority_Id(rset.getInt("authority_Id"));//1
+				m.setAuthority_Id(rset.getString("authority_Id"));//1
 				m.setUserId(rset.getString("userId"));//2
 				m.setUserPwd(rset.getString("userPwd"));//3
 				m.setNick(rset.getString("nick"));//4
@@ -54,7 +54,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		//MEMBER_SEQ.NEXTVAL,SYSDATE,'N'는 고정값이라 위치 홀더를 쓰지 않는다.
-		String query= "INSERT INTO MEMBER VALUES(MEMBER_SEQ.NEXTVAL,DEFAULT,?,?,?,?,NULL,SYSDATE,'N')";
+		String query= "INSERT INTO MEMBER VALUES(DEFAULT,?,?,?,?,NULL,SYSDATE,'N')";
 
 		
 		try {
@@ -152,9 +152,9 @@ public class MemberDAO {
 	}
 
 	public int updateOneMember(Member m, Connection conn) {
+		System.out.println("updateOneMember m : " + m.toString());
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
 		String query = "UPDATE MEMBER SET p_image=?, nick=?, email=? WHERE userId=?";
 		
 		try {
@@ -165,7 +165,6 @@ public class MemberDAO {
 			pstmt.setString(4, m.getUserId());
 			
 			result = pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -191,7 +190,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-				m.setAuthority_Id(rset.getInt("authority_Id"));
+				m.setAuthority_Id(rset.getString("authority_Id"));
 				m.setUserId(rset.getString("userId"));
 				m.setUserPwd(rset.getString("userPwd"));
 				m.setNick(rset.getString("nick"));
@@ -262,6 +261,31 @@ public class MemberDAO {
 		}finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertFileUpdate2(Member m, Connection conn) {
+		System.out.println("m : " + m.toString());
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET P_IMAGE=? WHERE USERID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getP_Image());
+			pstmt.setString(2, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("result : " + result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}
