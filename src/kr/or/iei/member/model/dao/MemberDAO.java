@@ -152,9 +152,9 @@ public class MemberDAO {
 	}
 
 	public int updateOneMember(Member m, Connection conn) {
+		System.out.println("updateOneMember m : " + m.toString());
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
 		String query = "UPDATE MEMBER SET p_image=?, nick=?, email=? WHERE userId=?";
 		
 		try {
@@ -165,7 +165,6 @@ public class MemberDAO {
 			pstmt.setString(4, m.getUserId());
 			
 			result = pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,6 +261,31 @@ public class MemberDAO {
 		}finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertFileUpdate2(Member m, Connection conn) {
+		System.out.println("m : " + m.toString());
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET P_IMAGE=? WHERE USERID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getP_Image());
+			pstmt.setString(2, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("result : " + result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}
