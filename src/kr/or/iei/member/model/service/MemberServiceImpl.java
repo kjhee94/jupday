@@ -101,6 +101,17 @@ public class MemberServiceImpl implements MemberService {
 		JDBCTemplate.close(conn);	
 		return result;
 	}
+
+	//미사용
+	@Override
+	public int insertFileUpdate2(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.insertFileUpdate2(m, conn);
+		if(result>0) JDBCTemplate.getConnection();
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
 	
 
 
