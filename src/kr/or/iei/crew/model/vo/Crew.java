@@ -10,13 +10,15 @@ public class Crew {
 	private String crewInfo;
 	private String crewImg;
 	private char crewDelYN;
+	private int crewCount;
 	
 	//생성자
 	public Crew() {
 		super();
 	}
 
-	public Crew(int crewNo, String crewName, Date crewCreateDate, String crewInfo, String crewImg, char crewDelYN) {
+	public Crew(int crewNo, String crewName, Date crewCreateDate, String crewInfo, String crewImg, char crewDelYN,
+			int crewCount) {
 		super();
 		this.crewNo = crewNo;
 		this.crewName = crewName;
@@ -24,6 +26,15 @@ public class Crew {
 		this.crewInfo = crewInfo;
 		this.crewImg = crewImg;
 		this.crewDelYN = crewDelYN;
+		this.crewCount = crewCount;
+	}
+	
+	//검색목록에서 사용하는 요소
+	public Crew(String crewName, String crewImg, int crewCount) {
+		super();
+		this.crewName = crewName;
+		this.crewImg = crewImg;
+		this.crewCount = crewCount;
 	}
 
 	//getter setter
@@ -74,4 +85,14 @@ public class Crew {
 	public void setCrewDelYN(char crewDelYN) {
 		this.crewDelYN = crewDelYN;
 	}
+
+	public int getCrewCount() {
+		return crewCount;
+	}
+
+	public void setCrewCount(int crewCount) {
+		this.crewCount = crewCount;
+	}
+	
+	
 }
