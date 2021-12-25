@@ -4,7 +4,11 @@
 		<%
 		   Member m = (Member)session.getAttribute("member");
 		%>
-		
+		<%
+		   Member r = (Member)session.getAttribute("review");
+		%>
+		<% System.out.println(m); %>
+		<% System.out.println(r); %>
 		<header id="header">
 		    <div class="logo">
 		        <a href="/"><img src="/assets/images/jupday_logo.png" alt="줍데이로고"></a>
@@ -18,9 +22,9 @@
 		                    <li><a href="/views/crew/crewJoinList.jsp">크루 목록</a></li>
 		                </ul>
 		            </li>
-		            <li><a href="/views/review/reviewSelectAllListPage.jsp">줍데이리뷰</a>
+		            <li><a href="/review/reviewAllSelect.do">줍데이리뷰</a>
 		                <ul class="lnb-list">
-		                    <li><a href="/views/review/reviewSelectAllListPage.jsp">리뷰 목록</a></li>
+		                    <li><a href="/review/reviewAllSelect.do">리뷰 목록</a></li>
 		                    <li><a href="/views/review/reviewWriteForm.jsp">리뷰 작성</a></li>
 		                </ul>
 		            </li>
@@ -34,7 +38,7 @@
 		                <ul class="lnb-list">
 		                    <li><a href="/views/member/myPage.jsp">회원 정보</a></li>
 		                    <li><a href="/views/member/myPageMyCrew.jsp">크루 목록</a></li>
-		                    <li><a href="/views/member/myPageMyReview.jsp">리뷰 목록</a></li>
+		                    <li><a href="/member/myPageMyReview.do">리뷰 목록</a></li>
 		                </ul>
 		            </li>
 		        </ul>

@@ -1,3 +1,7 @@
+<%@page import="kr.or.iei.review.model.dao.ReviewDAO"%>
+<%@page import="kr.or.iei.review.model.vo.Review"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,19 +35,51 @@
 					<div class="calendar">
 						<%@ include file="/views/member/myPageCalendar.jsp"%>
 					</div>
+					
+					
+				<%
+				HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+				
+				ArrayList<Review> list = (ArrayList<Review>)pageDataMap.get("list");
+				String pageNavi = (String)pageDataMap.get("pageNavi");
+				int currentPage = (int)request.getAttribute("currentPage");
+				String keyword = (String)request.getAttribute("keyword"); //getParameter로도 넘기기 가능
+				
+				%>
+			
+					
+					
 					<div class="board">
-						<div class="board-in">
-							<div class="review1">1 </div>
-							<div class="review2">2 </div>
-							<div class="review3">3 </div>
-							<div class="review4">4 </div>
-							<div class="review5">5 </div> 
-							<div class="review6">6 </div>
-							<div class="review7">7 </div>
-							<div class="review8">8 </div>
-							<div class="review9">9 </div>
-							<div class="navi-bar">navi-bar </div>
-						</div>
+							<%for(Review review : list) { %>
+								<%-- <% if(session.getAttribute("member").equals(r.getUserId())) { %> --%>
+								
+								<div class="box-one-review">
+									<div class="box-img">
+										
+										<a href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
+											<img alt="" src="">
+										</a>
+									</div>
+								</div>
+									
+								<%--  <%} %>	 --%>
+							<%} %>
+							
+							<div id="page_wrap">
+			                   <ul class="page_ul">
+			                       <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
+			                       <%=pageNavi %>
+			                       
+			                      <%-- 기존 코드는 일단 주석처리
+			                       <li><a href="" class="page_active">1</a></li>
+			                       <li><a href="">2</a></li>
+			                       <li><a href="">3</a></li>
+			                       <li><a href="">4</a></li>
+			                       <li><a href="">5</a></li>
+			                      --%>
+			                       <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+			                   	</ul>
+			               	</div>
 					</div>
 				</div>
 			</div>

@@ -110,8 +110,8 @@
 								<!-- <button type="submit" class="btn-s" name="file" onclick="document.getElementById('btn-s').click();"><a href="#">사진 변경</a></button> /member/profileUpdate.do
 								<input type="file" id="btn-s" name="file" class="btn-s" style="display:none">-->
 <%-- 								<input type="text" class="input-style" id="nick" name="nick" onclick="nickCheck();" placeholder="닉네임을 입력해주세요." value="<%=m.getNick() %>" readonly>
- --%>								
-								<input type="file" class="btn-p" name="file" id="file" accept="image/*" value="업로드" >
+ --%>							<label for="file" class="btn-s">사진등록</label>								
+								<input type="file" class="btn-p" name="file" id="file" accept="image/*" style="display:none">
 								<!-- </form> -->
 							</td>
 						</tr>
