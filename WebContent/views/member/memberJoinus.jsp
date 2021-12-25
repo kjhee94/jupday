@@ -16,10 +16,51 @@
 </head>
 
 
+<<<<<<< HEAD
 
 <body>
        
 	
+=======
+<body>
+
+	<script>
+	<!--ID 중복 체크 확인-->
+		function idCheck()
+		{
+			//alert('jup-day'); 확인
+			window.open("/views/member/idCheck.jsp","_blank","width=300px, height=150px");
+		}
+	
+	</script>
+	
+    <script>
+  <!--ID란 바로 중복체크창으로 연결-->
+    function goIdCheck(){	
+		window.open("/views/member/idCheck.jsp","_blank","width=300px, height=150px");
+	
+	}
+       </script>
+       
+	
+		<script>
+		<!--nick 중복체크 확인 -->
+		function nickCheck()
+		{
+			//AJAX배우면 수정?
+			window.open("/views/member/nickCheck.jsp","_blank","width=300px, height=150px");
+		}
+	
+	   </script>
+
+		<script>
+		<!--nick창 누르면 바로 중복체크창으로 이동 -->
+       function goNickCheck(){
+			window.open("/views/member/nickCheck.jsp","_blank","width=300px, height=150px");
+       }
+	
+       </script>
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
        
 	<!-- 비밀번호 유효성 검사 확인-->
 	<script>
@@ -29,7 +70,11 @@
             var SC = ["!","@","#","$","%","^","&","*","(",")"];//!@#$%^&*()
             var check_SC = 0;
  			//비밀번호 길이
+<<<<<<< HEAD
             if(userPwd.length < 8 || userPwd.length>16){
+=======
+            if(userPwd.length < 8 || userPwd.length > 16){
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
                 window.alert('비밀번호는 8글자 이상, 16글자 이하만 이용 가능합니다.');
                 document.getElementById('userPwd').value='';
             }
@@ -81,6 +126,7 @@
 			    = document.querySelector('input[name="selectall"]');
 			  
 			  if(checkboxes.length === checked.length)  {
+<<<<<<< HEAD
 				    selectAll.checked = true;
 				  }else {
 				    selectAll.checked = false;
@@ -100,6 +146,25 @@
 				var nRegExp= /^[가-힣ㄱ-ㅎa-zA-Z0-9._-]{2,16}\$/;//nick 유효성 검사
 				
 			   
+=======
+			    selectAll.checked = true;
+			  }else {
+			    selectAll.checked = false;
+			  }
+
+		}		
+		 </script>
+		 
+		 <!-- 최종 제출전 다향성 검사 -->
+		 <script>
+		 function Validation(){
+			 
+			 
+		        var RegExp = /^[a-zA-Z0-9]{8,12}$/;  //id 영어와 숫자 글자수 검사
+		        var p_RegExp = /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/;//pwassword 글자수 유효성 검사 정규식 /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/
+		        var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;//이메일 유효성검사
+				var n_RegExp= /^[가-힣ㄱ-ㅎa-zA-Z0-9._-]{2,16}\$/; //닉네임
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		        
 		        var objId = document.getElementById("userId"); //아이디
 		        var objPwd = document.getElementById("userPwd"); //비밀번호
@@ -108,7 +173,10 @@
 		        var objEmail = document.getElementById("email");//메일
 		        var chk1=document.getElementById("checkAgreement").checked;//필수 약관 체크박스 체크여부 확인 [하나]
 		        var chk2=document.getElementById("agreementCheck").checked;//필수 약관 체크박스 체크여부 확인 [둘]
+<<<<<<< HEAD
 		   
+=======
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 	
 		        
 		        // ================ ID 유효성검사 ================ //
@@ -127,7 +195,11 @@
 		            alert("Password를 입력해주세요.");
 		            return false;
 		        }
+<<<<<<< HEAD
 		        if(!pRegExp.test(objPwd.value)){ //패스워드 유효성검사
+=======
+		        if(!p_RegExp.test(objPwd.value)){ //패스워드 유효성검사
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		            alert("Password는 8~16자의 영문 대소문자와 숫자 특수문자로만 입력하여 주세요.");
 		            return false;
 		        }
@@ -148,24 +220,41 @@
 		            alert("닉네임을 입력해주세요.");
 		            return false;
 		        }
+<<<<<<< HEAD
 		        if(!nRegExp.test(objNick.value)){ //닉네임
 		            alert("닉네임을 2~16자의 숫자,한국어,영어,'_'로 입력해주세요.");        
+=======
+		        if(!n_RegExp.test(objNick.value)){ //닉네임
+		            alert("닉네임은 2~16자의 숫자,한국어,영어,'_'로만 만들어주세요.");        
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		            return false;
 		        }
 
 		        
 		        // ================ email 유효성검사 ================ //
+<<<<<<< HEAD
 		        if(eRegExp.value == ''){ // 이메일 입력여부 검사
+=======
+		        if(e_RegExp.value == ''){ // 이메일 입력여부 검사
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		            alert("이메일을 입력해주세요.");
 		            return false;
 		        }
 		        
+<<<<<<< HEAD
 		        if(!eRegExp.test(objEmail.value)){ //이메일 유효성 검사
+=======
+		        if(!e_RegExp.test(objEmail.value)){ //이메일 유효성 검사
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		            alert("올바른 이메일 형식이 아닙니다.");
 		            return false;
 		        }
 		        
+<<<<<<< HEAD
 		        //==================필수약관 체크 여부 ==================== //
+=======
+				//==================필수약관 체크 여부 ==================== //
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		 
 		        
 		        if(!chk1){
@@ -176,9 +265,19 @@
 		            alert('필수 약관에 동의해 주세요');
 		            return false;
 		        }
+<<<<<<< HEAD
 			 
 		 }
 		  
+=======
+
+
+			 
+		 }
+		 
+		 
+		 
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 		 </script>
 		 
 
@@ -188,6 +287,7 @@
 		<div class="logo-user"><a href="/"><img src="/assets/images/jupday_logo.png" alt="줍데이로고"></a></div>
 		<form action="/member/memberJoin.do" onsubmit="return Validation();" method="post">
 			<label for="userId" class="tit-label">아이디*</label><br>
+<<<<<<< HEAD
 			<input type="text" id="userId" class="input-join" name="userId" placeholder="아이디 입력 (8~12자)" maxlength="12"><br>
 			<span id="msg" style="font-size:11pt"></span><br>
 		
@@ -207,6 +307,23 @@
 			<input type="email" id="email" class="input-join" name="email" placeholder="이메일"><br>
 			<span id="emailCheck" style="font-size:11pt"></span><br>
 			
+=======
+			<input type="text" id="userId" class="input-join" name="userId" onclick="goIdCheck();"  placeholder="아이디 입력 (8~12자)" maxlength="12">
+			<input type="button" class="btn-verify" onclick="idCheck();" value="중복확인"><br>
+			
+			<label for="userPwd" class="tit-label">비밀번호*</label><br>
+			<input type="password" id="userPwd" class="input-join2" name="userPwd" onchange="pwCheck()" placeholder="비밀번호 입력 (영문, 숫자, 특수문자 조합 (8~16)" maxlength="16"> <br>
+			<input type="password" class="input-join2" id="userPwdRe" name="userPwdRe" onchange="pwCheck()"  placeholder="비밀번호 확인">&nbsp;<span id="check"></span><br>
+			
+			
+			<label for="nick" class="tit-label">닉네임*</label><br>
+			<input type="text" id="nick" class="input-join" name="nick" onclick="goNickCheck();" placeholder="닉네임 입력" >
+			<input type="button" class="btn-verify" onclick="nickCheck();" value="중복확인"><br>
+			
+			<label for="email" class="tit-label">이메일*</label><br>
+			<input type="email" id="email" class="input-join" name="email" placeholder="이메일">
+			<input type="button" value="이메일 인증" class="btn-verify" method="post" onclick="location.replace('/member/mail.do');"/>
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 			<br>
 			    	
         	<h3 class="tit-join">이용 약관</h3>
@@ -220,6 +337,7 @@
 		</form>
 	</div>
 	</div>
+<<<<<<< HEAD
 	
 
 	
@@ -346,6 +464,8 @@
 	
 
 		
+=======
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 	
 	<!-- footer -->
 	<%@ include file="/views/commons/footer/footer.jsp"%>

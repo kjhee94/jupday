@@ -5,6 +5,7 @@
 	height: auto;
 	overflow: hidden;
 	border: 0.5px solid #D8D8D8;
+	box-sizing: border-box;
 }
 
 .box-subject {

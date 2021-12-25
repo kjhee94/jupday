@@ -37,7 +37,28 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+<<<<<<< HEAD
 
+=======
+
+	@Override
+	public int deleteOneMember(String userId, String userPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.deleteOneMember(userId, userPwd, conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public Member refreshOneMember(String userId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.refreshOneMember(userId, conn);
+		JDBCTemplate.close(conn); 
+		return m;
+	}
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 
 	@Override
 	public boolean selectIdCheck(String userId) {
@@ -58,6 +79,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public boolean selectEmailCheck(String email) {
 		Connection conn = JDBCTemplate.getConnection();
 		boolean result=mDAO.selectEmailCheck(email,conn);
@@ -93,3 +115,46 @@ public class MemberServiceImpl implements MemberService {
 
 
 }
+=======
+	public int updatePwdMember(String userId, String pwd, String newPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.updatePwdMember(userId, pwd, newPwd, conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int updateOneMember(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.updateOneMember(m, conn);
+		if(result>0) JDBCTemplate.getConnection();
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public boolean selectEmailCheck(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		boolean result=mDAO.selectEmailCheck(email,conn);
+		JDBCTemplate.close(conn);	
+		return result;
+	}
+
+	//미사용
+	@Override
+	public int insertFileUpdate2(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = mDAO.insertFileUpdate2(m, conn);
+		if(result>0) JDBCTemplate.getConnection();
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+
+
+}
+>>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf

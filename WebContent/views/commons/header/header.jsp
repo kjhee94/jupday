@@ -11,11 +11,11 @@
 		    </div>
 		    <nav>
 		        <ul class="gnb-list">
-		            <li><a href="/views/crew/crewJoinList.jsp">줍데이크루</a>
+		            <li><a href="/crew/crewAllList.do">줍데이크루</a>
 		                <ul class="lnb-list">
-		                    <li><a href="/views/crew/crewJoinList.jsp">크루 목록</a></li>
-		                    <li><a href="/views/crew/crewSearchList.jsp">크루 검색</a></li>
+		                    <li><a href="/crew/crewAllList.do">크루 검색</a></li>
 		                    <li><a href="/views/crew/crewCreate.jsp">크루 생성</a></li>
+		                    <li><a href="/views/crew/crewJoinList.jsp">크루 목록</a></li>
 		                </ul>
 		            </li>
 		            <li><a href="/views/review/reviewSelectAllListPage.jsp">줍데이리뷰</a>
@@ -42,12 +42,18 @@
 		    <div class="link-user">
 		    
 		    	<%if(m!=null){%>
-		    	
+		    		<%if(m.getAuthority_Id().equals("root")) { //관리자로 로그인할 경우 닉네임 누를시 관리자페이지로 이동%>
+		    		<div class="box-user">
+	     				<a href="/admin/MemberManageList.do"><%=m.getNick()%>님 </a>
+	     				<a href="/member/logout.do">로그아웃</a><br>
+					</div>
+					<%} %>
+						    	
 		    	<div class="box-user">
 	     			<a href="/views/member/myPage.jsp"><%=m.getNick()%>님 </a>
 	     			<a href="/member/logout.do">로그아웃</a><br>
-				</div>
-				
+				</div>    	
+								
 		    	<%}else{%>
 		    	
 	    		<div class="box-user">
@@ -56,5 +62,8 @@
 	    		</div>
 	    		
 		    	<%}%>
+		    	
+
+		    	
 		    </div>
 		</header>
