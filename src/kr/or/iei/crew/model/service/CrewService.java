@@ -2,6 +2,8 @@ package kr.or.iei.crew.model.service;
 
 import java.util.HashMap;
 
+import kr.or.iei.crew.model.vo.Crew;
+
 public interface CrewService {
 
 	/**
@@ -24,5 +26,16 @@ public interface CrewService {
 	 * Description : 게시물을 검색하는 메소드
 	 */
 	HashMap<String, Object> selectCrewSearchList(int currentPage, String keyword);
+	
+	/**
+	 * 작성자 : 강주희
+	 * @param c
+	 * @param crewMaster
+	 * @return boolean
+	 * 작성일 : 2021. 12. 25.
+	 *
+	 * Description : 새로운 크루를 생성하는 메소드
+	 */
+	boolean crewCreate(Crew c, String userId);
 
 }

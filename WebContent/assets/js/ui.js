@@ -120,5 +120,26 @@ $(document).ready(function(){
     	}
 
     });
+    
+    
+    //maxlength
+    $('.input-style').keyup(function(){ 
+    	if($(this).val().length > $(this).attr('maxlength')) { 
+    		alert('제한길이를 초과했습니다'); 
+    		$(this).val($(this).val().substr(0, $(this).attr('maxlength'))); 
+		} 
+	});
+    
+    
+    //file name 표시
+    $("#crewImg").on('change',function(){
+    	var fileValue = $("#crewImg").val().split("\\");
+    	var fileName = fileValue[fileValue.length-1];
+
+    	$(".file-name").text(fileName);
+	});
+
+
+    
 });
 

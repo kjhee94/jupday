@@ -33,7 +33,7 @@
 			<form id="crewInfo" action="/crew/crewCreate.do" method="post">
 				<div class="box-name">
 					<span>크루명</span>
-					<input type="text" id="crewName" class="input-style" name="crewName" placeholder="크루명을 입력하세요(10자 이내)">
+					<input type="text" id="crewName" class="input-style" name="crewName" placeholder="크루명을 입력하세요(10자 이내)" maxlength="10">
 				</div>
 				<div class="box-explan">
 					<p>크루설명</p>
@@ -41,6 +41,7 @@
 				</div>
 				<div class="box-upload">
 					<span>크루 대표 사진</span>
+					<span class="file-name"></span>
 					<label for="crewImg" class="btn-s">사진등록</label>
 					<input type="file" id="crewImg" name="crewImg"><br>
 				</div>

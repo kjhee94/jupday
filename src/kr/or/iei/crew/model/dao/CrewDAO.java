@@ -260,6 +260,86 @@ public class CrewDAO {
 		}
 		return count;
 	}
+
+	public int insertOneCrew(Connection conn, Crew c) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO CREW VALUES(CREW_SEQ.NEXTVAL, ?, SYSDATE, ?, ?, 'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, c.getCrewName());
+			pstmt.setString(2, c.getCrewInfo());
+			pstmt.setString(3, c.getCrewImg());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertCrewMaster(Connection conn, Crew c, String userId) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		//입력한 크루명을 사용하여 c_no 검색 후 가져오기
+		int crewNo = selectCrewNo(conn,c);
+		
+		String query = "INSERT INTO CREW_MEMBER VALUES(?, ?, '크루장', SYSDATE, 'SUCCESS', 'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, crewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	private int selectCrewNo(Connection conn, Crew c) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int crewNo = 0;
+		
+		String query = "SELECT C_NO FROM CREW WHERE C_NAME=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, c.getCrewName());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				crewNo = rset.getInt("c_no");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return crewNo;
+	}
 	
 	
 	

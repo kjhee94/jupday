@@ -12,6 +12,7 @@ public class Crew {
 	private char crewDelYN;
 	private int crewCount;
 	
+	
 	//생성자
 	public Crew() {
 		super();
@@ -29,14 +30,15 @@ public class Crew {
 		this.crewCount = crewCount;
 	}
 	
-	//검색목록에서 사용하는 요소
-	public Crew(String crewName, String crewImg, int crewCount) {
+	//크루생성에서 사용하는 생성자
+	public Crew(String crewName, String crewInfo, String crewImg) {
 		super();
 		this.crewName = crewName;
+		this.crewInfo = crewInfo;
 		this.crewImg = crewImg;
-		this.crewCount = crewCount;
 	}
 
+	
 	//getter setter
 	public int getCrewNo() {
 		return crewNo;
@@ -93,6 +95,4 @@ public class Crew {
 	public void setCrewCount(int crewCount) {
 		this.crewCount = crewCount;
 	}
-	
-	
 }

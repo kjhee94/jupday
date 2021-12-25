@@ -81,6 +81,28 @@ public class CrewServiceimpl implements CrewService {
 		
 		return hm;
 	}
+
+	@Override
+	public boolean crewCreate(Crew c, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//크루 생성
+		int result = cDAO.insertOneCrew(conn, c);
+		
+		//크루에 크루장 등록
+		int result2 = cDAO.insertCrewMaster(conn, c, userId);
+		
+		if(result>0 && result2>0) {
+			JDBCTemplate.commit(conn);
+			JDBCTemplate.close(conn);
+			return true;
+		}else {
+			JDBCTemplate.rollback(conn);
+			JDBCTemplate.close(conn);
+			return false;
+		}
+	}
 	
 	
 	
