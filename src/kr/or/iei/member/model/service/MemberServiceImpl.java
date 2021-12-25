@@ -37,9 +37,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-<<<<<<< HEAD
 
-=======
 
 	@Override
 	public int deleteOneMember(String userId, String userPwd) {
@@ -58,7 +56,6 @@ public class MemberServiceImpl implements MemberService {
 		JDBCTemplate.close(conn); 
 		return m;
 	}
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 
 	@Override
 	public boolean selectIdCheck(String userId) {
@@ -79,8 +76,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public boolean selectEmailCheck(String email) {
+
+	public boolean selectEmailChecking(String email) {
 		Connection conn = JDBCTemplate.getConnection();
 		boolean result=mDAO.selectEmailCheck(email,conn);
 		JDBCTemplate.close(conn);	
@@ -114,8 +111,8 @@ public class MemberServiceImpl implements MemberService {
 	
 
 
-}
-=======
+
+
 	public int updatePwdMember(String userId, String pwd, String newPwd) {
 		Connection conn = JDBCTemplate.getConnection();
 		int result = mDAO.updatePwdMember(userId, pwd, newPwd, conn);
@@ -153,8 +150,7 @@ public class MemberServiceImpl implements MemberService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+	}
 	
 
 
-}
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf

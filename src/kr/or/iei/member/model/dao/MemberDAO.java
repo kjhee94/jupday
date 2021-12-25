@@ -28,10 +28,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
-<<<<<<< HEAD
 
-=======
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 				m.setAuthority_Id(rset.getString("authority_Id"));//1
 				m.setUserId(rset.getString("userId"));//2
 				m.setUserPwd(rset.getString("userPwd"));//3
@@ -133,8 +130,8 @@ public class MemberDAO {
 		return result;
 	}
 
-<<<<<<< HEAD
-	public boolean selectEmailCheck(String email, Connection conn) {
+
+	public boolean selectEmailChecking(String email, Connection conn) {
 		PreparedStatement pstmt= null;
 		ResultSet rset= null;
 		boolean result = false;
@@ -220,7 +217,18 @@ public class MemberDAO {
 			}
 			
 		} catch (SQLException e) { 
-=======
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return m;
+		
+	}
+		
+
 	public int updatePwdMember(String userId, String pwd, String newPwd, Connection conn) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -348,22 +356,15 @@ public class MemberDAO {
 			}
 			
 		} catch (SQLException e) {
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-<<<<<<< HEAD
-		
-		return m;
-		
-	}
 
 
-
-=======
 		return result;
 	}
 
@@ -392,8 +393,6 @@ public class MemberDAO {
 		return result;
 	}
 
-
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 	
 	
 

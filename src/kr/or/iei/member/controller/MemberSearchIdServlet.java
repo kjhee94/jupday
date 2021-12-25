@@ -43,7 +43,7 @@ public class MemberSearchIdServlet extends HttpServlet {
 		Member m = mService.SearchId(email);//이메일 값을 넘겨주면서 비즈니스로직을 시작한다.
 		
 
-		if(m!=null) {//로그인이 성공했다면
+		if(m!=null) {//이메일있다면
 			HttpSession session = request.getSession(true);
 			session.setAttribute("member", m);
 			

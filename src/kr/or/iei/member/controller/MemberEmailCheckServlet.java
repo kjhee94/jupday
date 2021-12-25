@@ -36,7 +36,7 @@ public class MemberEmailCheckServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		
 		MemberService mService = new MemberServiceImpl();
-		boolean result= mService.selectEmailCheck(email);
+		boolean result= mService.selectEmailChecking(email);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/member/emailCheck.jsp");
 		

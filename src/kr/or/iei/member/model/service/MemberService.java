@@ -17,10 +17,7 @@ public interface MemberService {
 	 */
 	public Member selectOneMember(String userId, String userPwd);
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
 	/**
 	 * 작성자: 남진구
 	 * @param m
@@ -28,15 +25,12 @@ public interface MemberService {
 	 * 작성일: 2021.12.13
 	 */
 	//신규 회원가입시
-<<<<<<< HEAD
 	public int insertOneMember(Member m);
 	
-	
-=======
-	
-	public int insertOneMember(Member m);
+		
 	//아이디 중복 체크
->>>>>>> 3d6d31fc29f72230bba5257e7f31765b739181bf
+
+	
 	/**
 	 * 작성자: 남진구
 	 * @param userId
@@ -65,7 +59,7 @@ public interface MemberService {
 	 * 작성일:2021.12.24
 	 */
 	//email 중복 체크
-	public boolean selectEmailCheck(String email);
+	public boolean selectEmailChecking(String email);
 	
 	
 	/**
@@ -77,6 +71,7 @@ public interface MemberService {
 	//아이디 찾기
 	public Member SearchId(String email);
 
+	
 	/**
 	 * 작성자 : 남진구
 	 * @param userId,
