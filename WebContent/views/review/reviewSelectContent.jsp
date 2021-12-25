@@ -47,6 +47,8 @@
 				<p class="tit-big">줍데이리뷰</p>
 			</div>
 		
+			
+		
 			<%
 				Review review = (Review)request.getAttribute("review");
 				int currentPage = (int)request.getAttribute("currentPage");	
