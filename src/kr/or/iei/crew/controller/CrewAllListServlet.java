@@ -14,16 +14,16 @@ import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
 
 /**
- * Servlet implementation class CrewSearchListServlet
+ * Servlet implementation class CrewAllListServlet
  */
-@WebServlet("/crew/crewSearchList.do")
-public class CrewSearchListServlet extends HttpServlet {
+@WebServlet("/crew/crewAllList.do")
+public class CrewAllListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrewSearchListServlet() {
+    public CrewAllListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,21 +45,18 @@ public class CrewSearchListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		//인코딩
-		request.setCharacterEncoding("UTF-8");
-		
-		String keyword = request.getParameter("keyword");
-		
+		//currentPage 값으로 페이지에 따른 데이터 목록화를 비즈니스 로직으로 처리
 		CrewService cService = new CrewServiceimpl();
-		HashMap<String, Object> map = cService.selectCrewSearchList(currentPage, keyword);
+		HashMap<String, Object> pageDataMap = cService.selectCrewAllList(currentPage);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewSearchList.jsp");
 		
-		request.setAttribute("pageDataMap", map);
+		request.setAttribute("pageDataMap", pageDataMap);
 		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("keyword", keyword);
 		
 		view.forward(request, response);
+		
+		
 	}
 
 	/**

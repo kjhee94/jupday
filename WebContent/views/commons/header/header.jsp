@@ -15,9 +15,9 @@
 		    </div>
 		    <nav>
 		        <ul class="gnb-list">
-		            <li><a href="/views/crew/crewSearchList.jsp">줍데이크루</a>
+		            <li><a href="/crew/crewAllList.do">줍데이크루</a>
 		                <ul class="lnb-list">
-		                    <li><a href="/crew/crewSearchList.do">크루 검색</a></li>
+		                    <li><a href="/crew/crewAllList.do">크루 검색</a></li>
 		                    <li><a href="/views/crew/crewCreate.jsp">크루 생성</a></li>
 		                    <li><a href="/views/crew/crewJoinList.jsp">크루 목록</a></li>
 		                </ul>
