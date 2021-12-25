@@ -34,7 +34,7 @@ public class MemberJoinServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 				
-		//데이터를 꺼내기전에 인코딩 처리
+		//데이터를 꺼내기전에 인코딩 처리한다.(글자가 안깨지게)
 		request.setCharacterEncoding("UTF-8");
 		
 		//view Page에서 보내온 값을 처리 		
@@ -52,11 +52,11 @@ public class MemberJoinServlet extends HttpServlet {
 		int result= mService.insertOneMember(m);
 		
 		//회원가입 성공 또는 실패
+		
 		//1.회원가입을 성공하면 성공페이지로 이동,회원가입을 실패하면 실패 페이지로 이동
-		//2.성공/실패 여부와 상관없이 하나의 페이지로 이동한다 (해당 페이지에서 성공/실패를 처리한다)
+		//2.성공과 실패 여부와 상관없이 하나의 페이지로 이동한다 (해당 페이지에서 성공/실패를 처리한다)
 		
-		//첫번째 방법
-		
+		//첫번째 방법으로 처리
 		if(result>0)//성공했다면
 		{
 			//response.sendRedirect("/views/member/memberJoinSuccess.jsp");
@@ -68,14 +68,16 @@ public class MemberJoinServlet extends HttpServlet {
 			response.sendRedirect("/views/member/memberJoinFail.jsp");
 		}
 		
+		
 		//System.out.println(userId); 이상무
 		//System.out.println(userPwd); 이상무
 		//System.out.println(nick);  이상무
 		//System.out.println(email); 이상무
 
+		
+		
 	}
-
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -85,3 +87,4 @@ public class MemberJoinServlet extends HttpServlet {
 	}
 
 }
+

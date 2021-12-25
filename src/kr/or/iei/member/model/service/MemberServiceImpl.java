@@ -37,23 +37,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	@Override
-	public int udateOneMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	@Override
-	public int deleteOneMember(int userNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Member refreshOneMember(int userNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean selectIdCheck(String userId) {
@@ -72,4 +56,40 @@ public class MemberServiceImpl implements MemberService {
 		
 		return result;
 	}
+
+	@Override
+	public boolean selectEmailCheck(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		boolean result=mDAO.selectEmailCheck(email,conn);
+		JDBCTemplate.close(conn);	
+		
+		return result;
+	}
+	
+	@Override
+	public Member SearchId(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.SearchId(email,conn);
+		JDBCTemplate.close(conn);
+
+		return m;
+		
+		
+	}
+	
+	@Override
+	public Member SearchPwd(String userId,String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.SearchPwd(userId,email,conn);
+		JDBCTemplate.close(conn);
+
+		return m;
+		
+
+		
+	}
+	
+	
+
+
 }
