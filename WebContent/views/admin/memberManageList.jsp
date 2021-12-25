@@ -90,10 +90,12 @@
                                 <td><%=mem.getEmail() %></td>
                                 <td><%=mem.getEnrollDate() %></td>
                                 <td>
+                                <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
                                 <%if(mem.getEnd_YN()=='N') {%>
                                 <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="del_btn">탈퇴</button></a>
                                 <%}else {%>
                                 <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
                                 <%} %>
                                 </td>
                             </tr>
