@@ -8,8 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
-<link rel="stylesheet" href="/assets/css/default.css">
-<link rel="stylesheet" href="/assets/css/footer.css">
+<link rel="stylesheet" href="/assets/commons/default.css">
+<link rel="stylesheet" href="/assets/commons/common.css">
+<link rel="stylesheet" href="/assets/commons/footer.css">
 <link rel="stylesheet" href="/assets/css/memberSearchId.css">
 </head>
 
@@ -23,8 +24,8 @@
 				<a href="/views/member/memberSearchPwd.jsp">비밀번호 찾기</a>
 			</div>
 			<form action="/member/memberSearchId.do" method="get">
-				<input type="email" id="email" class="input-data" name="email" placeholder="이메일 입력"><br>&nbsp;
-				<span id="emailCheck" style="font-size:11pt"></span><br>
+				<input type="email" id="email" class="input-style" name="email" placeholder="이메일 입력"><br>
+				<span id="emailCheck" class="check-msg"></span><br>
 				<input type="submit" id="searchId" onclick="submitSearchId();" class="btn-searchId" value="아이디 찾기">
 			</form>
 			<a href="/">메인으로 가기</a>
