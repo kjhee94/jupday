@@ -55,6 +55,7 @@ public class MyPageProfileUpdate extends HttpServlet {
 		
 		// 정책 관련 객체 MutipartRequest 객체를 생성 (동일한 이름의 파일이 들어올 경우)
 		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileSizeLimit, encType, new DefaultFileRenamePolicy());
+
 		
 		//위에서 5가지 정보를 바탕으로 MultipartRequest 객체를 생성하게 되는 순간, 이미 파일은 해당 경로에 업로드 되는 상태가 된다.
 		
