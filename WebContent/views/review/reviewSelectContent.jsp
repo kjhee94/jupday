@@ -1,3 +1,5 @@
+<%@page import="kr.or.iei.review.model.vo.ReviewComment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="kr.or.iei.review.model.vo.Review"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -47,14 +49,12 @@
 				<p class="tit-big">줍데이리뷰</p>
 			</div>
 		
-			
-		
 			<%
 				Review review = (Review)request.getAttribute("review");
 				int currentPage = (int)request.getAttribute("currentPage");	
 			%>
 			
-			<%if(m!=null){ %>
+			
 		
 			<div id="review_writing">
 				<div class="write-top">
@@ -103,47 +103,26 @@
 				
 				<div class="box-comment">
 				
+				<%
+					ArrayList<ReviewComment> commentslist = review.getComments();
+				%>
+				
+					<%for(ReviewComment co : commentslist){ %>
+				
 					<div class="box-one-comment">
 						<div class="user-img">
 							<img alt="" src="/assets/images/profile.png">
 						</div>
 						<div class="right-comment">
 							<div class="user-comment">
-								<p>최강주희<span>2021-12-06</span></p>
+								<p><%=co.getNick() %><span><%=co.getR_c_regDate() %></span></p>
 							</div>
 							<div class="txt-comment">
-								<p>우와 너무 멋져요 자극받고갑니다!</p>
+								<p><%=co.getR_c_comment() %></p>
 							</div>
 						</div>
 					</div>
-					
-					<div class="box-one-comment">
-						<div class="user-img">
-							<img alt="" src="/assets/images/profile.png">
-						</div>
-						<div class="right-comment">
-							<div class="user-comment">
-								<p>연신내핵주먹<span>2021-12-06</span></p>
-							</div>
-							<div class="txt-comment">
-								<p>한강이 플로깅하기 좋군요 참고하겠습니다 고마워요!</p>
-							</div>
-						</div>
-					</div>
-					
-					<div class="box-one-comment">
-						<div class="user-img">
-							<img alt="" src="/assets/images/profile.png">
-						</div>
-						<div class="right-comment">
-							<div class="user-comment">
-								<p>난폭한오렌지<span>2021-12-06</span></p>
-							</div>
-							<div class="txt-comment">
-								<p>와ㅠㅠ대단하세요ㅠㅠㅠㅠㅠ</p>
-							</div>
-						</div>
-					</div>
+					<%} %>
 					
 					<div class="box-write-comment">
 						<div class="user-nick">
@@ -152,20 +131,22 @@
 						<textarea placeholder="댓글을 입력하세요"></textarea>
 						<button>등록</button>
 					</div>
+					
+					
 				</div>
-				
+	
 				<div class="list-btn">
-					<button class="btn-m btn-update"><a href="./reviewUpdateForm.jsp">수정</a></button>
+				<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
+					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
 					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+				<%}else{ %>
+					
+					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
+					<button class="btn-m btn-update" disabled>수정</button>
+					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+				<%} %>
 				</div>
 			</div>
-			
-			<%}else{%>
-				<script>
-					alert('해당 글이 존재하지 않습니다');
-					location.replace('/review/reviewAllselect.do'); //여기 주의! 서블릿 주소 바꿔야 할 수도 있음
-				</script>
-			<%} %>
 			
 		</div> 
 	

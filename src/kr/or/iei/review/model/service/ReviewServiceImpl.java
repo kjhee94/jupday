@@ -7,6 +7,7 @@ import java.util.HashMap;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.review.model.dao.ReviewDAO;
 import kr.or.iei.review.model.vo.Review;
+import kr.or.iei.review.model.vo.ReviewComment;
 
 
 public class ReviewServiceImpl implements ReviewService{
@@ -43,6 +44,11 @@ public class ReviewServiceImpl implements ReviewService{
 		Connection conn = JDBCTemplate.getConnection();
 		
 		Review review = rDAO.selectOneContent(conn, postNum);
+		
+		ArrayList<ReviewComment> commentslist = rDAO.selectPostAllComment(conn,postNum);
+		
+		review.setComments(commentslist);
+		
 		JDBCTemplate.close(conn);
 		return review;
 

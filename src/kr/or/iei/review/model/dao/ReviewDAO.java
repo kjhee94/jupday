@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.review.model.vo.Review;
+import kr.or.iei.review.model.vo.ReviewComment;
 
 public class ReviewDAO {
 
@@ -173,6 +174,49 @@ public class ReviewDAO {
 		}
 		
 		return review;
+	}
+
+	public ArrayList<ReviewComment> selectPostAllComment(Connection conn, int postNum) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<ReviewComment> commentslist = new ArrayList<ReviewComment>();
+		
+		String query = "select REVIEW_COMMENT.*,Member.nick from REVIEW_COMMENT " + 
+				"left join member on (REVIEW_COMMENT.userid = member.userid) " + 
+				"where R_C_DEL_YN='N' and R_C_NO=? " + 
+				"order by R_C_NO DESC";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNum);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ReviewComment co = new ReviewComment();
+				
+				co.setR_c_no(rset.getInt("r_c_no"));
+				co.setPostNum(rset.getInt("postNum"));
+				co.setUserId(rset.getString("userId"));
+				co.setR_c_comment(rset.getString("r_c_comment"));
+				co.setR_c_regDate(rset.getDate("r_c_regDate"));
+				co.setR_c_del_YN(rset.getString("r_c_del_YN").charAt(0));
+				co.setNick(rset.getString("nick"));
+				
+				commentslist.add(co);
+			}	
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return commentslist;
 	}
 	
 
