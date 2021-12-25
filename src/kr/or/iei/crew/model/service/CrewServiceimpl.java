@@ -103,6 +103,24 @@ public class CrewServiceimpl implements CrewService {
 			return false;
 		}
 	}
+
+	@Override
+	public ArrayList<Crew> selectManageCrew(String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Crew> list = cDAO.selectManageCrew(conn, userId);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	@Override
+	public ArrayList<Crew> selectJoinedCrew(String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Crew> list = cDAO.selectJoinedCrew(conn, userId);
+		JDBCTemplate.close(conn);
+		return list;
+	}
 	
 	
 	

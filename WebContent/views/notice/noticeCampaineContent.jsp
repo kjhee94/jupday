@@ -59,7 +59,7 @@
          	
          	<div class="box-button">
          		<button class="btn-m">
-	         		<a href="./noticeCampaign.jsp">목록</a>
+	         		<a href="/views/notice/noticeCampaign.jsp">목록</a>
 	         	</button>
          	</div>
         	

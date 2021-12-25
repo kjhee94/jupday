@@ -17,6 +17,10 @@
 <script src="/assets/js/ui.js"></script>
 </head>
 <body>
+	
+	<%
+		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
+	%>
 
 	<div id="wrap">
 		<!-- header -->
@@ -29,14 +33,14 @@
 			</div>
 			
 			<div class="list-setting">
-				<p><a href="./crewUpdateInfo.jsp">크루 정보 수정</a></p>
-				<p><a href="./crewJoinApprove.jsp">크루 가입 승인</a></p>
-				<p><a href="./crewDelete.jsp">크루 삭제</a></p>
+				<p><a href="/crew/crewValue.do?crewNo=<%=crewNo%>">크루 정보 수정</a></p>
+				<p><a href="/views/crew/crewJoinApprove.jsp?crewNo=<%=crewNo%>">크루 가입 승인</a></p>
+				<p><a href="/views/crew/crewDelete.jsp?crewNo=<%=crewNo%>">크루 삭제</a></p>
 			</div>
 			
 			<div class="box-btn">
 				<button class="btn-m">
-					<a href="./crewJoinList.jsp">완료</a>
+					<a href="/crew/crewJoinList.do">완료</a>
 				</button>
 			</div>
 		</div>

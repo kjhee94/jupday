@@ -18,6 +18,10 @@
 </head>
 <body>
 
+	<%
+		
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -31,17 +35,18 @@
 			<form id="crewInfo">
 				<div class="box-name">
 					<span>크루명</span>
-					<input type="text" id="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="오늘도 내가 해냄">
+					<input type="text" id="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="<% %>">
 				</div>
 				<div class="box-explan">
 					<p>크루설명</p>
-					<textarea class="input-style" placeholder="크루 설명을 입력하세요">해버렸따고</textarea>
+					<textarea class="input-style" id="crewInfo" placeholder="크루 설명을 입력하세요"><% %></textarea>
 				</div>
 				<div class="box-upload">
 					<span>크루 대표 사진</span>
 					<label for="crewImg" class="btn-s">사진등록</label>
-					<input type="file" id="crewImg" value="사진등록" ><br>
+					<input type="file" id="crewImg" value="<% %>" ><br>
 				</div>
+				<input type="hidden" name="crewNo" value="<% %>">
 				<input type="submit" value="수정하기" class="btn-m">
 			</form>
 		</div>

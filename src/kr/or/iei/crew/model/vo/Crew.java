@@ -30,6 +30,15 @@ public class Crew {
 		this.crewCount = crewCount;
 	}
 	
+	//크루목록에서 사용하는 생성자
+	public Crew(int crewNo, String crewName, String crewImg, int crewCount) {
+		super();
+		this.crewNo = crewNo;
+		this.crewName = crewName;
+		this.crewImg = crewImg;
+		this.crewCount = crewCount;
+	}
+	
 	//크루생성에서 사용하는 생성자
 	public Crew(String crewName, String crewInfo, String crewImg) {
 		super();
@@ -37,8 +46,8 @@ public class Crew {
 		this.crewInfo = crewInfo;
 		this.crewImg = crewImg;
 	}
-
 	
+
 	//getter setter
 	public int getCrewNo() {
 		return crewNo;

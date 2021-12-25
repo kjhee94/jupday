@@ -109,8 +109,8 @@
 			</div>
 			
 			<div class="list-btn">
-				<button class="btn-m btn-update"><a href="./crewUpdateFeed.jsp">수정</a></button>
-				<button class="btn-m btn-golist"><a href="./crewOnePage.jsp">목록</a></button>
+				<button class="btn-m btn-update"><a href="/views/crews/crewUpdateFeed.jsp">수정</a></button>
+				<button class="btn-m btn-golist"><a href="/views/crews/crewOnePage.jsp">목록</a></button>
 			</div>
 			
 		</div>
