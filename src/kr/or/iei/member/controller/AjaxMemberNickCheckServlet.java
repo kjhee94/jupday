@@ -1,24 +1,28 @@
 package kr.or.iei.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.member.model.service.MemberServiceImpl;
 
 /**
- * Servlet implementation class MemberLogoutServlet
+ * Servlet implementation class AjaxMemberNickCheckServlet
  */
-@WebServlet("/member/logout.do")
-public class MemberLogoutServlet extends HttpServlet {
+@WebServlet("/member/memberNickCheck.do")
+public class AjaxMemberNickCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLogoutServlet() {
+    public AjaxMemberNickCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,20 +31,16 @@ public class MemberLogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		//로그 아웃을 처리하기 위한 Servlet doget 메소드
-		HttpSession session=request.getSession();//세션부터 가져와야한다.
 		
-		//일반적인 로그아웃은 session을 찾아서 파기만 하면된다.
-		//그런데 만약에 혹시라도 로그 아웃에 대한 시점 저장 하고 싶다면? =>그때에는 session에서 데이터(ID값)값을 찾아서 DB에 기록 해야한다.
+		//nick 값을 받아서 로직을 진행
+		String nick = request.getParameter("nick");
+		MemberService mService = new MemberServiceImpl();
 		
-		session.invalidate();//세션 파기
-		/*
-		  sendRedirect?
-		  RequestDispatcher?
-		 */
+		boolean result = mService.selectNickCheck(nick);
 		
-		response.sendRedirect("/");
+		PrintWriter out = response.getWriter();
+		
+		out.print(result);
 	}
 
 	/**
