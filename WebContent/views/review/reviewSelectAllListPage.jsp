@@ -190,7 +190,7 @@
 			
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
+						<a href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
 							<img alt="" src="">
 						</a>
 					</div>
