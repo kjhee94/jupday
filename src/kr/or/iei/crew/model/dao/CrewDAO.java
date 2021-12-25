@@ -418,6 +418,66 @@ public class CrewDAO {
 		}
 		return list;
 	}
+
+	public Crew selectOneCrew(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Crew c = null;
+		
+		String query = "SELECT * FROM CREW WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				c = new Crew();
+				c.setCrewNo(rset.getInt("c_no"));
+				c.setCrewName(rset.getString("c_name"));
+				c.setCrewCreateDate(rset.getDate("c_createdate"));
+				c.setCrewInfo(rset.getString("c_info"));
+				c.setCrewImg(rset.getString("c_p_image"));
+				c.setCrewDelYN(rset.getString("c_del_YN").charAt(0));				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return c;
+	}
+
+	public int updateOneCrew(Connection conn, Crew c) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW SET C_NAME=?,C_INFO=?,C_P_IMAGE=? WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, c.getCrewName());
+			pstmt.setString(2, c.getCrewInfo());
+			pstmt.setString(3, c.getCrewImg());
+			pstmt.setInt(4, c.getCrewNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	

@@ -14,16 +14,16 @@ import kr.or.iei.crew.model.service.CrewServiceimpl;
 import kr.or.iei.crew.model.vo.Crew;
 
 /**
- * Servlet implementation class CrewValueServlet
+ * Servlet implementation class CrewUpdateServlet
  */
-@WebServlet("/crew/crewValue.do")
-public class CrewValueServlet extends HttpServlet {
+@WebServlet("/crew/crewUpdate.do")
+public class CrewUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrewValueServlet() {
+    public CrewUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +33,32 @@ public class CrewValueServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//인코딩
+		request.setCharacterEncoding("UTF-8");
+		
+		//보내주는 값 받아주기
+		String crewName = request.getParameter("crewName");
+		String crewInfo = request.getParameter("crewInfo");
+		String crewImg = request.getParameter("crewImg");
 		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		
+		Crew c = new Crew(crewNo, crewName,crewInfo,crewImg);
+		
 		CrewService cService = new CrewServiceimpl();
-		Crew c = cService.selectOneCrew(crewNo);
+		int result = cService.UpdateOneCrew(c);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdate.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateResult.jsp");
 		
-		request.setAttribute("crew", c);
+		if(result>0) {
+			request.setAttribute("updateResult", true);
+		}else {
+			request.setAttribute("updateResult", false);
+		}
+		
+		request.setAttribute("crewNo", crewNo);
 		
 		view.forward(request, response);
+		
 	}
 
 	/**

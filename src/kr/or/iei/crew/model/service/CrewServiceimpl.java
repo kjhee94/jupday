@@ -121,6 +121,29 @@ public class CrewServiceimpl implements CrewService {
 		JDBCTemplate.close(conn);
 		return list;
 	}
+
+	@Override
+	public Crew selectOneCrew(int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		Crew c = cDAO.selectOneCrew(conn, crewNo);
+		JDBCTemplate.close(conn);
+		return c;
+	}
+
+	@Override
+	public int UpdateOneCrew(Crew c) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateOneCrew(conn, c);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 	
 	
 	
