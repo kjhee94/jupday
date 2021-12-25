@@ -38,7 +38,7 @@ public class MemberManageListServlet extends HttpServlet {
 		
 		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
-		System.out.println(authorityId);
+		//System.out.println(authorityId); 검증코드
 		
 		if(authorityId==null) {
 			response.sendRedirect("/views/commons/error.jsp");

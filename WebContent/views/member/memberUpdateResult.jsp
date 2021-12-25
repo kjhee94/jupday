@@ -9,7 +9,7 @@
 <body>
 
 	<%
-	boolean updateResult = (boolean)request.getAttribute("updateResult");
+	boolean updateResult = (boolean)request.getAttribute("result");
 	%>
 	
 	<script>

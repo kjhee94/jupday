@@ -91,4 +91,9 @@ public interface MemberService {
 	 * 작성일 : 2021.12.22
 	 */
 	public boolean selectEmailCheck(String email);
+
+	
+	//프로필파일의 원본(확장자포함)을 멤버테이블에 저장함
+	//미사용
+	public int insertFileUpdate2(Member m);
 }

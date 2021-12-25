@@ -35,10 +35,10 @@
 	<%
 		Member m = (Member)session.getAttribute("member");
 		ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-		String authority_Id = (String)request.getAttribute("authority_Id");
+		String authorityId = (String)request.getAttribute("authority_Id");
 	%>
             <div class="box-user">
-                <a href="/"><%=m.getNick()%>님</a>
+                <a href="/"><%=m.getNick()%></a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -68,7 +68,7 @@
 						</form>
 					</div>
                 </div>
-
+		
                 <div class="table_wrap">
                     <table>
                         <thead>
@@ -81,90 +81,28 @@
                                 <th width="150">탈퇴 / 복원</th>
                             </tr>
                         </thead>
+                        <%for(Member mem : list) {%>
                         <tbody>
                             <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
+                                <td><%=mem.getAuthority_Id() %></td>
+                                <td><%=mem.getUserId() %></td>
+                                <td><%=mem.getNick() %></td>
+                                <td><%=mem.getEmail() %></td>
+                                <td><%=mem.getEnrollDate() %></td>
+                                <td>
+                                <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
+                                <%if(mem.getEnd_YN()=='N') {%>
+                                <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="del_btn">탈퇴</button></a>
+                                <%}else {%>
+                                <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                <%} %>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                            <tr>
-                                <td>일반회원</td>
-                                <td>user11</td>
-                                <td>홍길똥씨</td>
-                                <td>user11@naver.com</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                        </tbody>
+                        </tbody> 
+                        <%} %>
                     </table>
-
+				
                     <div id="page_wrap">
                         <ul class="page_ul">
                             <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
@@ -185,5 +123,30 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>
+    
+    <script>
+	$('.del_btn').click(function(){
+		
+		var data = $(this).html();
+		
+		if(data=='Y')
+		{
+			window.confirm(<%=m.getUserId() %> + " 회원을 탈퇴처리하시겠습니까?");
+			
+		}
+		
+	});
+	
+	$('.re_btn').click(function(){
+		
+		var data = $(this).html();
+		
+		if(data=='Y')
+		{
+			window.confirm(<%=m.getUserId() %> + " 회원을 복원하시겠습니끼?");	
+		}
+		
+	});
+    </script>
 </body>
 </html>

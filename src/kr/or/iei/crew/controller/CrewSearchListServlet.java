@@ -1,6 +1,9 @@
 package kr.or.iei.crew.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +35,7 @@ public class CrewSearchListServlet extends HttpServlet {
 		
 		//해당 servlet을 요청하면 페이지 값을 받아서 동작하는 형태 (페이징 처리)
 		
+		//pageNavi에서 현재페이지
 		int currentPage;
 		
 		//처음 게시판으로 이동시(null값일 때) 가장 첫페이지로 설정
@@ -41,12 +45,21 @@ public class CrewSearchListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		//currentPage 값으로 페이지에 따른 데이터 목록화를 비즈니스 로직으로 처리
+		//인코딩
+		request.setCharacterEncoding("UTF-8");
+		
+		String keyword = request.getParameter("keyword");
+		
 		CrewService cService = new CrewServiceimpl();
-		cService.selectAllCrewList(currentPage);
+		HashMap<String, Object> map = cService.selectCrewSearchList(currentPage, keyword);
 		
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewSearchList.jsp");
 		
+		request.setAttribute("pageDataMap", map);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("keyword", keyword);
 		
+		view.forward(request, response);
 	}
 
 	/**

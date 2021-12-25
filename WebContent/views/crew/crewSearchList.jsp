@@ -1,3 +1,6 @@
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +22,18 @@
 </head>
 <body>
 
+	<%
+	//페이징 처리되어 넘어온 데이터를 가져와야함
+	
+	HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+	
+	ArrayList<Crew> list = (ArrayList<Crew>)pageDataMap.get("list");
+	String pageNavi = (String)pageDataMap.get("pageNavi");
+	int currentPage = (int)request.getAttribute("currentPage");
+	
+	String keyword = (String)request.getAttribute("keyword");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -30,7 +45,7 @@
 			</div>
 			
 			<div class="search-bar">
-				<form action="">
+				<form action="/crew/crewSearchList.do" method="get">
 					<div class="box-input">
 						<i class="fas fa-search"></i>
 						<input type="text" name="keyword" placeholder="크루명을 검색하세요">
@@ -40,152 +55,35 @@
 			</div>
 			
 			<div class="list-crew-all">
+			
+				<%for(Crew c : list){%>
 				<div class="box-crew">
 					<div class="area-img">
 						<a href="">
+							<%if(c.getCrewImg()!=null) { %>
+							<img alt="크루이미지" src="<%=c.getCrewImg()%>">
+							<%}else { %>
 							<img alt="크루이미지" src="/assets/images/crew.png">
+							<%} %>
 						</a>
 					</div>
 					<div class="area-bottom">
 						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
+							<p class="crew-name"><%=c.getCrewName() %></p>
 							<div class="crew-m-number">
 								<i class="far fa-user"></i>
-								<span>37명</span>
+								<span><%=c.getCrewCount() %></span>
 							</div>
 						</div>
 					</div>
 				</div>
+				<%} %>
 				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew2.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 			
 			<div id="page_wrap">
 		        <ul class="page_ul">
-		            <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-		            <li><a href="" class="page_active">1</a></li>
-		            <li><a href="">2</a></li>
-		            <li><a href="">3</a></li>
-		            <li><a href="">4</a></li>
-		            <li><a href="">5</a></li>
-		            <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+		            <%=pageNavi %>
 		        </ul>
 		    </div>
 		</div>

@@ -37,7 +37,25 @@
 				<table class="info">
 					<tr class="profile">
 						<td>사진</td>
-						<td class="profile-img"><img class="profile-img2" src="/assets/images/profile.png"></td>
+						<td class="profile-img">
+							<%
+								System.out.println(m);
+								if(m.getP_Image() == null || m.getP_Image() =="") {
+									System.out.println("Null");
+							%>
+							
+									<img class="profile-img2" src="/assets/images/profile.png">
+							<%
+								} else {
+									System.out.println("Not Null");
+							%>
+									<img class="profile-img2" src="/upload/<%=m.getP_Image() %>.png">
+							<%
+								}
+							%>
+						
+						
+						</td>
 						<td>
 							<p>회원님을 알릴 수 있는 사진을 등록해 주세요.</p>
 							<p>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</p>
