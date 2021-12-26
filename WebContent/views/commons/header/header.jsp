@@ -4,11 +4,7 @@
 		<%
 		   Member m = (Member)session.getAttribute("member");
 		%>
-		<%
-		   Member r = (Member)session.getAttribute("review");
-		%>
-		<% System.out.println(m); %>
-		<% System.out.println(r); %>
+		
 		<header id="header">
 		    <div class="logo">
 		        <a href="/"><img src="/assets/images/jupday_logo.png" alt="줍데이로고"></a>

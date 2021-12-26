@@ -12,19 +12,29 @@
 	width: 50%;
 	height:70vh;
 	justify-content: center;
-  	align-items: center;
+  	/* align-items: center; */
   	padding: 0px 30px 0px 0px;
   	margin-top: 30px;
   	border-right: 0.5px solid #2A2A2A;
 }
 
+
 .board {
 	width: 50%;
-	height:900px;
+	height:85vh;
   	padding-left: 30px;
 	margin-top: 16px;
+	position: relative;
 }
-
+#page_wrap {
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    clear: left;
+    float: left;
+    bottom: 0;
+    left: 0;
+}
 
 .box-review {
 	width: 100%;
@@ -36,7 +46,7 @@
 	width: 29.3%;
 	height: 19vh;
 	border: 0.5px solid #D8D8D8;
-	margin: 2% 0px 2% 2%;
+	margin: 2% 0px 0px 2%;
 	float: left;
 	position: relative;
 }

@@ -23,12 +23,12 @@
 <body>
 
 	<script>
-	<!--nick 중복체크 확인 -->
+	<!--중복체크 확인 -->
 		function nickCheck(){
-			window.open("/views/member/nickCheck.jsp","_blank","width=500px, height=150px");
+			window.open("/views/member/nickCheck.jsp","_blank","width=800px, height=300px");
 		}
 		function emailCheck(){
-			window.open("/views/member/emailCheck.jsp","_blank","width=500px, height=150px");
+			window.open("/views/member/emailCheck.jsp","_blank","width=800px, height=300px");
 		}
 		
 		
@@ -60,7 +60,6 @@
 			        return false;
 			    }
 			} 
-			
 		})
 	})
 	
@@ -88,7 +87,6 @@
 								if(m.getP_Image() == null || m.getP_Image() =="") {
 									System.out.println("Null");
 							%>
-							
 									<img class="profile-img2" src="/assets/images/profile.png">
 							<%
 								} else {
@@ -106,16 +104,10 @@
 								</p>
 							</td>
 							<td>
-								<!-- <form action="/file/profileUpdate.do" method="post" enctype="multipart/form-data"> -->
-								<!-- <button type="submit" class="btn-s" name="file" onclick="document.getElementById('btn-s').click();"><a href="#">사진 변경</a></button> /member/profileUpdate.do
-								<input type="file" id="btn-s" name="file" class="btn-s" style="display:none">-->
-<%-- 								<input type="text" class="input-style" id="nick" name="nick" onclick="nickCheck();" placeholder="닉네임을 입력해주세요." value="<%=m.getNick() %>" readonly>
- --%>							<label for="file" class="btn-s">사진등록</label>								
-								<input type="file" class="btn-p" name="file" id="file" accept="image/*" style="display:none">
-								<!-- </form> -->
+ 								<label for="file" class="btn-s">사진등록</label>								
+								<input type="file" class="btn-s" name="file" id="file" accept="image/*" style="display:none">
 							</td>
 						</tr>
-						<!-- <form action="/member/memberUpdate.do" method="post"> -->
 						<tr>
 							<td>아이디</td>
 							<td colspan="3"> <%=m.getUserId() %></td>
@@ -135,7 +127,6 @@
 								<input type="submit" class="btn-m" value="수정하기">
 							</td>
 						</tr>
-						<!-- </form> -->
 					</table>
 				</form>
 			</div>
@@ -147,10 +138,6 @@
 				location.replace("/views/member/memberLogin.jsp");
 			</script>
 		<% }  %>
-
-
-
-
 
 
 </body>
