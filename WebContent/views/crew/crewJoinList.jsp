@@ -48,7 +48,7 @@
 				<%for(Crew c:manageList) {%>
 					<div class="box-crew">
 						<div class="area-img">
-							<a href="/views/crew/crewOnePage.jsp">
+							<a href="/crew/crewOnePage.do?crewNo=<%=c.getCrewNo()%>">
 								<%if(c.getCrewImg()!=null) { %>
 								<img alt="크루이미지" src="<%=c.getCrewImg()%>">
 								<%}else { %>
@@ -86,7 +86,7 @@
 				<%for(Crew c:joinList) {%>
 					<div class="box-crew">
 						<div class="area-img">
-							<a href="/views/crew/crewOnePage.jsp">
+							<a href="/crew/crewOnePage.do?crewNo=<%=c.getCrewNo()%>">
 								<%if(c.getCrewImg()!=null) { %>
 								<img alt="크루이미지" src="<%=c.getCrewImg()%>">
 								<%}else { %>

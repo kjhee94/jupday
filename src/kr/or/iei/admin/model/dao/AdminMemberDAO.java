@@ -11,50 +11,130 @@ import kr.or.iei.member.model.vo.Member;
 
 public class AdminMemberDAO {
 	
-	public ArrayList<Member> SelectAllMemberList(String authorityId, Connection conn)
-	{
+	public ArrayList<Member> selectAllMemberList(Connection conn, int currentPage, int recordCountPerPage) {
+
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Member> list = new ArrayList<Member>();
+		
+		int start = currentPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		
+		String query = "SELECT ROWNUM, MEMBER.* " + 
+						"FROM MEMBER " + 
+						"WHERE ROWNUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) 
+			{
+				//Member m은 MemberDAO와 겹쳐서 memp으로 대체
+				Member memp = new Member();
+				
+				memp.setAuthority_Id(rset.getString("authority_Id")); //1
+				memp.setUserId(rset.getString("userId")); //2
+				memp.setUserPwd(rset.getString("userPwd")); //3
+				memp.setNick(rset.getString("nick")); //4
+				memp.setEmail(rset.getString("email")); //5
+				memp.setP_Image(rset.getString("p_Image")); //6
+				memp.setEnrollDate(rset.getDate("enrollDate")); //7
+				memp.setEnd_YN(rset.getString("end_yn").charAt(0)); //8
+				list.add(memp);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+		
+	}
 
-		String query = selectAllMemberQuery(authorityId);
+	public String getPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage) {
+		
+		//전체 회원수
+		int recordTotalCount = totalCount(conn);
+		
+		//전체 페이지수
+		int pageTotalCount = 0;
+		
+		if((recordTotalCount % recordCountPerPage)>0) 
+		{
+			pageTotalCount = (recordTotalCount / recordCountPerPage)+1;
+		}else 
+		{
+			pageTotalCount = (recordTotalCount / recordCountPerPage);
+		}
+		
+		int startNavi = (((currentPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+		int endNavi = startNavi+(naviCountPerPage-1);
+		
+		//endNavi가 총 page수보다 클 경우 총 page수로 셋팅
+		if(endNavi > pageTotalCount) 
+		{
+			endNavi = pageTotalCount;
+		}
+				
+		//pageNavi 모양 만들기
+		StringBuilder sb = new StringBuilder();
+		
+		if(startNavi!=1) {
+			sb.append("<li><a href='/admin/MemberManageList.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+		}
+
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentPage) {
+				sb.append("<li><a href='/admin/MemberManageList.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/admin/MemberManageList.do?currentPage="+i+"'>"+i+"</a></li>");
+			}
+		}
+
+		if(endNavi!=pageTotalCount) {
+			sb.append("<li><a href='/admin/MemberManageList.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+		}
+		
+		return sb.toString();
+				
+	}
+	
+	public int totalCount(Connection conn)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query = "SELECT COUNT(*) as count FROM MEMBER";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			
-			//여러명이므로 while
-			while(rset.next()) 
+			if(rset.next())
 			{
-				//Member m은 MemberDAO와 겹쳐서 mem으로 대체
-				Member mem = new Member();
-				mem.setAuthority_Id(rset.getString("authority_Id")); //1
-				mem.setUserId(rset.getString("userId")); //2
-				mem.setUserPwd(rset.getString("userPwd")); //3
-				mem.setNick(rset.getString("nick")); //4
-				mem.setEmail(rset.getString("email")); //5
-				mem.setP_Image(rset.getString("p_Image")); //6
-				mem.setEnrollDate(rset.getDate("enrollDate")); //7
-				mem.setEnd_YN(rset.getString("end_yn").charAt(0)); //8
-				list.add(mem);
+				count = rset.getInt("count");
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
 		}
-		return list;
 		
+		return count;
 	}
-
-	public String selectAllMemberQuery(String authorityId)
-	{
-		String query = "SELECT * FROM MEMBER"; 
-		return query;
-	}
-
+	
+	
 	public int updateMemberEndYN(String userId, char endYN, Connection conn) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -76,5 +156,7 @@ public class AdminMemberDAO {
 		
 		return result;
 	}
+
+	
 	
 }
