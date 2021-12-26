@@ -16,23 +16,59 @@
 </head>
 
 <body>
-
 <%
    Member m = (Member)session.getAttribute("member");
 %>
 
-<%if(m!=null){%>
+<%if(m!=null){%><!-- ///이메일과 아이디가 일치해서 인증이 됬을 경우/// -->
+
+
+
+
+                       <!--/////비밀번호 변경시 유효성 검사를 해준다////// -->
+	<script>
+	function Validation(){
+			 
+			 	
+		        var pRegExp = /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/;//password 글자수 유효성 검사 정규식 
+		   
+     	        var objPwd = document.getElementById("userPwd"); //비밀번호
+		        var objPwdCheck = document.getElementById("userPwdRe"); //비밀번호확인
+
+
+		 
+		        if(objPwd.value==''){ // 비밀번호 입력여부 검사
+		            alert("Password를 입력해주세요.");
+		            return false;
+		        }
+		        
+		        if(!pRegExp.test(objPwd.value)){ //패스워드 유효성검사
+		            alert("Password는 8~16자의 영문 대소문자와 숫자 특수문자로만 입력하여 주세요.");
+		            return false;
+		        }
+		        
+		        if(objPwdCheck.value!=objPwd.value){ //비밀번호와 비밀번호확인이 동일한지 검사
+		            alert("비밀번호가 일치하지 않습니다. 다시 확인하여 입력해주세요.");
+		            return false;
+		        }
+
+		        
+		 }
+		  
+		 </script>
+
+
 	<div class="bg-color">
 		<div class="box-white">
 			<div class="tab-search">
 				<a href="/views/member/memberSearchId.jsp">아이디 찾기</a>
 				<a href="/views/member/memberSearchPwd.jsp">비밀번호 찾기</a>
-			</div>
+			</div><!--아이디 값와 이메일 값을 경우 비밀번호 재설정 기회를 주는 방식으로 변경  -->
 			<div class="box-result">
 				<p>비밀번호 재설정</p>
-				<form action="">
-					<input type="password" class="input-style" name="userPwd" placeholder="비밀번호 입력"> <br>
-					<input type="password" class="input-style" name="userPwdRe" placeholder="비밀번호 확인"> <br>
+				<form action="/member/resetSearchPassword.do" onsubmit="return Validation();" method="post">
+					<input type="password" class="input-style" id="userPwd" name="userPwd" placeholder="비밀번호 입력"> <br>
+					<input type="password" class="input-style" id="userPwdRe" name="userPwdRe" placeholder="비밀번호 확인"> <br>
 					<input type="submit" class="btn-login" value="재설정">
 				</form>
 				
