@@ -160,7 +160,7 @@ public class MemberDAO {
 	
 	
 	
-	public Member SearchId(String email , Connection conn) {
+	public Member searchId(String email , Connection conn) {
 		
 		PreparedStatement pstmt = null;
 		Member m=null;
@@ -194,7 +194,7 @@ public class MemberDAO {
 	}
 	
 	
-	public Member SearchPwd(String userId, String email , Connection conn) {
+	public Member searchPwd(String userId, String email , Connection conn) {
 		
 		PreparedStatement pstmt = null;
 		Member m=null;
@@ -227,6 +227,32 @@ public class MemberDAO {
 		return m;
 		
 	}
+	
+	public int searchUapatePwd(String userId, String userPwd, Connection conn) {
+		PreparedStatement pstmt= null;
+		int result = 0; 
+		
+		String query ="UPDATE MEMBER SET userPwd=? Where userId=?";
+		
+		//preparestatement 부터 만들겠다.
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userPwd);//변경할 비밀번호
+			pstmt.setString(2, userId);//아이디
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	
+	}
+
 		
 
 	public int updatePwdMember(String userId, String pwd, String newPwd, Connection conn) {
