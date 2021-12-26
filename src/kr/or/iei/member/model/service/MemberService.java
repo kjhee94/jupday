@@ -69,7 +69,7 @@ public interface MemberService {
 	 * 작성일:2021.12.24
 	 */
 	//아이디 찾기
-	public Member SearchId(String email);
+	public Member searchId(String email);
 
 	
 	/**
@@ -80,7 +80,19 @@ public interface MemberService {
 	 * 작성일:2021.12.24
 	 */
 	//비밀번호 찾기
-	public Member SearchPwd(String userId,String email);
+	public Member searchPwd(String userId,String email);
+	
+	
+	/**
+	 * 작성자 : 남진구
+	 * @param userId
+	 * @param userPwd
+	 * @return Member
+	 * 작성일:2021.12.26
+	 */
+	public int searchUapatePwd(String userId, String userPwd);
+
+
 
 	
 	

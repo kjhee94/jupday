@@ -86,9 +86,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member SearchId(String email) {
+	public Member searchId(String email) {
 		Connection conn = JDBCTemplate.getConnection();
-		Member m = mDAO.SearchId(email,conn);
+		Member m = mDAO.searchId(email,conn);
 		JDBCTemplate.close(conn);
 
 		return m;
@@ -97,13 +97,26 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member SearchPwd(String userId,String email) {
+	public Member searchPwd(String userId,String email) {
 		Connection conn = JDBCTemplate.getConnection();
-		Member m = mDAO.SearchPwd(userId,email,conn);
+		Member m = mDAO.searchPwd(userId,email,conn);
 		JDBCTemplate.close(conn);
 
 		return m;
 		
+
+		
+	}
+	
+	
+	@Override
+	public int searchUapatePwd(String userId, String userPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result= mDAO.searchUapatePwd(userId,userPwd,conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
 
 		
 	}
