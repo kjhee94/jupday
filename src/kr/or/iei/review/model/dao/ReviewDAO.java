@@ -185,7 +185,7 @@ public class ReviewDAO {
 		
 		String query = "select REVIEW_COMMENT.*,Member.nick from REVIEW_COMMENT " + 
 				"left join member on (REVIEW_COMMENT.userid = member.userid) " + 
-				"where R_C_DEL_YN='N' and R_C_NO=? " + 
+				"where R_C_DEL_YN='N' and postnum=? " + 
 				"order by R_C_NO DESC";
 		
 		try {
@@ -242,6 +242,116 @@ public class ReviewDAO {
 		}
 		
 		return result;
+	}
+
+	public int updateReviewComment(Connection conn, ReviewComment co) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "update REVIEW_COMMENT set R_C_COMMENT=? where R_C_NO=? and userid=?"; 
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, co.getR_c_comment());
+			pstmt.setInt(2, co.getR_c_no());
+			pstmt.setString(3, co.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteReviewComment(Connection conn, int r_c_no, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "update REVIEW_COMMENT set R_C_DEL_YN='Y' where R_C_NO=? and userid=?"; 
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, r_c_no);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertPostWrite(Connection conn, Review review) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO review VALUES(REVIEW_Seq.NEXTVAL,?,SYSDATE,?,?,'0','0','N','N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, review.getUserId());
+			pstmt.setString(2, review.getPostTitle());
+			pstmt.setString(3, review.getPostContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int searchBoardNo(Connection conn, Review review) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int postNum = 0;
+		
+		String query = "SELECT postnum FROM " + 
+				"(SELECT ROW_NUMBER() OVER(order BY postnum DESC) AS NUM,review.*  FROM review " + 
+				"WHERE userid=? AND posttitle=? AND postCONTENT=?) " + 
+				"WHERE NUM = 1";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, review.getUserId());
+			pstmt.setString(2, review.getPostTitle());
+			pstmt.setString(3, review.getPostContent());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				postNum = rset.getInt("postNum");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return postNum;
 	}
 	
 

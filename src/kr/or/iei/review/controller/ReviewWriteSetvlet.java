@@ -1,30 +1,28 @@
 package kr.or.iei.review.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.iei.member.model.vo.Member;
 import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
 import kr.or.iei.review.model.vo.Review;
-import kr.or.iei.review.model.vo.ReviewComment;
 
 /**
- * Servlet implementation class ReviewSelectContentServlet
+ * Servlet implementation class ReviewWriteSetvlet
  */
-@WebServlet("/review/reviewSelectContent.do")
-public class ReviewSelectContentServlet extends HttpServlet {
+@WebServlet("/review/reviewWrite.do")
+public class ReviewWriteSetvlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewSelectContentServlet() {
+    public ReviewWriteSetvlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +32,34 @@ public class ReviewSelectContentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int postNum = Integer.parseInt(request.getParameter("postNum"));
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		request.setCharacterEncoding("UTF-8");
+		
+		String postTitle = request.getParameter("postTitle");
+		String postContent = request.getParameter("postContent");
+		
+		if(request.getSession().getAttribute("member")==null)
+		{
+			response.sendRedirect("/views/commons/error.jsp");
+			return;
+		}
+		
+		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
+		
+		Review review = new Review();
+		review.setUserId(userId);
+		review.setPostTitle(postTitle);
+		review.setPostContent(postContent);
+		
 		
 		ReviewService rService = new ReviewServiceImpl();
-		Review review = rService.selectOnePost(postNum);
+		int result = rService.insertPostWrite(review);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewSelectContent.jsp");
-		
-		request.setAttribute("review", review);
-		request.setAttribute("currentPage", currentPage);
-		view.forward(request, response);
-		
+		if(result>0) {//작성이 완료되면
+			int postNum = rService.searchReviewNo(review); //그 글의 BoardNo를 가져옴
+			response.sendRedirect("/review/reviewSelectContent.do?postNum="+postNum+"&currentPage=1");
+		}else {
+			response.sendRedirect("/views/commons/error.jsp");
+		}
 	}
 
 	/**

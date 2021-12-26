@@ -104,6 +104,9 @@
 				<%
 					ArrayList<ReviewComment> commentslist = review.getComments();
 				%>
+				<%if(commentslist.isEmpty()){ %>
+					<H2>현재 댓글이 없습니다. 댓글을 작성해보세요</H2>
+				<%}else{ %>
 				
 					<%for(ReviewComment co : commentslist){ %>
 				
@@ -115,50 +118,65 @@
 							<div class="user-comment">
 								<p><%=co.getNick() %><span><%=co.getR_c_regDate() %></span></p>
 							</div>
-							<div class="txt-comment">
-								<p><%=co.getR_c_comment() %></p>
+							<div class="txt-comment">								
+								<%if(m!=null && m.getUserId().equals(co.getUserId())){ %>
+									
+									<p><%=co.getR_c_comment() %></p>
+									<input type="text" style="display:none;"/>
+									<form>
+										<button class="coModifyBtn">수정</button>  
+										<button class="coDeleteBtn" commentNo="<%=co.getR_c_comment()%>">삭제</button>
+									</form>
+									<%-- 안되겠다, 이거 팝업으로 만들자, 서블릿~DAO 왕복 로직만 구현하고 servlet 가는 길목만 끊어놓자  --%>
+								<%}else{ %>
+										<p><%=co.getR_c_comment() %></p> 
+								<%} %>
 							</div>
 						</div>
 					</div>
+
 					<%} %>
 					
+				<%} %>
+				
+					<%if(m!=null){ %>
 					<form action="/review/reviewCommentWrite.do" method="post">
 					<div class="box-write-comment">
-						<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
-						
 						<div class="user-nick">
 							<p><%=review.getNick() %></p>
+							<%-- 도대체 이게 왜 로그인한 내 정보가 아닌 이 글의 작성자 정보가 나오는 것인가? 
+								이게 표기만 글 작성자가 나오는거지 실제로는 내 아이디로 댓글이 달린다, 다중에 이것만 수정해주자--%>
 						</div>
-						
 						<textarea name="r_c_comment" placeholder="댓글을 입력하세요"></textarea>
 						<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
 						<input type="hidden" name="currentPage" value="<%=currentPage %>"/>
-						<button>등록</button>
+						<button>등록</button>											
+					</div>
+					</form>	
 						
-						<%}else{ %>
-						
+					<%}else{ %>
+					<div class="box-write-comment">	
 						<div class="user-nick">
 							<p><%=review.getNick() %></p>
 						</div>
 						<textarea disabled placeholder="로그인 후 사용해주세요"></textarea>
 						<button disabled>등록</button>
-						
-						<%} %>
-					</div>
+						<%--추루 여기다 location.replace를 줘서 로그인 페이지로 돌아가게 만들 예정 --%>
+					</div>	
+					<%} %>
 					
-					</form>
 					
 				</div>
 	
 				<div class="list-btn">
-				<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
+				<%if(m!=null){ %>
 					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
-					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
 				<%}else{ %>
 					
 					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
 					<button class="btn-m btn-update" disabled>수정</button>
-					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
 				<%} %>
 				</div>
 			</div>

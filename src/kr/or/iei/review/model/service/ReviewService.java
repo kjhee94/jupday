@@ -21,5 +21,13 @@ public interface ReviewService {
 
 	int insertBoardComment(ReviewComment co);
 
+	int updateReviewComment(ReviewComment co);
+
+	int deleteReviewComment(int r_c_no, String userId);
+
+	int insertPostWrite(Review review);
+
+	int searchReviewNo(Review review);
+
 	
 }

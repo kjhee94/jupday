@@ -1,30 +1,27 @@
 package kr.or.iei.review.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.iei.member.model.vo.Member;
 import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
-import kr.or.iei.review.model.vo.Review;
-import kr.or.iei.review.model.vo.ReviewComment;
 
 /**
- * Servlet implementation class ReviewSelectContentServlet
+ * Servlet implementation class ReviewCommentDeleteServlet
  */
-@WebServlet("/review/reviewSelectContent.do")
-public class ReviewSelectContentServlet extends HttpServlet {
+@WebServlet("/review/deletePostComment.do")
+public class ReviewCommentDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewSelectContentServlet() {
+    public ReviewCommentDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +31,20 @@ public class ReviewSelectContentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int r_c_no = Integer.parseInt(request.getParameter("r_c_no"));
 		int postNum = Integer.parseInt(request.getParameter("postNum"));
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		ReviewService rService = new ReviewServiceImpl();
-		Review review = rService.selectOnePost(postNum);
+		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewSelectContent.jsp");
+		ReviewService bService = new ReviewServiceImpl();
+		int result = bService.deleteReviewComment(r_c_no,userId);
 		
-		request.setAttribute("review", review);
-		request.setAttribute("currentPage", currentPage);
-		view.forward(request, response);
-		
+		if(result>0) {
+			response.sendRedirect("/review/reviewSelectContent.do?postNum="+postNum+"&currentPage="+currentPage);
+		}else {
+			response.sendRedirect("/views/commons/error.jsp");
+		}
 	}
 
 	/**

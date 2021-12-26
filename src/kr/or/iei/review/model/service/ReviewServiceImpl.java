@@ -63,6 +63,45 @@ public class ReviewServiceImpl implements ReviewService{
 		JDBCTemplate.close(conn);
 		return result;
 	}
+
+	@Override
+	public int updateReviewComment(ReviewComment co) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.updateReviewComment(conn,co);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+		
+	}
+
+	@Override
+	public int deleteReviewComment(int r_c_no, String userId) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.deleteReviewComment(conn,r_c_no,userId);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int insertPostWrite(Review review) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.insertPostWrite(conn,review);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int searchReviewNo(Review review) {
+		Connection conn = JDBCTemplate.getConnection();
+		int postNum = rDAO.searchBoardNo(conn,review);
+		JDBCTemplate.close(conn);
+		return postNum;
+	}
 	
 	
 }
