@@ -122,7 +122,6 @@
 					</div>
 					<%} %>
 					
-					
 					<form action="/review/reviewCommentWrite.do" method="post">
 					<div class="box-write-comment">
 						<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
@@ -139,7 +138,7 @@
 						<%}else{ %>
 						
 						<div class="user-nick">
-							<p>none</p>
+							<p><%=review.getNick() %></p>
 						</div>
 						<textarea disabled placeholder="로그인 후 사용해주세요"></textarea>
 						<button disabled>등록</button>
