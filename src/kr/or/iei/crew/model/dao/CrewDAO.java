@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewMember;
+import oracle.net.aso.p;
 
 public class CrewDAO {
 
@@ -26,7 +28,7 @@ public class CrewDAO {
 					   "COUNT(*)AS c_count " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
-					   "WHERE C_DEL_YN='N' " + 
+					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' " + 
 					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE) " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
@@ -148,7 +150,7 @@ public class CrewDAO {
 					   "COUNT(*)AS c_count " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
-					   "WHERE C_DEL_YN='N' AND C_NAME LIKE ? " + 
+					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' AND C_NAME LIKE ? " + 
 					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE) " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
@@ -344,7 +346,7 @@ public class CrewDAO {
 		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
-					   "WHERE C_DEL_YN='N' " +
+					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' " +
 					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루장') " + 
 					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
 					   "ORDER BY C.C_NO DESC";
@@ -386,7 +388,7 @@ public class CrewDAO {
 		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
-					   "WHERE C_DEL_YN='N' " +
+					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' " +
 					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루원') " + 
 					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
 					   "ORDER BY C.C_NO DESC";
@@ -478,8 +480,144 @@ public class CrewDAO {
 		}
 		return result;
 	}
-	
-	
-	
 
+	public ArrayList<CrewMember> selectApproveList(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<CrewMember> list = new ArrayList<CrewMember>();
+		
+		String query = "SELECT NICK,P_IMAGE,CM.* " +
+					   "FROM CREW_MEMBER CM " + 
+					   "LEFT JOIN MEMBER M ON (CM.USERID=M.USERID) " + 
+					   "WHERE CM.C_NO=? AND C_JOIN_STATE='WAIT'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				CrewMember cm = new CrewMember();
+				
+				cm.setUserId(rset.getString("userId"));
+				cm.setCrewNo(rset.getInt("c_no"));
+				cm.setCrewAuthorityId(rset.getString("c_Authority_Id"));
+				cm.setCrewEnrollDate(rset.getDate("c_EnrollDate"));
+				cm.setCrewJoinState(rset.getString("c_Join_State"));
+				cm.setCrewEndYN(rset.getString("c_End_YN").charAt(0));
+				cm.setNick(rset.getString("nick"));
+				cm.setMemberImg(rset.getString("p_image"));
+				
+				list.add(cm);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public int updateCrewJoinStateAccept(Connection conn, String userId, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW_MEMBER SET C_JOIN_STATE='SUCCESS' " + 
+					   "WHERE USERID=? AND C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, crewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateCrewJoinStateRefusal(Connection conn, String userId, int crewNo) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM CREW_MEMBER " + 
+					   "WHERE USERID=? AND C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, crewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public String selectCrewName(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String crewName = "";
+		
+		String qurey = "SELECT C_NAME FROM CREW WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(qurey);
+			pstmt.setInt(1, crewNo);
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				crewName = rset.getString("c_name");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return crewName;
+	}
+
+	public int deleteOneCrew(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW SET C_DEL_YN='Y' WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

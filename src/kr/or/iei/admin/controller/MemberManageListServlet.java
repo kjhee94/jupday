@@ -1,6 +1,10 @@
 package kr.or.iei.admin.controller;
 
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -43,17 +47,36 @@ public class MemberManageListServlet extends HttpServlet {
 			return;
 		}
 		
+<<<<<<< HEAD
 		/*
+=======
+		
+		//페이징처리
+		int currentPage;
+		
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage = 1;
+		}else 
+		{
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 		//비즈니스 로직
 		AdminMemberService adService = new AdminMemberServiceImpl();
-		ArrayList<Member> list = adService.selectAllMemberList(authorityId);
+		
+		HashMap<String,Object> pageDataMap = adService.selectAllMemberList(currentPage);
 		
 		//view페이지 이동
 		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
-		request.setAttribute("authorityId", authorityId);
-		request.setAttribute("list", list);
+		
+		request.setAttribute("pageDataMap", pageDataMap);
+		request.setAttribute("currentPage", currentPage);
 		
 		view.forward(request, response);
+<<<<<<< HEAD
 		*/
 		
 		//페이징처리
@@ -77,6 +100,9 @@ public class MemberManageListServlet extends HttpServlet {
 		
 		
 	
+=======
+		
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 	}
 
 	/**

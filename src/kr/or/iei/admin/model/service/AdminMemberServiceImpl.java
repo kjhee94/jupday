@@ -9,17 +9,41 @@ import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.vo.Member;
 
 public class AdminMemberServiceImpl implements AdminMemberService{
+	
 	private AdminMemberDAO adDAO = new AdminMemberDAO();
+<<<<<<< HEAD
 	/*
+=======
+	
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 	@Override
-	public ArrayList<Member> selectAllMemberList(String authorityId) {
-		Connection conn = JDBCTemplate.getConnection();
+	public HashMap<String, Object> selectAllMemberList(int currentPage) {
 		
-		ArrayList<Member> list = adDAO.SelectAllMemberList(authorityId, conn);
+		Connection conn = JDBCTemplate.getConnection();
+		//한 개의 page에서 몇 개의 목록으로 보여줄 것인지
+		int recordCountPerPage = 10;
+		
+		ArrayList<Member> list = adDAO.selectAllMemberList(conn, currentPage, recordCountPerPage);
+		
+		//한 개의 pageNavi에서 보여질 Navi 개수
+		int naviCountPerPage = 5;
+		
+		String pageNavi = adDAO.getPageNavi(conn,naviCountPerPage,recordCountPerPage,currentPage);
+		
 		JDBCTemplate.close(conn);
+<<<<<<< HEAD
 				
 		return list;
 	}*/
+=======
+		
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+		
+		return hm;
+	}
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 
 	@Override
 	public int updateMemberEndYN(String userId, char endYN) {
@@ -32,6 +56,7 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 		return result;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public HashMap<String, Object> selectAllMemberPageList(int currentPage) {
 		Connection conn = JDBCTemplate.getConnection();
@@ -61,3 +86,10 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 
 		
 	}
+=======
+	
+
+
+		
+}
+>>>>>>> f93397b939848e98cbef78726858accdef6ad98d

@@ -59,7 +59,7 @@
 				<%for(Crew c : list){%>
 				<div class="box-crew">
 					<div class="area-img">
-						<a href="">
+						<a href="/crew/crewOnePage.do?crewNo=<%=c.getCrewNo()%>">
 							<%if(c.getCrewImg()!=null) { %>
 							<img alt="크루이미지" src="<%=c.getCrewImg()%>">
 							<%}else { %>
