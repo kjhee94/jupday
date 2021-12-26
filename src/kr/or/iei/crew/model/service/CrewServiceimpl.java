@@ -204,6 +204,13 @@ public class CrewServiceimpl implements CrewService {
 		
 		return result;
 	}
+
+	@Override
+	public HashMap<String, Object> selectAllCrewFeed(int crewNo) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		return null;
+	}
 	
 	
 	
