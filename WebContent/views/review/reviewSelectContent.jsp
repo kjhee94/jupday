@@ -53,9 +53,7 @@
 				Review review = (Review)request.getAttribute("review");
 				int currentPage = (int)request.getAttribute("currentPage");	
 			%>
-			
-			
-		
+
 			<div id="review_writing">
 				<div class="write-top">
 					<div class="box-subject">
@@ -124,14 +122,32 @@
 					</div>
 					<%} %>
 					
+					
+					<form action="/review/reviewCommentWrite.do" method="post">
 					<div class="box-write-comment">
+						<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
+						
 						<div class="user-nick">
-							<p>연신내 독감자</p>
+							<p><%=review.getNick() %></p>
 						</div>
-						<textarea placeholder="댓글을 입력하세요"></textarea>
+						
+						<textarea name="r_c_comment" placeholder="댓글을 입력하세요"></textarea>
+						<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
+						<input type="hidden" name="currentPage" value="<%=currentPage %>"/>
 						<button>등록</button>
+						
+						<%}else{ %>
+						
+						<div class="user-nick">
+							<p>none</p>
+						</div>
+						<textarea disabled placeholder="로그인 후 사용해주세요"></textarea>
+						<button disabled>등록</button>
+						
+						<%} %>
 					</div>
 					
+					</form>
 					
 				</div>
 	

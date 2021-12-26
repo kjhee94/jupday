@@ -218,6 +218,31 @@ public class ReviewDAO {
 		
 		return commentslist;
 	}
+
+	public int insertBoardComment(Connection conn, ReviewComment co) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO REVIEW_COMMENT VALUES(REV_COMMENT_SEQ.nextval,?,?,?,sysdate,'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, co.getPostNum());
+			pstmt.setString(2, co.getUserId());
+			pstmt.setString(3, co.getR_c_comment());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
 	
 
 }

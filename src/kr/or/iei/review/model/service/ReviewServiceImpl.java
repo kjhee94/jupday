@@ -53,6 +53,16 @@ public class ReviewServiceImpl implements ReviewService{
 		return review;
 
 	}
+
+	@Override
+	public int insertBoardComment(ReviewComment co) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.insertBoardComment(conn,co);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
 	
 	
 }
