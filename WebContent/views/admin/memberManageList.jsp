@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -21,6 +22,19 @@
 </head>
 
 <body>
+
+	<%
+		Member m = (Member)session.getAttribute("member");
+	%>
+	
+	<%//페이징 처리 된 데이터 가져오기
+		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+	
+		ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
+		String pageNavi = (String)pageDataMap.get("pageNavi");
+		int currentPage = (int)request.getAttribute("currentPage");
+	%>
+
     <div id="wrap">
         
         <!-- navigation -->
@@ -32,11 +46,6 @@
                 <p>회원 정보 관리</p>
             </div>
            
-	<%
-		Member m = (Member)session.getAttribute("member");
-		ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-		String authorityId = (String)request.getAttribute("authority_Id");
-	%>
             <div class="box-user">
                 <a href="/"><%=m.getNick()%></a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -81,8 +90,9 @@
                                 <th width="150">탈퇴 / 복원</th>
                             </tr>
                         </thead>
-                        <%for(Member mem : list) {%>
+                        
                         <tbody>
+                       	<%for(Member mem : list) {%>
                             <tr>
                                 <td><%=mem.getAuthority_Id() %></td>
                                 <td><%=mem.getUserId() %></td>
@@ -91,27 +101,26 @@
                                 <td><%=mem.getEnrollDate() %></td>
                                 <td>
                                 <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
-                                <%if(mem.getEnd_YN()=='N') {%>
-                                <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="del_btn">탈퇴</button></a>
-                                <%}else {%>
-                                <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="re_btn">복원</button></a>
-                                <%} %>
+	                                <%if(mem.getEnd_YN()=='N') {%>
+	                               		<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
+	                               			<button class="del_btn">탈퇴</button>
+	                               		</a>
+	                                <%}else {%>
+	                                	<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
+	                                		<button class="re_btn">복원</button>
+	                                	</a>
+	                                <%} %>
                                 <%} %>
                                 </td>
                             </tr>
-                        </tbody> 
                         <%} %>
+                        </tbody> 
+                        
                     </table>
 				
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					       <%=pageNavi%>
                         </ul>
                     </div>
 

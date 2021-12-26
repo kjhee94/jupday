@@ -18,6 +18,11 @@
 </head>
 <body>
 
+	<%	
+		String crewName = (String)request.getAttribute("crewName");
+		int crewNo = (int)request.getAttribute("crewNo");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -32,21 +37,44 @@
 			<div class="box-noti">
 				<p class="txt-head">삭제 유의사항</p>
 				<p>
-					- 운영하고 계신 크루(오늘도 내가 해냄)는 삭제할 경우 재사용 및 복구가 불가능합니다.<br>
+					- 운영하고 계신 크루[<%=crewName %>]는 삭제할 경우 재사용 및 복구가 불가능합니다.<br>
 					- 삭제 후 크루정보 및 개인형 서비스 이용기록은 모두 삭제됩니다.
 				</p>
 				<div class="box-checkbox">
-					<input type="checkbox" id="crewDeleteNoti">
-					<label for="crewDeleteNoti">안내사항을 모두 확인하였으며, 이에 동의합니다.</label>
+					<input type="checkbox" id="agree">
+					<label for="agree">안내사항을 모두 확인하였으며, 이에 동의합니다.</label>
 				</div>
 			</div>
 			
 			<div class="box-btn">
-				<button class="btn-m">
-					<a href="">완료</a>
+				<button class="btn-m" id="">
+					<a href="/crew/crewDelete.do?crewNo=<%=crewNo%>">완료</a>
 				</button>
 			</div>
 		</div>
+		
+		<script>
+		
+		$(".btn-m").click(function(){
+			
+			var check = document.getElementById("agree").checked;
+			
+			//체크박스 눌러야만 넘어가도록
+			if(!check) {
+				alert("필수 약관에 동의해 주세요")
+				return false;
+			}
+			
+			//한번더 확인
+			if(window.confirm("삭제를 진행하시게 되면 데이터는 복구 불가능합니다. \n삭제하시겠습니까?")) {
+				return true;
+			} else {
+				return false;
+			};
+		});
+		
+		</script>
+		
 		
 		<% } else { %>
 			<script>

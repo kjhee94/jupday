@@ -2,6 +2,7 @@ package kr.or.iei.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.iei.admin.model.service.AdminMemberService;
 import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
@@ -45,17 +45,32 @@ public class MemberManageListServlet extends HttpServlet {
 			return;
 		}
 		
+		
+		//페이징처리
+		int currentPage;
+		
+		if(request.getParameter("currentPage")==null)
+		{
+			currentPage = 1;
+		}else 
+		{
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		
 		//비즈니스 로직
 		AdminMemberService adService = new AdminMemberServiceImpl();
-		ArrayList<Member> list = adService.selectAllMemberList(authorityId);
+		
+		HashMap<String,Object> pageDataMap = adService.selectAllMemberList(currentPage);
 		
 		//view페이지 이동
 		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
-		request.setAttribute("authorityId", authorityId);
-		request.setAttribute("list", list);
+		
+		request.setAttribute("pageDataMap", pageDataMap);
+		request.setAttribute("currentPage", currentPage);
 		
 		view.forward(request, response);
-	
+		
 	}
 
 	/**

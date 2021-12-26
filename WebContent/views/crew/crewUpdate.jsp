@@ -49,7 +49,10 @@
 					<input type="file" id="crewImg" name="crewImg" value="<%=c.getCrewImg() %>" ><br>
 				</div>
 				<input type="hidden" name="crewNo" value="<%=c.getCrewNo() %>">
-				<input type="submit" value="수정하기" class="btn-m">
+				<div class="box-button">
+					<input type="submit" value="수정" class="btn-m">
+					<button class="btn-m"><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">취소</a></button>
+				</div>
 			</form>
 		</div>
 		

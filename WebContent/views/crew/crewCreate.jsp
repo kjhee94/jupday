@@ -45,7 +45,9 @@
 					<label for="crewImg" class="btn-s">사진등록</label>
 					<input type="file" id="crewImg" name="crewImg"><br>
 				</div>
-				<input type="submit" value="생성하기" class="btn-m">
+				<div class="box-button">
+					<input type="submit" value="완료" class="btn-m">
+				</div>
 			</form>
 		</div>
 		
