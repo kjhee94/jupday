@@ -1,6 +1,7 @@
 package kr.or.iei.member.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.dao.MemberDAO;
@@ -150,7 +151,8 @@ public class MemberServiceImpl implements MemberService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+
+		
 	}
-	
 
 

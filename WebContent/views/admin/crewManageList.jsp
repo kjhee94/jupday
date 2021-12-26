@@ -1,5 +1,7 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,9 +31,13 @@
                 <p>줍데이크루</p>
                 <p>크루 삭제 관리</p>
             </div>
+            
+            <% Member m = (Member)session.getAttribute("member"); 
+       		ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+			String authorityId = (String)request.getAttribute("authority_Id");%>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -172,15 +178,10 @@
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					        <%--<%=pageNavi --%>
                         </ul>
-                    </div>
+                    </div>                    
+                    
                 </div>
             </div>
         </div>
@@ -189,5 +190,30 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>
+    
+        <script>
+	$('.del_btn').click(function(){
+		
+		var data = $(this).html();
+		
+		if(data=='Y')
+		{
+			window.confirm(<%=m.getUserId() %> + " 크루를 삭제처리하시겠습니까?");
+			
+		}
+		
+	});
+	
+	$('.re_btn').click(function(){
+		
+		var data = $(this).html();
+		
+		if(data=='Y')
+		{
+			window.confirm(<%=m.getUserId() %> + " 크루를 복원하시겠습니끼?");	
+		}
+		
+	});
+    </script>
 </body>
 </html>

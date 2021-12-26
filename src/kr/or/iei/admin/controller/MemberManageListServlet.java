@@ -1,7 +1,7 @@
 package kr.or.iei.admin.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,12 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.iei.admin.model.service.AdminMemberService;
 import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
-import kr.or.iei.member.model.vo.Member;
+import kr.or.iei.crew.model.service.CrewService;
+import kr.or.iei.crew.model.service.CrewServiceimpl;
 
 /**
  * Servlet implementation class MemberManageListServlet
@@ -45,6 +45,7 @@ public class MemberManageListServlet extends HttpServlet {
 			return;
 		}
 		
+		/*
 		//비즈니스 로직
 		AdminMemberService adService = new AdminMemberServiceImpl();
 		ArrayList<Member> list = adService.selectAllMemberList(authorityId);
@@ -54,6 +55,26 @@ public class MemberManageListServlet extends HttpServlet {
 		request.setAttribute("authorityId", authorityId);
 		request.setAttribute("list", list);
 		
+		view.forward(request, response);
+		*/
+		
+		//페이징처리
+		int currentPage;
+		if(request.getParameter("currentPage")==null)
+		{
+				currentPage = 1;
+		}else 
+		{
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
+		AdminMemberService adService = new AdminMemberServiceImpl();
+		HashMap<String,Object> pageDataMap = adService.selectAllMemberPageList(currentPage);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
+		request.setAttribute("pageDataMap", pageDataMap);
+		request.setAttribute("currentPage", currentPage);
 		view.forward(request, response);
 	
 	}

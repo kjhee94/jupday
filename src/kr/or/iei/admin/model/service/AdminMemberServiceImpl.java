@@ -2,6 +2,7 @@ package kr.or.iei.admin.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.or.iei.admin.model.dao.AdminMemberDAO;
 import kr.or.iei.common.JDBCTemplate;
@@ -9,7 +10,7 @@ import kr.or.iei.member.model.vo.Member;
 
 public class AdminMemberServiceImpl implements AdminMemberService{
 	private AdminMemberDAO adDAO = new AdminMemberDAO();
-
+	/*
 	@Override
 	public ArrayList<Member> selectAllMemberList(String authorityId) {
 		Connection conn = JDBCTemplate.getConnection();
@@ -18,7 +19,7 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 		JDBCTemplate.close(conn);
 				
 		return list;
-	}
+	}*/
 
 	@Override
 	public int updateMemberEndYN(String userId, char endYN) {
@@ -31,4 +32,32 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 		return result;
 	}
 
-}
+	@Override
+	public HashMap<String, Object> selectAllMemberPageList(int currentPage) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//한 개의 page에서 몇 개의 목록으로 보여줄 것인지
+		int recordCountPerPage = 10;
+		
+		ArrayList<Member> list = adDAO.selectAllMemberPageList(conn, currentPage, recordCountPerPage);
+		
+		//한 개의 pageNavi에서 보여질 Navi 개수
+		int naviCountPerPage = 5;
+		
+		String pageNavi = adDAO.getPageNavi(conn,naviCountPerPage,recordCountPerPage,currentPage);
+		
+		HashMap<String,Object> hm = new HashMap<String,Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+
+		JDBCTemplate.close(conn);
+		return hm;
+		
+		
+		
+	}
+
+
+		
+	}

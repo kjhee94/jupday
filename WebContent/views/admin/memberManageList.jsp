@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -34,8 +35,12 @@
            
 	<%
 		Member m = (Member)session.getAttribute("member");
-		ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-		String authorityId = (String)request.getAttribute("authority_Id");
+	%>
+	
+	<%//페이징 처리 된 데이터 가져오기
+	HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+	ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
+	String pageNavi = (String)pageDataMap.get("pageNavi");
 	%>
             <div class="box-user">
                 <a href="/"><%=m.getNick()%></a>
@@ -62,7 +67,7 @@
 							</div>
 							<div class="input-search">
 								<i class="fas fa-search icon-search"></i>
-								<input type="text" name="search" placeholder="검색어을 검색하세요">
+								<input type="text" name="search" placeholder="검색어를 검색하세요">
 							</div>
 							<input type="submit" class="btn-rec" value="검색">
 						</form>
@@ -105,13 +110,7 @@
 				
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					       <%=pageNavi%>
                         </ul>
                     </div>
 

@@ -195,15 +195,10 @@
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					        <%=pageNavi %>
                         </ul>
-                    </div>
+                    </div>                    
+                    
                 </div>
             </div>
         </div>
