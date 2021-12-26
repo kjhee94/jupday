@@ -31,12 +31,13 @@
 </head>
 
 <body>
-
+	
+	
 	<div id="wrap">
 	
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
-			
+		<%if(m!=null){ %>	
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
@@ -44,13 +45,13 @@
 			</div>
 		
 			<div id="review_writing">
-				<form action="">
+				<form action="/review/reviewWrite.do" method="post">
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요">
+							<input type="text" placeholder="제목을 입력하세요" name="postTitle"/>
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"></textarea>
+							<textarea placeholder="내용을 입력하세요" name="postContent"></textarea>
 						</div>
 						<div class="box-upload">
 							<label for="upload">
@@ -65,23 +66,32 @@
 								<span>위치추가</span>
 								<i class="fas fa-chevron-down"></i>
 							</div>
-							<div class="map-content">
+							<div class="map-content" id='map'>
 								<!-- 여기가 지도html부분 -->
 							</div>
 						</div>
 					</div>
 					<div class="box-button">
 						<input type="submit" value="완료" class="btn-m">
-						<button class="btn-m"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+						<input type="button" value="목록" class="btn-m" onclick="location.replace('/review/reviewAllSelect.do');"/>
+						<%-- 이거..String type으로 가니까 integer.parseint 해줘야하나? --%>
 					</div>
 				</form>
 			</div>
 			
 		</div> 
+		<%}else{ %>
+			<script>
+				alert("로그인 후 이용하세요");
+				location.replace("/views/member/memberLogin.jsp");	
+			</script>	
+			
+		<%} %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	
 	</div>
+	
 	
 	
 	<!-- 지도 스크립트 -->
