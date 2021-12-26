@@ -203,5 +203,5 @@ public class AdminMemberDAO {
 		
 		return count;
 	}
-	
 }
+

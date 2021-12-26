@@ -1,7 +1,10 @@
+<%@page import="kr.or.iei.admin.crew.model.dao.AdminCrewDAO"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="kr.or.iei.member.model.vo.Member"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,10 +35,13 @@
                 <p>크루 삭제 관리</p>
             </div>
             
-            <% Member m = (Member)session.getAttribute("member"); 
-       		ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-			String authorityId = (String)request.getAttribute("authority_Id");%>
-
+            <% Member m = (Member)session.getAttribute("member"); %>
+            
+		<%//페이징 처리 된 데이터 가져오기
+		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+		ArrayList<Crew> list = (ArrayList<Crew>)pageDataMap.get("list");
+		String pageNavi = (String)pageDataMap.get("pageNavi");
+	%>
             <div class="box-user">
                 <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -82,103 +88,30 @@
                                 <th width="150">탈퇴 / 복원</th>
                             </tr>
                         </thead>
+                        <%for(Crew cr : list) {%>
                         <tbody>
                             <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
+                                <td><%=cr.getCrewNo() %></td>
+                                <td><%=cr.getCrewName() %></td>
+                                <td><%=cr.getCrewInfo() %></td>
+                                <td><%=cr.getCrewCount() %></td>
+                                <td><%=cr.getCrewCreateDate() %></td>
                                 <td><button class="man_btn"><a href="crewFeedManageList.jsp">관리</a></button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>쓰레기함부로버리지마</td>
-                                <td>니가 쓰레기통 들어갈래?</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>환경호르몬의 날</td>
-                                <td>그만 먹고 뛰고 줍자</td>
-                                <td>15</td>
-                                <td>2021/11/11</td>
-                                <td><button class="man_btn">관리</button>
-                                <td><button class="del_btn">삭제</button></td>
+                                <td>
+                                <%if(cr.getCrewDelYN()=='N') {%>
+                                <a href="/admin/memberEndYNChange.do?userId=<%=cr.getCrewNo()%>&endYN=<%=cr.getCrewDelYN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/memberEndYNChange.do?userId=<%=cr.getCrewNo()%>&endYN=<%=cr.getCrewDelYN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                             </tr>
                         </tbody>
+                        <%} %>
                     </table>
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-					        <%--<%=pageNavi --%>
+					        <%=pageNavi %>
                         </ul>
                     </div>                    
                     
@@ -191,6 +124,7 @@
         </footer>
     </div>
     
+    <%-- 
         <script>
 	$('.del_btn').click(function(){
 		
@@ -198,7 +132,7 @@
 		
 		if(data=='Y')
 		{
-			window.confirm(<%=m.getUserId() %> + " 크루를 삭제처리하시겠습니까?");
+			window.confirm(<%=c.getCrewName() %> + " 크루를 삭제처리하시겠습니까?");
 			
 		}
 		
@@ -210,10 +144,10 @@
 		
 		if(data=='Y')
 		{
-			window.confirm(<%=m.getUserId() %> + " 크루를 복원하시겠습니끼?");	
+			window.confirm(<%=c.getCrewName %> + " 크루를 복원하시겠습니끼?");	
 		}
 		
 	});
-    </script>
+    </script> --%>
 </body>
 </html>

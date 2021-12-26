@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.admin.model.dao.AdminMemberDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
@@ -42,6 +43,7 @@
 	ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
 	String pageNavi = (String)pageDataMap.get("pageNavi");
 	%>
+	
             <div class="box-user">
                 <a href="/"><%=m.getNick()%></a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -52,7 +54,7 @@
             <div class="container">
                 <div class="container_top">
                     <div class="count-all">
-                        <p>전체 <span>7,777</span> 건</p>
+                        <p>전체 <span>7777</span> 건</p>
                     </div>
                     
                     <div class="box-search">

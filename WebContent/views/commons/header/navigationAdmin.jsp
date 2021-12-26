@@ -17,7 +17,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                	<a href="/views/admin/memberManageList.jsp">· 회원 정보 관리</a>
+                                	<a href="/admin/MemberManageList.do">· 회원 정보 관리</a>
                                	</li>
                             </ul>
                         </ul>
@@ -36,7 +36,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="/views/admin/crewManageList.jsp">· 크루 삭제 관리</a>
+                                    <a href="/admin/crewManageList.do">· 크루 삭제 관리</a>
                                 </li>
                             </ul>
                         </ul>
