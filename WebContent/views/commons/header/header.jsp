@@ -18,9 +18,9 @@
 		                    <li><a href="/crew/crewJoinList.do">크루 목록</a></li>
 		                </ul>
 		            </li>
-		            <li><a href="/views/review/reviewSelectAllListPage.jsp">줍데이리뷰</a>
+		            <li><a href="/review/reviewAllSelect.do">줍데이리뷰</a>
 		                <ul class="lnb-list">
-		                    <li><a href="/views/review/reviewSelectAllListPage.jsp">리뷰 목록</a></li>
+		                    <li><a href="/review/reviewAllSelect.do">리뷰 목록</a></li>
 		                    <li><a href="/views/review/reviewWriteForm.jsp">리뷰 작성</a></li>
 		                </ul>
 		            </li>

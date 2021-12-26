@@ -1,3 +1,7 @@
+<%@page import="kr.or.iei.member.model.vo.Member"%>
+<%@page import="kr.or.iei.review.model.vo.Review"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -143,9 +147,19 @@
 			    </div>
 			</div>
 			
+			<%
+				HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+				
+				ArrayList<Review> list = (ArrayList<Review>)pageDataMap.get("list");
+				String pageNavi = (String)pageDataMap.get("pageNavi");
+				int currentPage = (int)request.getAttribute("currentPage");
+				String keyword = (String)request.getAttribute("keyword"); //getParameter로도 넘기기 가능
+				
+			%>
+			
 			<div class="box-write-search">
 				<button class="btn-rec">
-					<a href="./reviewWriteForm.jsp">글쓰기</a>
+					<a href="/views/review/reviewWriteForm.jsp">글쓰기</a>
 				</button>
 				
 				<div class="box-search">
@@ -168,155 +182,38 @@
 				</div>
 			</div>
 			
+			
+			
 			<div class="box-review">
+			
+			<%for(Review review : list) { %>
+			
 				<div class="box-one-review">
 					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
+						<a href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
 							<img alt="" src="">
 						</a>
 					</div>
 					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
+						<p><%=review.getPostTitle() %></p>
+						<p class="review-writer"><%=review.getUserId() %></p>
 						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
+							<i class="far fa-heart"></i><span><%=review.getHits() %></span>
 							<i class="far fa-comment"></i><span>5</span>
 						</div>
-						<p class="review-date">2021.11.29</p>				
+						<p class="review-date"><%=review.getRegDate() %></p>				
 					</div>
 				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
-				
-				<div class="box-one-review">
-					<div class="box-img">
-						<a href="./reviewSelectContent.jsp">
-							<img alt="" src="">
-						</a>
-					</div>
-					<div class="box-txt">
-						<p>여의도 플로깅 후기입니다</p>
-						<p class="review-writer">연신내 독감자</p>
-						<div class="review-info">
-							<i class="far fa-heart"></i><span>12</span>
-							<i class="far fa-comment"></i><span>5</span>
-						</div>
-						<p class="review-date">2021.11.29</p>				
-					</div>
-				</div>
+
+				<%} %>
 				
 				<div id="page_wrap">
                    <ul class="page_ul">
-                       <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-                       <li><a href="" class="page_active">1</a></li>
-                       <li><a href="">2</a></li>
-                       <li><a href="">3</a></li>
-                       <li><a href="">4</a></li>
-                       <li><a href="">5</a></li>
-                       <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+                     	<%=pageNavi %>         
                    	</ul>
                	</div>
 			</div>
+
 			
 		</div>
 	
