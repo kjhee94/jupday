@@ -14,7 +14,7 @@
 		<%if(result) {%>
 	
 			alert("크루를 생성했습니다")
-			location.replace("/views/crew/crewJoinList.jsp");
+			location.replace("/crew/crewJoinList.do");
 	
 		<%}else { %>
 		

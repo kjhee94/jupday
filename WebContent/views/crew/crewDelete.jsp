@@ -21,7 +21,8 @@
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
-			
+		
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
@@ -34,8 +35,8 @@
 					- 운영하고 계신 크루(오늘도 내가 해냄)는 삭제할 경우 재사용 및 복구가 불가능합니다.<br>
 					- 삭제 후 크루정보 및 개인형 서비스 이용기록은 모두 삭제됩니다.
 				</p>
-				<div class="box-radio">
-					<input type="radio" id="crewDeleteNoti">
+				<div class="box-checkbox">
+					<input type="checkbox" id="crewDeleteNoti">
 					<label for="crewDeleteNoti">안내사항을 모두 확인하였으며, 이에 동의합니다.</label>
 				</div>
 			</div>
@@ -46,6 +47,12 @@
 				</button>
 			</div>
 		</div>
+		
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	

@@ -22,12 +22,12 @@ public class CrewDAO {
 		
 		String query = "SELECT * FROM(" + 
 					   "SELECT ROW_NUMBER() OVER(ORDER BY C.C_NO DESC)AS NUM," + 
-					   "C.C_NO,C_NAME,C_CREATEDATE,C_INFO,C_P_IMAGE,C_DEL_YN," + 
+					   "C.C_NO,C_NAME,C_P_IMAGE," + 
 					   "COUNT(*)AS c_count " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
 					   "WHERE C_DEL_YN='N' " + 
-					   "GROUP BY C.C_NO,C_NAME,C_CREATEDATE,C_INFO,C_P_IMAGE,C_DEL_YN) " + 
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE) " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
 		try {
@@ -42,10 +42,7 @@ public class CrewDAO {
 				
 				c.setCrewNo(rset.getInt("c_no"));
 				c.setCrewName(rset.getString("c_name"));
-				c.setCrewCreateDate(rset.getDate("c_createdate"));
-				c.setCrewInfo(rset.getString("c_info"));
 				c.setCrewImg(rset.getString("c_p_image"));
-				c.setCrewDelYN(rset.getString("c_del_YN").charAt(0));
 				c.setCrewCount(rset.getInt("c_count"));
 				
 				list.add(c);
@@ -147,12 +144,12 @@ public class CrewDAO {
 		
 		String query = "SELECT * FROM(" + 
 					   "SELECT ROW_NUMBER() OVER(ORDER BY C.C_NO DESC)AS NUM," + 
-					   "C.C_NO,C_NAME,C_CREATEDATE,C_INFO,C_P_IMAGE,C_DEL_YN," + 
+					   "C.C_NO,C_NAME,C_P_IMAGE," + 
 					   "COUNT(*)AS c_count " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
 					   "WHERE C_DEL_YN='N' AND C_NAME LIKE ? " + 
-					   "GROUP BY C.C_NO,C_NAME,C_CREATEDATE,C_INFO,C_P_IMAGE,C_DEL_YN) " + 
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE) " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
 		try {
@@ -164,17 +161,14 @@ public class CrewDAO {
 			
 			while(rset.next()) {
 				
-			Crew c = new Crew();
-			
-			c.setCrewNo(rset.getInt("c_no"));
-			c.setCrewName(rset.getString("c_name"));
-			c.setCrewCreateDate(rset.getDate("c_createdate"));
-			c.setCrewInfo(rset.getString("c_info"));
-			c.setCrewImg(rset.getString("c_p_image"));
-			c.setCrewDelYN(rset.getString("c_del_YN").charAt(0));
-			c.setCrewCount(rset.getInt("c_count"));
-			
-			list.add(c);
+				Crew c = new Crew();
+				
+				c.setCrewNo(rset.getInt("c_no"));
+				c.setCrewName(rset.getString("c_name"));
+				c.setCrewImg(rset.getString("c_p_image"));
+				c.setCrewCount(rset.getInt("c_count"));
+				
+				list.add(c);
 			}
 			
 		} catch (SQLException e) {
@@ -339,6 +333,150 @@ public class CrewDAO {
 		}
 		
 		return crewNo;
+	}
+
+	public ArrayList<Crew> selectManageCrew(Connection conn, String userId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Crew> list = new ArrayList<Crew>();
+		
+		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
+					   "FROM CREW C " + 
+					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
+					   "WHERE C_DEL_YN='N' " +
+					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루장') " + 
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
+					   "ORDER BY C.C_NO DESC";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Crew c = new Crew();
+				
+				c.setCrewNo(rset.getInt("c_no"));
+				c.setCrewName(rset.getString("c_name"));
+				c.setCrewImg(rset.getString("c_p_image"));
+				c.setCrewCount(rset.getInt("c_count"));
+				
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Crew> selectJoinedCrew(Connection conn, String userId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Crew> list = new ArrayList<Crew>();
+		
+		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
+					   "FROM CREW C " + 
+					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
+					   "WHERE C_DEL_YN='N' " +
+					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루원') " + 
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
+					   "ORDER BY C.C_NO DESC";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Crew c = new Crew();
+				
+				c.setCrewNo(rset.getInt("c_no"));
+				c.setCrewName(rset.getString("c_name"));
+				c.setCrewImg(rset.getString("c_p_image"));
+				c.setCrewCount(rset.getInt("c_count"));
+				
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public Crew selectOneCrew(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Crew c = null;
+		
+		String query = "SELECT * FROM CREW WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				c = new Crew();
+				c.setCrewNo(rset.getInt("c_no"));
+				c.setCrewName(rset.getString("c_name"));
+				c.setCrewCreateDate(rset.getDate("c_createdate"));
+				c.setCrewInfo(rset.getString("c_info"));
+				c.setCrewImg(rset.getString("c_p_image"));
+				c.setCrewDelYN(rset.getString("c_del_YN").charAt(0));				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return c;
+	}
+
+	public int updateOneCrew(Connection conn, Crew c) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW SET C_NAME=?,C_INFO=?,C_P_IMAGE=? WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, c.getCrewName());
+			pstmt.setString(2, c.getCrewInfo());
+			pstmt.setString(3, c.getCrewImg());
+			pstmt.setInt(4, c.getCrewNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 	
 	

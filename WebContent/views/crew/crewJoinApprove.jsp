@@ -22,6 +22,7 @@
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
@@ -92,6 +93,12 @@
 				</button>
 			</div>
 		</div>
+		
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	

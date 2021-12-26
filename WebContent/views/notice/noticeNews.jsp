@@ -34,10 +34,10 @@
          <div class="notice-top">
          	 <div class="box-button">
 				<button class="btn-notice">
-					<a href="./noticeNews.jsp">공지사항</a>
+					<a href="/views/notice/noticeNews.jsp">공지사항</a>
 				</button>
 				<button class="btn-campaign">
-					<a href="./noticeCampaign.jsp">캠페인 안내</a>
+					<a href="/views/notice/noticeCampaign.jsp">캠페인 안내</a>
 				</button>
 			 </div>
 		 </div>
@@ -75,7 +75,7 @@
 			        <tbody>
 			            <tr>
 			                <td>12</td>
-			                <td><div class="text-ellipsis subject"><a href="./noticeNewsContent.jsp">세미 프로젝트 종료 및 발표 안내</a></div></td>
+			                <td><div class="text-ellipsis subject"><a href="/views/notice/noticeNewsContent.jsp">세미 프로젝트 종료 및 발표 안내</a></div></td>
 			                <td>568</td>
 			                <td>관리자</td>
 			                <td>2021/12/28</td>

@@ -14,10 +14,10 @@
 	font-weight: 700;
 	margin-bottom: 5px;
 }
-.box-radio {
+.box-checkbox {
 	margin-top: 30px;
 }
-.box-radio>input {
+.box-checkbox>input {
 	width: 16px;
 	height: 16px;
 	vertical-align:-2px;

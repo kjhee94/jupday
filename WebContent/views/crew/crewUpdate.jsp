@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,33 +19,45 @@
 </head>
 <body>
 
+	<%
+		Crew c = (Crew)request.getAttribute("crew");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
 				<p class="tit-big">크루 정보 수정</p>
 			</div>
 			
-			<form id="crewInfo">
+			<form id="crewInfo" action="/crew/crewUpdate.do" method="post">
 				<div class="box-name">
 					<span>크루명</span>
-					<input type="text" id="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="오늘도 내가 해냄">
+					<input type="text" id="crewName" name="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="<%=c.getCrewName() %>">
 				</div>
 				<div class="box-explan">
 					<p>크루설명</p>
-					<textarea class="input-style" placeholder="크루 설명을 입력하세요">해버렸따고</textarea>
+					<textarea class="input-style" id="crewInfo" name="crewInfo" placeholder="크루 설명을 입력하세요"><%=c.getCrewInfo() %></textarea>
 				</div>
 				<div class="box-upload">
 					<span>크루 대표 사진</span>
 					<label for="crewImg" class="btn-s">사진등록</label>
-					<input type="file" id="crewImg" value="사진등록" ><br>
+					<input type="file" id="crewImg" name="crewImg" value="<%=c.getCrewImg() %>" ><br>
 				</div>
+				<input type="hidden" name="crewNo" value="<%=c.getCrewNo() %>">
 				<input type="submit" value="수정하기" class="btn-m">
 			</form>
 		</div>
+		
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	

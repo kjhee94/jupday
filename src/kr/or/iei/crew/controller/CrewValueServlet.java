@@ -1,24 +1,29 @@
-package kr.or.iei.member.controller;
+package kr.or.iei.crew.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import kr.or.iei.crew.model.service.CrewService;
+import kr.or.iei.crew.model.service.CrewServiceimpl;
+import kr.or.iei.crew.model.vo.Crew;
 
 /**
- * Servlet implementation class MemberLogoutServlet
+ * Servlet implementation class CrewValueServlet
  */
-@WebServlet("/member/logout.do")
-public class MemberLogoutServlet extends HttpServlet {
+@WebServlet("/crew/crewValue.do")
+public class CrewValueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLogoutServlet() {
+    public CrewValueServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,20 +32,17 @@ public class MemberLogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		//로그 아웃을 처리하기 위한 Servlet doget 메소드
-		HttpSession session=request.getSession();//세션부터 가져와야한다.
 		
-		//일반적인 로그아웃은 session을 찾아서 파기만 하면된다.
-		//그런데 만약에 혹시라도 로그 아웃에 대한 시점 저장 하고 싶다면? =>그때에는 session에서 데이터(ID값)값을 찾아서 DB에 기록 해야한다.
+		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		
-		session.invalidate();//세션 파기
-		/*
-		  sendRedirect?
-		  RequestDispatcher?
-		 */
+		CrewService cService = new CrewServiceimpl();
+		Crew c = cService.selectOneCrew(crewNo);
 		
-		response.sendRedirect("/");
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdate.jsp");
+		
+		request.setAttribute("crew", c);
+		
+		view.forward(request, response);
 	}
 
 	/**

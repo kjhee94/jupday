@@ -15,7 +15,7 @@
 		                <ul class="lnb-list">
 		                    <li><a href="/crew/crewAllList.do">크루 검색</a></li>
 		                    <li><a href="/views/crew/crewCreate.jsp">크루 생성</a></li>
-		                    <li><a href="/views/crew/crewJoinList.jsp">크루 목록</a></li>
+		                    <li><a href="/crew/crewJoinList.do">크루 목록</a></li>
 		                </ul>
 		            </li>
 		            <li><a href="/review/reviewAllSelect.do">줍데이리뷰</a>
