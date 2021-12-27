@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 
+/**
+ * @author ipsak
+ *
+ */
 public interface CrewService {
 
 	/**
@@ -40,6 +46,16 @@ public interface CrewService {
 	 */
 	boolean crewCreate(Crew c, String userId);
 
+	/**
+	 * 작성자 : 강주희
+	 * @param cfd
+	 * @return int
+	 * 작성일 : 2021. 12. 27.
+	 *
+	 * Description : 크루생성시 크루대표 이미지를 저장하는 메소드
+	 */
+	int insertFileCreate(CrewFileData cfd);
+	
 	/**
 	 * 작성자 : 강주희
 	 * @param userId
@@ -81,6 +97,16 @@ public interface CrewService {
 	 */
 	int UpdateOneCrew(Crew c);
 
+	/**
+	 * 작성자 : 강주희
+	 * @param cfd
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루 수정시 크루 대표이미지를 저장하는 메소드
+	 */
+	int insertFileUpdate(CrewFileData cfd);
+	
 	/**
 	 * 작성자 : 강주희
 	 * @param crewNo void
@@ -133,17 +159,31 @@ public interface CrewService {
 	 */
 	int deleteOneCrew(int crewNo);
 
-	
 	/**
 	 * 작성자 : 강주희
 	 * @param currentFeedPage
 	 * @param crewNo
+	 * @param currentPage
 	 * @return HashMap<String,Object>
 	 * 작성일 : 2021. 12. 27.
 	 *
 	 * Description : 크루개별 페이지의 정보를 가져오는 메소드
 	 */
-	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo);
+	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo, int currentPage);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param feedNo
+	 * @return CrewBoard
+	 * 작성일 : 2021. 12. 27.
+	 *
+	 * Description : 크루 피드의 정보를 가져오는 메소드
+	 */
+	CrewBoard selectOneCrewFeed(int feedNo);
+
+	
+
+	
 	
 
 

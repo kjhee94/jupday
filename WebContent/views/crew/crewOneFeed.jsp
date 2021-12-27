@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +20,13 @@
 </head>
 <body>
 
+	<%
+		CrewBoard cb = (CrewBoard)request.getAttribute("crewBoard");
+		String crewName = (String)request.getAttribute("crewName");
+		int currentPage = (int)request.getAttribute("currentPage");	
+		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -26,20 +34,24 @@
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
-				<p class="tit-big">오늘도 내가 해냄</p>
+				<p class="tit-big"><%=crewName %></p>
 			</div>
 			
 			<div class="write-top">
 				<div class="box-subject">
-					<p>오늘 신한은행 앞에 타코야끼 트럭 있나요?</p>
+					<p><%=cb.getFeedSubject() %></p>
 				</div>
 				<div class="box-writer">
 					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
+						<%if(cb.getWriterImg()!=null) { %>
+						<img alt="프로필사진" src="/upload/<%=cb.getWriterImg()%>.png">
+						<%}else { %>
+						<img alt="프로필사진" src="/assets/images/profile.png">
+						<%} %>
 					</div>
 					<div class="user-name">
-						<p>연신내독감자</p>
-						<span>2021.11.23</span>
+						<p><%=cb.getWriter() %></p>
+						<span><%=cb.getFeedRegdate() %></span>
 					</div>
 				</div>
 			</div>
@@ -47,11 +59,11 @@
 			<div class="write-content">
 				<box-content-img>
 				<div class="box-content">
-					<p>붕어빵은 있는거 같은데 타코야끼가 안보이네요.. 혹시 사장님이 자리 옮기셨나요.. 아시는 분들은 댓글 달아주세요ㅠㅠㅠㅠㅠㅠ</p>
+					<p><%=cb.getFeedContent() %></p>
 				</div>
 				<div class="box-icon">
-					<i class="far fa-heart"></i><span>좋아요 11</span>
-					<i class="far fa-comment"></i><span>댓글 3</span>
+					<i class="far fa-heart"></i><span>좋아요 <%=cb.getFeedLikeCount() %></span>
+					<i class="far fa-comment"></i><span>댓글 <%=cb.getFeedCommentCount() %></span>
 				</div>
 			</div>
 			
@@ -114,6 +126,8 @@
 			</div>
 			
 		</div>
+		
+		
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>

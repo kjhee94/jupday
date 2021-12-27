@@ -1,7 +1,6 @@
 package kr.or.iei.crew.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
-import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewBoard;
 
 /**
- * Servlet implementation class CrewOnePageServlet
+ * Servlet implementation class CrewOneFeedServlet
  */
-@WebServlet("/crew/crewOnePage.do")
-public class CrewOnePageServlet extends HttpServlet {
+@WebServlet("/crew/crewOneFeed.do")
+public class CrewOneFeedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrewOnePageServlet() {
+    public CrewOneFeedServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,32 +35,23 @@ public class CrewOnePageServlet extends HttpServlet {
 		
 		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		
-		//현재 피드게시판 
-		int currentFeedPage;
-		
-		if(request.getParameter("currentFeedPage")==null) {
-			//게시판으로 처음 이동하는 경우에는 가장 첫페이지인 1page로 세팅
-			currentFeedPage = 1;
-		}else {
-			currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
-		}
+		int feedNo = Integer.parseInt(request.getParameter("feedNo"));
+		int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
 		
 		CrewService cService = new CrewServiceimpl();
 		
-		//크루 정보 가져오기
-		Crew c = cService.selectOneCrew(crewNo);
+		String crewName = cService.selectCrewName(crewNo);
+		CrewBoard cb = cService.selectOneCrewFeed(feedNo);
 		
-		HashMap<String, Object> pageDataMap = cService.selectAllCrewFeed(currentFeedPage ,crewNo, currentPage);
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewOneFeed.jsp");
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewOnePage.jsp");
-		
-		request.setAttribute("crew", c);
-		request.setAttribute("pageDataMap", pageDataMap);
+		request.setAttribute("crewBoard", cb);
+		request.setAttribute("crewName", crewName);
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("currentFeedPage", currentFeedPage);
 		
 		view.forward(request, response);
+		
 	}
 
 	/**

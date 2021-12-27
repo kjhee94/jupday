@@ -7,11 +7,11 @@ public class CrewBoard {
 	private int crewNo;
 	private int feedNo;
 	private String userId;
-	private String nick;
+	private String writer;
+	private String writerImg;	
 	private Date feedRegdate;
 	private String feedSubject;
 	private String feedContent;
-	private String feedImg;
 	private int feedLikeCount;
 	private int feedCommentCount;
 	private char feedDelYN;
@@ -21,87 +21,81 @@ public class CrewBoard {
 	public CrewBoard() {
 		super();
 	}
-
-	public CrewBoard(int crewNo, int feedNo, String userId, String nick, Date feedRegdate, String feedSubject,
-			String feedContent, String feedImg, int feedLikeCount, int feedCommentCount, char feedDelYN) {
-		super();
-		this.crewNo = crewNo;
-		this.feedNo = feedNo;
-		this.userId = userId;
-		this.nick = nick;
-		this.feedRegdate = feedRegdate;
-		this.feedSubject = feedSubject;
-		this.feedContent = feedContent;
-		this.feedImg = feedImg;
-		this.feedLikeCount = feedLikeCount;
-		this.feedCommentCount = feedCommentCount;
-		this.feedDelYN = feedDelYN;
-	}
+	
+	
 
 	
 	//getter setter
 	public int getCrewNo() {
 		return crewNo;
 	}
-
+	
 	public void setCrewNo(int crewNo) {
 		this.crewNo = crewNo;
 	}
-
+	
 	public int getFeedNo() {
 		return feedNo;
 	}
-
+	
 	public void setFeedNo(int feedNo) {
 		this.feedNo = feedNo;
 	}
-
+	
 	public String getUserId() {
 		return userId;
 	}
-
+	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-	public String getNick() {
-		return nick;
+	
+	public String getWriter() {
+		return writer;
 	}
-
-	public void setNick(String nick) {
-		this.nick = nick;
+	
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-
+	
+	public String getWriterImg() {
+		return writerImg;
+	}
+	
+	public void setWriterImg(String writerImg) {
+		this.writerImg = writerImg;
+	}
+	
 	public Date getFeedRegdate() {
 		return feedRegdate;
 	}
-
+	
 	public void setFeedRegdate(Date feedRegdate) {
 		this.feedRegdate = feedRegdate;
 	}
-
+	
 	public String getFeedSubject() {
 		return feedSubject;
 	}
-
+	
 	public void setFeedSubject(String feedSubject) {
 		this.feedSubject = feedSubject;
 	}
-
+	
 	public String getFeedContent() {
 		return feedContent;
 	}
-
+	
 	public void setFeedContent(String feedContent) {
 		this.feedContent = feedContent;
 	}
-
-	public String getFeedImg() {
-		return feedImg;
+	
+	public char getFeedDelYN() {
+		return feedDelYN;
 	}
-
-	public void setFeedImg(String feedImg) {
-		this.feedImg = feedImg;
+	
+	public void setFeedDelYN(char feedDelYN) {
+		this.feedDelYN = feedDelYN;
 	}
 
 	public int getFeedLikeCount() {
@@ -118,13 +112,5 @@ public class CrewBoard {
 
 	public void setFeedCommentCount(int feedCommentCount) {
 		this.feedCommentCount = feedCommentCount;
-	}
-
-	public char getFeedDelYN() {
-		return feedDelYN;
-	}
-
-	public void setFeedDelYN(char feedDelYN) {
-		this.feedDelYN = feedDelYN;
 	}
 }

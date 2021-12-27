@@ -1,4 +1,8 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,27 +23,45 @@
 </head>
 <body>
 
+	<%
+		Crew c = (Crew)request.getAttribute("crew");
+		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
+		int currentPage = (int)request.getAttribute("currentPage");
+		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
+		
+		ArrayList<CrewBoard> list = (ArrayList<CrewBoard>)pageDataMap.get("list");
+		String pageNavi = (String)pageDataMap.get("pageNavi");
+	
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class="img-crew-profile">
-					<img alt="크루이미지" src="/assets/images/crew.png">
+				<%if(c.getCrewImg()!=null) { %>
+				<img alt="크루이미지" src="/upload/<%=c.getCrewImg()%>.png">
+				<%}else { %>
+				<img alt="크루이미지" src="/assets/images/crew.png">
+				<%} %>
 			</div>
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
-				<p class="tit-big">오늘도 내가 해냄</p>
+				<p class="tit-big"><%=c.getCrewName() %></p>
 				<p class="txt-crew-exp">
-					오늘도 해버렸지 밤샘<br>
-					끝내버렸찌 코딩 함께해요..^^(광기)
+					<%=c.getCrewInfo() %>
 				</p>
+				<!-- 권한설정 필요 -->
 				<button>크루 가입하기</button>
 			</div>
 			
 			<div class="box-write-search">
 				<button class="btn-rec">
+					<!-- 권한설정 필요 -->
 					<a href="/views/crew/crewWriteFeed.jsp">글쓰기</a>
+					
 				</button>
 				
 				<div class="box-search">
@@ -62,40 +84,49 @@
 			</div>
 			
 			<div class="box-feed">
+				<!-- 권한설정 필요 -->
+				<%for(CrewBoard cb : list) {%>
 				<div class="list-crew-feed">
-					<a href="/views/crew/crewOneFeed.jsp">
+					<a href="/crew/crewOneFeed.do?crewNo=<%=cb.getCrewNo()%>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>">
 						<div class="box-writer">
 							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
+								<%if(cb.getWriterImg()!=null) { %>
+								<img alt="프로필사진" src="/upload/<%=cb.getWriterImg()%>.png">
+								<%}else { %>
+								<img alt="프로필사진" src="/assets/images/profile.png">
+								<%} %>
+								
 							</div>
 							<div class="user-name">
-								<p>연신내 독감자</p>
-								<span>2021.11.23</span>
+								<p><%=cb.getWriter() %></p>
+								<span><%=cb.getFeedRegdate() %></span>
 							</div>
 						</div>
 						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
+							<p><%=cb.getFeedSubject() %></p>
 						</div>
 						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>11</span>
-							<i class="far fa-comment"></i><span>3</span>
+							<i class="far fa-heart"></i><span><%=cb.getFeedLikeCount() %></span>
+							<i class="far fa-comment"></i><span><%=cb.getFeedCommentCount() %></span>
 						</div>
 					</a>
 				</div>
+				<%} %>
+				
 			</div>
 			
 			<div id="page_wrap">
 		        <ul class="page_ul">
-		            <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-		            <li><a href="" class="page_active">1</a></li>
-		            <li><a href="">2</a></li>
-		            <li><a href="">3</a></li>
-		            <li><a href="">4</a></li>
-		            <li><a href="">5</a></li>
-		            <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+		            <%=pageNavi %>
 		        </ul>
 		    </div>
 		</div>
+		
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>

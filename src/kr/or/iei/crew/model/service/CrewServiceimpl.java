@@ -8,7 +8,9 @@ import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
+import kr.or.iei.file.model.dao.MemberFileDAO;
 
 public class CrewServiceimpl implements CrewService {
 	
@@ -23,16 +25,6 @@ public class CrewServiceimpl implements CrewService {
 		int recordCountPerPage = 8;
 		
 		ArrayList<Crew> list = cDAO.selectCrewAllList(conn, currentPage, recordCountPerPage);
-		
-//		for(Crew c : list) {
-//			System.out.println("크루번호 : "+c.getCrewNo()+"<br>"+
-//							   "크루명 : "+c.getCrewName()+"<br>"+
-//							   "크루생성일 : "+c.getCrewCreateDate()+"<br>"+
-//							   "크루설명 : "+c.getCrewInfo()+"<br>"+
-//							   "크루이미지 : "+c.getCrewImg()+"<br>"+
-//							   "크루삭제여부 : "+c.getCrewDelYN()+"<br>"+
-//							   "크루원수 : "+c.getCrewCount());
-//		}
 		
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
@@ -58,17 +50,7 @@ public class CrewServiceimpl implements CrewService {
 		int recordCountPerPage = 8;
 		
 		ArrayList<Crew> list = cDAO.selectCrewSearchList(conn, currentPage, recordCountPerPage, keyword);
-		
-//		for(Crew c : list) {
-//		System.out.println("크루번호 : "+c.getCrewNo()+"<br>"+
-//						   "크루명 : "+c.getCrewName()+"<br>"+
-//						   "크루생성일 : "+c.getCrewCreateDate()+"<br>"+
-//						   "크루설명 : "+c.getCrewInfo()+"<br>"+
-//						   "크루이미지 : "+c.getCrewImg()+"<br>"+
-//						   "크루삭제여부 : "+c.getCrewDelYN()+"<br>"+
-//						   "크루원수 : "+c.getCrewCount());
-//		}
-		
+
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
 		
@@ -104,6 +86,15 @@ public class CrewServiceimpl implements CrewService {
 			JDBCTemplate.close(conn);
 			return false;
 		}
+	}
+	
+	@Override
+	public int insertFileCreate(CrewFileData cfd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFileCreate(conn, cfd);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		return result;
 	}
 
 	@Override
@@ -144,6 +135,16 @@ public class CrewServiceimpl implements CrewService {
 		
 		JDBCTemplate.close(conn);
 		
+		return result;
+	}
+	
+	@Override
+	public int insertFileUpdate(CrewFileData cfd) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFileUpdate(conn, cfd);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
 		return result;
 	}
 
@@ -207,7 +208,7 @@ public class CrewServiceimpl implements CrewService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo) {
+	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo, int currentPage) {
 
 		Connection conn = JDBCTemplate.getConnection();
 		
@@ -217,9 +218,29 @@ public class CrewServiceimpl implements CrewService {
 		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
 		
 		
-		return null;
+		//pageNavi에서 보여질 Navi 개수를 설정
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getFeedPageNavi(conn, naviCountPerPage, recordCountPerPage, currentFeedPage, crewNo, currentPage);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+	
+		JDBCTemplate.close(conn);
+		
+		return hm;
 	}
-	
-	
+
+	@Override
+	public CrewBoard selectOneCrewFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		CrewBoard cb = cDAO.selectOneCrewFeed(conn, feedNo);
+		JDBCTemplate.close(conn);
+		return cb;
+	}
+
 	
 }

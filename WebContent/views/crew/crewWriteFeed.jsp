@@ -32,10 +32,10 @@
 			<form action="">
 				<div class="box-write">
 					<div class="box-subject">
-						<input type="text" placeholder="제목을 입력하세요">
+						<input type="text" name="feedSubject" placeholder="제목을 입력하세요">
 					</div>
 					<div class="box-content">
-						<textarea placeholder="내용을 입력하세요"></textarea>
+						<textarea name="feedContent" placeholder="내용을 입력하세요"></textarea>
 					</div>
 					<div class="box-upload">
 						<label for="upload">

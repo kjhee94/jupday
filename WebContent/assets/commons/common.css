@@ -221,6 +221,7 @@ textarea {
 	border: 1px solid #AAAAAA;
 	border-radius: 100px;
 	float: left;
+	overflow: hidden;
 }
 .user-img>img {
 	display: block;

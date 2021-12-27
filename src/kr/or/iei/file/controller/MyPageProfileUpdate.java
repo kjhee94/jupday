@@ -60,7 +60,7 @@ public class MyPageProfileUpdate extends HttpServlet {
 		//위에서 5가지 정보를 바탕으로 MultipartRequest 객체를 생성하게 되는 순간, 이미 파일은 해당 경로에 업로드 되는 상태가 된다.
 		
 		//파일 사이즈 검증
-		File tmp = new File(uploadFilePath+"\\"+multi.getFilesystemName("files"));
+		File tmp = new File(uploadFilePath+"\\"+multi.getFilesystemName("file"));
 
 		if(tmp.length()>(1024*1024*50)) {
 			tmp.delete();
