@@ -133,15 +133,17 @@ public interface CrewService {
 	 */
 	int deleteOneCrew(int crewNo);
 
+	
 	/**
 	 * 작성자 : 강주희
+	 * @param currentFeedPage
 	 * @param crewNo
 	 * @return HashMap<String,Object>
 	 * 작성일 : 2021. 12. 27.
 	 *
 	 * Description : 크루개별 페이지의 정보를 가져오는 메소드
 	 */
-	HashMap<String, Object> selectAllCrewFeed(int crewNo);
+	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo);
 	
 
 

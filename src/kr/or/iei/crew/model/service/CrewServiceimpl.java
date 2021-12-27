@@ -7,6 +7,7 @@ import java.util.HashMap;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewBoard;
 import kr.or.iei.crew.model.vo.CrewMember;
 
 public class CrewServiceimpl implements CrewService {
@@ -206,9 +207,16 @@ public class CrewServiceimpl implements CrewService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectAllCrewFeed(int crewNo) {
+	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo) {
 
 		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
+		
+		
 		return null;
 	}
 	

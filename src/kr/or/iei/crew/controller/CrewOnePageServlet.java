@@ -36,11 +36,11 @@ public class CrewOnePageServlet extends HttpServlet {
 		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		
+		//현재 피드게시판 
 		int currentFeedPage;
 		
 		if(request.getParameter("currentPage")==null) {
-			//즉 index.jsp 에서 게시판으로 이동하는 경우에는 가장 첫페이지인 1page로 세팅
+			//게시판으로 처음 이동하는 경우에는 가장 첫페이지인 1page로 세팅
 			currentFeedPage = 1;
 		}else {
 			currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
@@ -51,7 +51,7 @@ public class CrewOnePageServlet extends HttpServlet {
 		//크루 정보 가져오기
 		Crew c = bService.selectOneCrew(crewNo);
 		
-		HashMap<String, Object> pageDataMap = bService.selectAllCrewFeed(crewNo);
+		HashMap<String, Object> pageDataMap = bService.selectAllCrewFeed(currentFeedPage ,crewNo);
 	}
 
 	/**
