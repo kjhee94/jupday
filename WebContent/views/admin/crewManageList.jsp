@@ -40,8 +40,8 @@
 		<%//페이징 처리 된 데이터 가져오기
 		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
 		ArrayList<Crew> list = (ArrayList<Crew>)pageDataMap.get("list");
-		String pageNavi = (String)pageDataMap.get("pageNavi");
-	%>
+		String pageNavi = (String)pageDataMap.get("pageNavi"); %>
+		
             <div class="box-user">
                 <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -79,7 +79,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th width="200">크루번호</th>
+                                <th width="150">크루번호</th>
                                 <th width="300">크루명</th>
                                 <th width="300">크루설명</th>
                                 <th width="200">회원수</th>
@@ -96,7 +96,7 @@
                                 <td><%=cr.getCrewInfo() %></td>
                                 <td><%=cr.getCrewCount() %></td>
                                 <td><%=cr.getCrewCreateDate() %></td>
-                                <td><button class="man_btn"><a href="crewFeedManageList.jsp">관리</a></button>
+                                <td><button class="man_btn"><a href="/admin/crewFeedManageList.do">관리</a></button>
                                 <td>
                                 <%if(cr.getCrewDelYN()=='N') {%>
                                 <a href="/admin/crewDelYNChange.do?c_No=<%=cr.getCrewNo()%>&c_Del_YN=<%=cr.getCrewDelYN()%>"><button class="del_btn">삭제</button></a>

@@ -1,3 +1,9 @@
+<%@page import="kr.or.iei.admin.crew.model.vo.AdminCrewFeed"%>
+<%@page import="kr.or.iei.admin.crew.model.dao.AdminCrewDAO"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,7 +34,7 @@
             
 		<%//페이징 처리 된 데이터 가져오기
 		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
-		ArrayList<CrewFeed> list = (ArrayList<CrewFeed>)pageDataMap.get("list");
+		ArrayList<AdminCrewFeed> list = (ArrayList<AdminCrewFeed>)pageDataMap.get("list");
 		String pageNavi = (String)pageDataMap.get("pageNavi");%>
 
         <div id="header">
@@ -81,114 +87,30 @@
                                 <th width="300">게시글제목</th>
                                 <th width="300">게시글내용</th>
                                 <th width="200">작성자</th>
-                                <th width="100">조회수</th>
                                 <th width="100">좋아요</th>
                                 <th width="200">작성일자</th>
                                 <th width="150">삭제 / 복원</th>
                             </tr>
                         </thead>
+                        <%for(AdminCrewFeed f : list) {%>
                         <tbody>
                             <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td><div class="text-ellipsis subject">드디어 연신내로 넘어왔다</div></td>
-                                <td><div class="text-ellipsis">은평구 살 때 행복했어요</div></td>
-                                <td>gramnotebook</td>
-                                <td>56</td>
-                                <td>30</td>
-                                <td>2021/11/11</td>
-                                <td><button class="del_btn">삭제</button></td>
+                                <td><%=f.getC_f_No() %></td>
+                                <td><div class="text-ellipsis subject"><%=f.getC_f_Subject() %></div></td>
+                                <td><div class="text-ellipsis"><%=f.getC_f_Content() %></div></td>
+                                <td><%=f.getnick() %></td>
+                                <td><%=f.getLikeCount() %></td>
+                                <td><%=f.getC_f_RegDate() %></td>
+                                <td>
+                                <%if(f.getC_f_Del_YN()=='N') {%>
+                                <a href="/admin/crewDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/crewDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                             </tr>
                         </tbody>
+                        <%} %>
                     </table>
 
                     <div id="page_wrap">

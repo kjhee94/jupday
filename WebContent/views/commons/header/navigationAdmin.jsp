@@ -49,7 +49,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="/views/admin/reviewManageList.jsp">· 리뷰게시판 관리</a>
+                                    <a href="/admin/reviewManageList.do">· 리뷰게시판 관리</a>
                                 </li>
                             </ul>
                         </ul>
