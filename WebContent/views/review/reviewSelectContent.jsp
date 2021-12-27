@@ -120,22 +120,80 @@
 							</div>
 							<div class="txt-comment">								
 								<p><%=co.getR_c_comment() %></p>
-									<input type="text" style="display:none;"/>
-										<form action ="/review/reviewCommentUpdate.do" method="post" id="commentUpdateForm" display="none">			
-											<input type="hidden" name="content" id="contentArea" value="<%=review.getPostContent()%>"/>
-											<input type="hidden" name="boardNo" value="<%=review.getPostTitle() %>"/>
-											<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
-										</form>
+									<form action ="/views/review/reviewCommentUpdate.jsp" method="post" id="commentUpdateForm" display="none">			
+										<input type="hidden" name="comment" value="<%=co.getR_c_comment() %>"/>
+										<input type="hidden" name="commentNo" value="<%=co.getR_c_no() %>"/>
+										<input type="hidden" name="postNum" value="<%=co.getPostNum() %>"/>
+										<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
+									</form>
 										
-										<%-- 막상 했지만 이건 고민좀 해봐야할듯, 창을 하나 띄우고 할 것인가, 내가 원하는건 수정 버튼 누르면 입력한 <p>태그에서 수정하고 완료 누르면 수정되는 로직인데--%> 
+									<%if(m!=null && m.getUserId().equals(co.getUserId())) {%>
 										
-										<%if(m!=null && m.getUserId().equals(co.getUserId())) {%>
+										<button class="coModifyBtn" onclick='coModify("/views/review/reviewCommentUpdate.jsp?comment=<%=co.getR_c_comment()%>&postNum=<%=co.getPostNum()%>&commentNo=<%=co.getR_c_no() %>&currentPage=<%=currentPage%>");'>수정</button>  
+										<button class="coDeleteBtn" commentNo="<%=co.getR_c_no()%>">삭제</button>
 										
-											<button class="coModifyBtn">수정</button>  
-											<button class="coDeleteBtn" commentNo="<%=co.getR_c_comment()%>">삭제</button>
-										<%}else{ %>
+										<script>
+											function coModify(str){
+												console.log(str);
+												
+												window.open(str,"_blank","width=300px, height=100px");
+											}
+										</script>
 										
-										<%} %>
+										<script>
+											$('.coDeleteBtn').click(function(){
+												
+												if(window.confirm('정말로 해당 댓글을 삭제하시겠습니까?')){
+													//댓글을 삭제하기 위해 필요한 정보는? 댓글번호, 작성자, 게시글번호, 현재페이지도 있어야 한다(다시 해당 post로 돌아가려면)
+													var commentNo = $(this).attr("commentNo");
+													var postNum = <%=review.getPostNum()%>;
+													var currentPage = <%=currentPage%>;
+													
+													//servlet으로 데이터를 전송하기 위한 form 생성
+													var formTag = document.createElement("form");
+													
+													formTag.setAttribute('action','/review/deletePostComment.do');
+													formTag.setAttribute('method','post');
+													formTag.setAttribute('display','none');
+													
+													//<input type="hidden" name="commentNo" value=commentNo>
+													var inputTag = document.createElement("input");
+													inputTag.setAttribute('type','hidden');
+													inputTag.setAttribute('name','commentNo');
+													inputTag.setAttribute('value',commentNo);
+													
+													formTag.appendChild(inputTag);
+													
+													//<input type="hidden" name="boardNo" value=boardNo>
+													var inputTag = document.createElement("input");
+													inputTag.setAttribute('type','hidden');
+													inputTag.setAttribute('name','postNum');
+													inputTag.setAttribute('value',postNum);
+													
+													formTag.appendChild(inputTag);
+													
+													//<input type="hidden" name="currentPage" value=currentPage>
+													var inputTag = document.createElement("input");
+													inputTag.setAttribute('type','hidden');
+													inputTag.setAttribute('name','currentPage');
+													inputTag.setAttribute('value',currentPage);
+													
+													formTag.appendChild(inputTag);
+													
+													document.body.appendChild(formTag); 
+
+													formTag.submit();
+	
+												}else{
+													alert('댓글 삭제를 취소하였습니다');
+												}
+												
+											});
+										</script>
+										
+									<%}else{ %>
+										
+									<%} %>
 							</div>
 						</div>
 					</div>
@@ -173,12 +231,45 @@
 				</div>
 	
 				<div class="list-btn">
-				<%if(m!=null){ %>
-				<form display="none">
-					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
-					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
-				</form>
-
+				<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
+				<form action="/views/review/reviewUpdateForm.jsp" method="post" display="none">	
+					<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
+					<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
+					<input type="hidden" name="postContent" value="<%=review.getPostContent()%>"/>
+					<input type="hidden" name="postTitle" value="<%=review.getPostTitle()%>"/>
+				
+					<button class="btn-m btn-update" id="modifyBtn">수정</button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button><br>
+				</form>		
+					<button class="btn-m btn-delete" id="deleteBtn">삭제</button>
+				
+					
+					<script>
+						$('#deleteBtn').click(function(){
+							if(window.confirm('게시글을 삭제하시겠습니까?')){
+								
+								var formTag = document.createElement("form");
+								formTag.setAttribute("action","/review/reviewPostDelete.do");
+								formTag.setAttribute("method", "post");
+								
+								var inputTag = document.createElement("input");
+								inputTag.setAttribute("type","hidden");
+								inputTag.setAttribute("name","postNum");
+								inputTag.setAttribute("value","<%=review.getPostNum()%>");
+								
+								formTag.appendChild(inputTag);
+								
+								document.body.appendChild(formTag);
+								
+								formTag.submit();
+								
+							}else{
+								alert('삭제 취소');
+							}
+						});
+					</script>
+					
+					
 				<%}else{ %>			
 					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
 					<button class="btn-m btn-update" disabled>수정</button>

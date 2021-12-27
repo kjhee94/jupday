@@ -29,5 +29,13 @@ public interface ReviewService {
 
 	int searchReviewNo(Review review);
 
+	int updatePost(Review review);
+
+	HashMap<String, Object> selectSearchPost(int currentPage, String keyword, String type);
+
+	int deletePost(int postNum, String userId);
+
+	
+
 	
 }

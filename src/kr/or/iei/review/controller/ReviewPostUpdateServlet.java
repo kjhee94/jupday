@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.iei.member.model.vo.Member;
+import kr.or.iei.review.model.service.ReviewService;
+import kr.or.iei.review.model.service.ReviewServiceImpl;
+import kr.or.iei.review.model.vo.Review;
+
 /**
  * Servlet implementation class ReviewPostUpdateServlet
  */
@@ -26,8 +31,28 @@ public class ReviewPostUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String postContent = request.getParameter("postContent");
+		int postNum = Integer.parseInt(request.getParameter("postNum"));
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		
+		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
+		
+		Review review = new Review();
+		review.setPostNum(postNum);
+		review.setPostContent(postContent);
+		review.setUserId(userId);
+		
+		ReviewService rService = new ReviewServiceImpl();
+		int result = rService.updatePost(review);
+		
+		if(result>0) {
+			response.sendRedirect("/review/reviewSelectContent.do?postNum="+postNum+"&currentPage="+currentPage);
+		}else {
+			response.sendRedirect("/views/commons/error.jsp");
+		}
 	}
 
 	/**

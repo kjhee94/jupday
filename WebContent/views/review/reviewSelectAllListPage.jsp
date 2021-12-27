@@ -210,7 +210,7 @@
 				<div id="page_wrap">
                    <ul class="page_ul">
                      	<%=pageNavi %>         
-                   	</ul>
+                   </ul>
                	</div>
 			</div>
 

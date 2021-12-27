@@ -46,6 +46,7 @@
 		
 			<div id="review_writing">
 				<form action="/review/reviewWrite.do" method="post">
+					
 					<div class="box-write">
 						<div class="box-subject">
 							<input type="text" placeholder="제목을 입력하세요" name="postTitle"/>
