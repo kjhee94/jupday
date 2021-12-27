@@ -39,7 +39,7 @@ public class MemberSearchPwdServlet extends HttpServlet {
 				
 				//비즈니스 로직 처리(있는지 없는지)
 				MemberService mService = new MemberServiceImpl();
-				Member m = mService.SearchPwd(userId,email);//ID값과 이메일 값을 넘겨주면서 비즈니스로직을 시작한다.
+				Member m = mService.searchPwd(userId,email);//ID값과 이메일 값을 넘겨주면서 비즈니스로직을 시작한다.
 				
 
 				if(m!=null) {//아이디와 이메일값이 존재한다면
