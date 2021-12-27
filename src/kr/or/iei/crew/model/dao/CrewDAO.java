@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewBoard;
 import kr.or.iei.crew.model.vo.CrewMember;
 import oracle.net.aso.p;
 
@@ -619,5 +620,55 @@ public class CrewDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+	public ArrayList<CrewBoard> selectAllPostList(Connection conn, int currentFeedPage, int recordCountPerPage, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<CrewBoard> list = new ArrayList<CrewBoard>();
+		
+		int start = currentFeedPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentFeedPage*recordCountPerPage;
+		
+		int feedLikeCount = selectFeedLikeCount(crewNo);
+		int feedCommentCount = selectFeedCommentCount(crewNo);
+		
+		String query = "SELECT * FROM ( " + 
+					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*,NICK " + 
+					   "FROM CREW_FEED CF " + 
+					   "LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+					   "WHERE C_NO=?) " + 
+					   "WHERE NUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	private int selectFeedCommentCount(int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int feedLikeCount = 0;
+		
+		String query = "";
+		
+		return 0;
+	}
+
+	private int selectFeedLikeCount(int crewNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
