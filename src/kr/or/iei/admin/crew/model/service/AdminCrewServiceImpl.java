@@ -7,6 +7,7 @@ import java.util.HashMap;
 import kr.or.iei.admin.crew.model.dao.AdminCrewDAO;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.member.model.vo.Member;
 
 public class AdminCrewServiceImpl implements AdminCrewService{
 	private AdminCrewDAO adcDAO = new AdminCrewDAO();
@@ -29,14 +30,9 @@ public class AdminCrewServiceImpl implements AdminCrewService{
 		
 		hm.put("list", list);
 		hm.put("pageNavi", pageNavi);
-		// DEBUG
-		System.out.println(list);
-		System.out.println(pageNavi);
-
+		
 		JDBCTemplate.close(conn);
 		return hm;
-		
-		
 		
 	}
 

@@ -4,124 +4,64 @@ import java.sql.Date;
 
 public class AdminCrew {
 	
-		private int crewNo;
-		private String crewName;
-		private Date crewCreateDate;
-		private String crewInfo;
-		private String crewImg;
-		private char crewDelYN;
-		private int crewCount;
+		private int c_No;
+		private String c_Name;
+		private Date c_CreateDate;
+		private String c_Info;
+		private char c_Del_YN;
+		private int c_Count;
 		
 		
-		//생성자
 		public AdminCrew() {
 			super();
+			// TODO Auto-generated constructor stub
 		}
 
-		public AdminCrew(int crewNo, String crewName, Date crewCreateDate, String crewInfo, String crewImg, char crewDelYN,
-				int crewCount) {
+		public AdminCrew(int c_No, String c_Name, Date c_CreateDate, String c_Info, char c_Del_YN, int c_Count) {
 			super();
-			this.crewNo = crewNo;
-			this.crewName = crewName;
-			this.crewCreateDate = crewCreateDate;
-			this.crewInfo = crewInfo;
-			this.crewImg = crewImg;
-			this.crewDelYN = crewDelYN;
-			this.crewCount = crewCount;
-		}
-		/*
-		//크루목록에서 사용하는 생성자
-		public AdminCrew(int crewNo, String crewName, String crewImg, int crewCount) {
-			super();
-			this.crewNo = crewNo;
-			this.crewName = crewName;
-			this.crewImg = crewImg;
-			this.crewCount = crewCount;
+			this.c_No = c_No;
+			this.c_Name = c_Name;
+			this.c_CreateDate = c_CreateDate;
+			this.c_Info = c_Info;
+			this.c_Del_YN = c_Del_YN;
+			this.c_Count = c_Count;
 		}
 		
-		//크루생성에서 사용하는 생성자
-		public AdminCrew(String crewName, String crewInfo, String crewImg) {
-			super();
-			this.crewName = crewName;
-			this.crewInfo = crewInfo;
-			this.crewImg = crewImg;
+		public int getC_No() {
+			return c_No;
 		}
-		
-		//크루를 한개 검색할때 사용하는 생성자
-		public AdminCrew(int crewNo, String crewName, Date crewCreateDate, String crewInfo, String crewImg, char crewDelYN) {
-			super();
-			this.crewNo = crewNo;
-			this.crewName = crewName;
-			this.crewCreateDate = crewCreateDate;
-			this.crewInfo = crewInfo;
-			this.crewImg = crewImg;
-			this.crewDelYN = crewDelYN;
+		public void setC_No(int c_No) {
+			this.c_No = c_No;
 		}
-		
-		크루수정에서 사용하는 생성자 
-		public AdminCrew(int crewNo, String crewName, String crewInfo, String crewImg) {
-			super();
-			this.crewNo = crewNo;
-			this.crewName = crewName;
-			this.crewInfo = crewInfo;
-			this.crewImg = crewImg;
-		}*/
+		public String getC_Name() {
+			return c_Name;
+		}
+		public void setC_Name(String c_Name) {
+			this.c_Name = c_Name;
+		}
+		public Date getC_CreateDate() {
+			return c_CreateDate;
+		}
+		public void setC_CreateDate(Date c_CreateDate) {
+			this.c_CreateDate = c_CreateDate;
+		}
+		public String getC_Info() {
+			return c_Info;
+		}
+		public void setC_Info(String c_Info) {
+			this.c_Info = c_Info;
+		}
+		public char getC_Del_YN() {
+			return c_Del_YN;
+		}
+		public void setC_Del_YN(char c_Del_YN) {
+			this.c_Del_YN = c_Del_YN;
+		}
+		public int getC_Count() {
+			return c_Count;
+		}
+		public void setC_Count(int c_Count) {
+			this.c_Count = c_Count;
+		}
+}
 
-		
-		//getter setter
-		public int getCrewNo() {
-			return crewNo;
-		}
-
-		public void setCrewNo(int crewNo) {
-			this.crewNo = crewNo;
-		}
-
-		public String getCrewName() {
-			return crewName;
-		}
-
-		public void setCrewName(String crewName) {
-			this.crewName = crewName;
-		}
-
-		public Date getCrewCreateDate() {
-			return crewCreateDate;
-		}
-
-		public void setCrewCreateDate(Date crewCreateDate) {
-			this.crewCreateDate = crewCreateDate;
-		}
-
-		public String getCrewInfo() {
-			return crewInfo;
-		}
-
-		public void setCrewInfo(String crewInfo) {
-			this.crewInfo = crewInfo;
-		}
-
-		public String getCrewImg() {
-			return crewImg;
-		}
-
-		public void setCrewImg(String crewImg) {
-			this.crewImg = crewImg;
-		}
-
-		public char getCrewDelYN() {
-			return crewDelYN;
-		}
-
-		public void setCrewDelYN(char crewDelYN) {
-			this.crewDelYN = crewDelYN;
-		}
-
-		public int getCrewCount() {
-			return crewCount;
-		}
-
-		public void setCrewCount(int crewCount) {
-			this.crewCount = crewCount;
-		}
-	}

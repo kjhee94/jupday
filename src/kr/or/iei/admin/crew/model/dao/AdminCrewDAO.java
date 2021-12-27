@@ -1,6 +1,7 @@
 package kr.or.iei.admin.crew.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.member.model.vo.Member;
 
 public class AdminCrewDAO {
 	public ArrayList<Crew> selectAllCrewPageList(Connection conn, int currentPage, int recordCountPerPage) {
@@ -17,11 +19,14 @@ public class AdminCrewDAO {
 		ArrayList<Crew> list = new ArrayList<Crew>();
 		
 		int start = currentPage * recordCountPerPage - (recordCountPerPage-1);
-		int end = currentPage * recordCountPerPage;
+		int end = currentPage * recordCountPerPage;		
 		
-		String query = "SELECT * FROM "
-				+ "	(SELECT ROW_NUMBER() OVER (ORDER BY C_NO ASC) AS NUM, "
-				+ "	CREW.* FROM CREW) WHERE NUM BETWEEN ? AND ?";
+		String query = " SELECT DISTINCT C.C_NO, C_NAME, C_INFO, C_CREATEDATE, C_DEL_YN, " + 
+				"	(SELECT COUNT(*) FROM CREW_MEMBER WHERE C_NO=C.C_NO AND C_END_YN = 'N') AS C_COUNT " + 
+				"	FROM CREW_MEMBER CM " + 
+				"	LEFT JOIN CREW C ON (C.C_NO=CM.C_NO) " + 
+				"	WHERE C.C_NO BETWEEN ? AND ? " + 
+				"	ORDER BY C.C_NO ASC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -35,15 +40,14 @@ public class AdminCrewDAO {
 				Crew cr = new Crew();
 				cr.setCrewNo(rset.getInt("c_No"));
 				cr.setCrewName(rset.getString("c_Name"));
-				cr.setCrewInfo(rset.getString("c_info"));
-				cr.setCrewCount(rset.getInt("c_count"));
-				cr.setCrewCreateDate(rset.getDate("c_createDate"));
+				cr.setCrewInfo(rset.getString("c_Info"));
+				cr.setCrewCreateDate(rset.getDate("c_CreateDate"));
 				cr.setCrewDelYN(rset.getString("c_Del_YN").charAt(0));
+				cr.setCrewCount(rset.getInt("c_Count"));
+				
 				list.add(cr);
 			}
-			
-			System.out.println(list);
-			
+						
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,20 +89,20 @@ public class AdminCrewDAO {
 		StringBuilder sb = new StringBuilder();
 		
 		if(startNavi!=1) {
-			sb.append("<li><a href='/admin/CrewrManageList.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+			sb.append("<li><a href='/admin/crewManageList.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
 		}
 
 		for(int i=startNavi; i<=endNavi; i++) {
 			
 			if(i==currentPage) {
-				sb.append("<li><a href='/admin/CrewManageList.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+				sb.append("<li><a href='/admin/crewManageList.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
 			}else {
-				sb.append("<li><a href='/admin/CrewManageList.do?currentPage="+i+"'>"+i+"</a></li>");
+				sb.append("<li><a href='/admin/crewManageList.do?currentPage="+i+"'>"+i+"</a></li>");
 			}
 		}
 
 		if(endNavi!=pageTotalCount) {
-			sb.append("<li><a href='/admin/CrewManageList.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+			sb.append("<li><a href='/admin/crewManageList.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
 		}
 		
 		return sb.toString();

@@ -8,6 +8,7 @@ import kr.or.iei.crew.model.vo.Crew;
 public interface AdminCrewService {
 
 	//요청한 페이지에 대한 목록 리턴
+
 	HashMap<String, Object> selectAllCrewPageList(int currentPage);
 
 }

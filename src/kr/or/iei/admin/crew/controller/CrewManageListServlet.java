@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.admin.crew.model.service.AdminCrewService;
 import kr.or.iei.admin.crew.model.service.AdminCrewServiceImpl;
+import kr.or.iei.admin.model.service.AdminMemberService;
+import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
@@ -35,9 +37,11 @@ public class CrewManageListServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
+		//인코딩 처리
 		
-		//System.out.println(authorityId); 검증코드
+		request.setCharacterEncoding("UTF-8");
+
+		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
 		if(authorityId==null) {
 			response.sendRedirect("/views/commons/error.jsp");

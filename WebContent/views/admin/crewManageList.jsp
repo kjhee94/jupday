@@ -79,7 +79,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th width="200">게시번호</th>
+                                <th width="200">크루번호</th>
                                 <th width="300">크루명</th>
                                 <th width="300">크루설명</th>
                                 <th width="200">회원수</th>
