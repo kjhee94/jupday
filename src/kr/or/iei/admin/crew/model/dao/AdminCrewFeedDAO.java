@@ -62,6 +62,7 @@ public class AdminCrewFeedDAO<CrewNo> {
 		
 	}
 	
+	//좋아요 카운트
     private int selectFeedLikeCount(Connection conn, int feedNo) {
         
         PreparedStatement pstmt = null;
@@ -98,7 +99,7 @@ public class AdminCrewFeedDAO<CrewNo> {
 	public String getPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage) {
 		
 		//전체 피드수
-		int recordTotalCount = totalCount(conn);
+		int recordTotalCount = totalCount(conn, crewNo);
 		
 		//전체 페이지수
 		int pageTotalCount = 0;
@@ -144,7 +145,7 @@ public class AdminCrewFeedDAO<CrewNo> {
 				
 	}
 	
-	public int totalCount(Connection conn)
+	public int totalCount(Connection conn, crewNo)
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -155,7 +156,7 @@ public class AdminCrewFeedDAO<CrewNo> {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			//pstmt.setInt(1, crewNo);
+			pstmt.setInt(1, crewNo);
 			
 			rset = pstmt.executeQuery();
 			

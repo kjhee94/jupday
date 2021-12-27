@@ -86,8 +86,7 @@
                                 <th width="200">작성자</th>
                                 <th width="200">좋아요</th>
                                 <th width="200">작성일자</th>
-                                <th width="200">베스트리뷰</th>                                                                
-                                <th width="200">리뷰설정</th>                                
+                                <th width="200">베스트설정</th>                                                                                              
                                 <th width="150">삭제 / 복원</th>
                             </tr>
                         </thead>
@@ -100,8 +99,13 @@
                                 <td><%=re.getNick() %></td>
                                 <td><%=re.getGood() %></td>
                                 <td><%=re.getRegDate() %></td>
-                                <td><input type="checkbox"></td>
-                                <td></td>
+                                <td>
+                                <%if(re.getBest_YN()=='N') {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                                 <td>
                                 <%if(re.getDel_YN()=='N') {%>
                                 <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="del_btn">삭제</button></a>

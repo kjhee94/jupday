@@ -22,7 +22,7 @@ public class AdminReviewDAO {
 		int end = currentPage * recordCountPerPage;		
 		
 		String query = " SELECT * FROM( " + 
-				"	SELECT ROW_NUMBER() OVER (ORDER BY R.POSTNUM ASC) AS NUM, " + 
+				"	SELECT ROW_NUMBER() OVER (ORDER BY R.POSTNUM DESC) AS NUM, " + 
 				"	R.POSTNUM, NICK, R.REGDATE, R.POSTTITLE, R.POSTCONTENT, R.GOOD, R.BEST_YN, R.DEL_YN " + 
 				"	FROM REVIEW R LEFT JOIN MEMBER M ON (R.USERID=M.USERID)) " + 
 				"	WHERE NUM BETWEEN ? AND ? ";
