@@ -28,6 +28,7 @@ public class MemberDAO {
 			
 			if(rset.next()) {
 				m = new Member();
+
 				m.setAuthority_Id(rset.getString("authority_Id"));//1
 				m.setUserId(rset.getString("userId"));//2
 				m.setUserPwd(rset.getString("userPwd"));//3
@@ -128,6 +129,131 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+
+	public boolean selectEmailChecking(String email, Connection conn) {
+		PreparedStatement pstmt= null;
+		ResultSet rset= null;
+		boolean result = false;
+		
+		String query= "select email from Member WHERE email=?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) 
+			{
+				result= true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+	public Member searchId(String email , Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		Member m=null;
+		ResultSet rset= null;
+		
+		String query ="SELECT*FROM MEMBER WHERE EMAIL=? AND END_YN='N'";
+	
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, email);
+			rset= pstmt.executeQuery();
+						
+			if(rset.next()) {
+				m = new Member();
+				m.setUserId(rset.getString("userId"));//1
+				m.setEmail(rset.getString("email"));//2
+				m.setEnrollDate(rset.getDate("enrollDate"));//3
+			}
+			
+		} catch (SQLException e) { 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return m;
+		
+	}
+	
+	
+	public Member searchPwd(String userId, String email , Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		Member m=null;
+		ResultSet rset= null;
+		
+		String query ="SELECT*FROM MEMBER WHERE userID=? AND EMAIL=? AND END_YN='N'";
+	
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, email);
+			rset= pstmt.executeQuery();
+						
+			if(rset.next()) {
+				m = new Member();
+				m.setUserId(rset.getString("userId"));//1
+				m.setUserPwd(rset.getString("userPwd"));//2
+				m.setEmail(rset.getString("email"));//3
+			}
+			
+		} catch (SQLException e) { 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return m;
+		
+	}
+	
+	public int searchUapatePwd(String userId, String userPwd, Connection conn) {
+		PreparedStatement pstmt= null;
+		int result = 0; 
+		
+		String query ="UPDATE MEMBER SET userPwd=? Where userId=?";
+		
+		//preparestatement 부터 만들겠다.
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userPwd);//변경할 비밀번호
+			pstmt.setString(2, userId);//아이디
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	
+	}
+
+		
 
 	public int updatePwdMember(String userId, String pwd, String newPwd, Connection conn) {
 		PreparedStatement pstmt = null;
@@ -256,12 +382,15 @@ public class MemberDAO {
 			}
 			
 		} catch (SQLException e) {
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
+
+
 		return result;
 	}
 
@@ -289,7 +418,6 @@ public class MemberDAO {
 		}
 		return result;
 	}
-
 
 	
 	

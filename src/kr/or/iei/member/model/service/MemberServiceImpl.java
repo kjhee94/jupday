@@ -38,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
 	@Override
 	public int deleteOneMember(String userId, String userPwd) {
 		Connection conn = JDBCTemplate.getConnection();
@@ -75,6 +76,56 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
+	public boolean selectEmailChecking(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		boolean result=mDAO.selectEmailCheck(email,conn);
+		JDBCTemplate.close(conn);	
+		
+		return result;
+	}
+	
+	@Override
+	public Member searchId(String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.searchId(email,conn);
+		JDBCTemplate.close(conn);
+
+		return m;
+		
+		
+	}
+	
+	@Override
+	public Member searchPwd(String userId,String email) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = mDAO.searchPwd(userId,email,conn);
+		JDBCTemplate.close(conn);
+
+		return m;
+		
+
+		
+	}
+	
+	
+	@Override
+	public int searchUapatePwd(String userId, String userPwd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result= mDAO.searchUapatePwd(userId,userPwd,conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+
+		
+	}
+	
+	
+
+
+
+
 	public int updatePwdMember(String userId, String pwd, String newPwd) {
 		Connection conn = JDBCTemplate.getConnection();
 		int result = mDAO.updatePwdMember(userId, pwd, newPwd, conn);
@@ -112,7 +163,7 @@ public class MemberServiceImpl implements MemberService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+	}
 	
 
 
-}

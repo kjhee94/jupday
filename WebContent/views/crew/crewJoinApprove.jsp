@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.or.iei.crew.model.vo.CrewMember"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,10 +20,16 @@
 </head>
 <body>
 
+	<%
+		ArrayList<CrewMember> list = (ArrayList<CrewMember>)request.getAttribute("list");
+		int crewNo = (int)request.getAttribute("crewNo");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
+		<% if(m!=null) {%>
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
@@ -29,69 +37,45 @@
 			</div>
 			
 			<div class="applicants">
-				<div class="box-applicant">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="user-name">
-						<p>최강주희</p>
-						<span>가입신청 : 2021.11.23</span>
-					</div>
-					<div class="box-approval">
-						<button>수락</button>
-						<button>거절</button>
-					</div>
-				</div>
+				<%if(!list.isEmpty()) {%>
 				
-				<div class="box-applicant">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="user-name">
-						<p>최강주희</p>
-						<span>가입신청 : 2021.11.23</span>
-					</div>
-					<div class="box-approval">
-						<button>수락</button>
-						<button>거절</button>
-					</div>
-				</div>
-				
-				<div class="box-applicant">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="user-name">
-						<p>최강주희</p>
-						<span>가입신청 : 2021.11.23</span>
-					</div>
-					<div class="box-approval">
-						<button>수락</button>
-						<button>거절</button>
-					</div>
-				</div>
-				
-				<div class="box-applicant">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="user-name">
-						<p>최강주희</p>
-						<span>가입신청 : 2021.11.23</span>
-					</div>
-					<div class="box-approval">
-						<button>수락</button>
-						<button>거절</button>
-					</div>
-				</div>
+					<%for(CrewMember cm : list) {%>
+						<div class="box-applicant">
+							<div class="user-img">
+								<%if(cm.getMemberImg()!=null) { %>
+								<img alt="프로필이미지" src="<%=cm.getMemberImg() %>">
+								<%}else { %>
+								<img alt="크루이미지" src="/assets/images/profile.png">
+								<%} %>
+							</div>
+							<div class="user-name">
+								<p><%=cm.getNick() %></p>
+								<span>가입신청 : <%=cm.getCrewEnrollDate() %></span>
+							</div>
+							<div class="box-approval">
+								<button><a href="/crew/crewJoinAccept.do?userId=<%=cm.getUserId() %>&crewNo=<%=cm.getCrewNo()%>">수락</a></button>
+								<button><a href="/crew/crewJoinRefusal.do?userId=<%=cm.getUserId() %>&crewNo=<%=cm.getCrewNo()%>">거절</a></button>
+							</div>
+						</div>
+					<%} %>
+					
+				<%}else { %>
+					<p>가입을 요청한 회원이 없습니다</p>
+				<%} %>
 			</div>
 			
 			<div class="box-btn">
 				<button class="btn-m">
-					<a href="./crewSetting.jsp">완료</a>
+					<a href="/views/crew/crewSetting.jsp?crewNo=<%=crewNo%>">완료</a>
 				</button>
 			</div>
 		</div>
+		
+		<% } else { %>
+			<script>
+				location.replace("/views/member/memberLogin.jsp");
+			</script>
+		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	

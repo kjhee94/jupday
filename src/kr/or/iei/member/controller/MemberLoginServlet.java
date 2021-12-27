@@ -51,7 +51,7 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		       //리턴값은 Member 객체 이거나 혹은 null
 		
-				if(m!=null) {//로그인이 성공했다면
+				if(m!=null) {//로그인이 성공했을 경우
 					HttpSession session = request.getSession(true);
 					session.setAttribute("member", m);
 					
@@ -60,7 +60,7 @@ public class MemberLoginServlet extends HttpServlet {
 					//로그인을 성공하게 되면, sendRedirect를 통하여 메인페이지로 이동 시켜주어라
 					//이때 sendRedirect는 사용자의 URL을 변경시켜주는 response 객체의 메소드
 				
-				}else {//로그인이 실패할시
+				}else {//로그인이 실패할 경우
 					//response.sendRedirect("/views/member/memberLoginFail.jsp");
 					
 					//RequestDispatcher를 이용하면 URL을 변경하지 않고 이동할 수 있다.

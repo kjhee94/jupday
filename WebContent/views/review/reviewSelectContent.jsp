@@ -1,3 +1,5 @@
+<%@page import="kr.or.iei.review.model.vo.ReviewComment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="kr.or.iei.review.model.vo.Review"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -51,9 +53,7 @@
 				Review review = (Review)request.getAttribute("review");
 				int currentPage = (int)request.getAttribute("currentPage");	
 			%>
-			
-			
-		
+
 			<div id="review_writing">
 				<div class="write-top">
 					<div class="box-subject">
@@ -101,66 +101,88 @@
 				
 				<div class="box-comment">
 				
+				<%
+					ArrayList<ReviewComment> commentslist = review.getComments();
+				%>
+				<%if(commentslist.isEmpty()){ %>
+					<H2>현재 댓글이 없습니다. 댓글을 작성해보세요</H2>
+				<%}else{ %>
+				
+					<%for(ReviewComment co : commentslist){ %>
+				
 					<div class="box-one-comment">
 						<div class="user-img">
 							<img alt="" src="/assets/images/profile.png">
 						</div>
 						<div class="right-comment">
 							<div class="user-comment">
-								<p>최강주희<span>2021-12-06</span></p>
+								<p><%=co.getNick() %><span><%=co.getR_c_regDate() %></span></p>
 							</div>
-							<div class="txt-comment">
-								<p>우와 너무 멋져요 자극받고갑니다!</p>
-							</div>
-						</div>
-					</div>
-					
-					<div class="box-one-comment">
-						<div class="user-img">
-							<img alt="" src="/assets/images/profile.png">
-						</div>
-						<div class="right-comment">
-							<div class="user-comment">
-								<p>연신내핵주먹<span>2021-12-06</span></p>
-							</div>
-							<div class="txt-comment">
-								<p>한강이 플로깅하기 좋군요 참고하겠습니다 고마워요!</p>
-							</div>
-						</div>
-					</div>
-					
-					<div class="box-one-comment">
-						<div class="user-img">
-							<img alt="" src="/assets/images/profile.png">
-						</div>
-						<div class="right-comment">
-							<div class="user-comment">
-								<p>난폭한오렌지<span>2021-12-06</span></p>
-							</div>
-							<div class="txt-comment">
-								<p>와ㅠㅠ대단하세요ㅠㅠㅠㅠㅠ</p>
+							<div class="txt-comment">								
+								<p><%=co.getR_c_comment() %></p>
+									<input type="text" style="display:none;"/>
+										<form action ="/review/reviewCommentUpdate.do" method="post" id="commentUpdateForm" display="none">			
+											<input type="hidden" name="content" id="contentArea" value="<%=review.getPostContent()%>"/>
+											<input type="hidden" name="boardNo" value="<%=review.getPostTitle() %>"/>
+											<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
+										</form>
+										
+										<%-- 막상 했지만 이건 고민좀 해봐야할듯, 창을 하나 띄우고 할 것인가, 내가 원하는건 수정 버튼 누르면 입력한 <p>태그에서 수정하고 완료 누르면 수정되는 로직인데--%> 
+										
+										<%if(m!=null && m.getUserId().equals(co.getUserId())) {%>
+										
+											<button class="coModifyBtn">수정</button>  
+											<button class="coDeleteBtn" commentNo="<%=co.getR_c_comment()%>">삭제</button>
+										<%}else{ %>
+										
+										<%} %>
 							</div>
 						</div>
 					</div>
+
+					<%} %>
 					
+				<%} %>
+				
+					<%if(m!=null){ %>
+					<form action="/review/reviewCommentWrite.do" method="post">
 					<div class="box-write-comment">
 						<div class="user-nick">
-							<p>연신내 독감자</p>
+							<p><%=m.getNick() %></p>
+							
 						</div>
-						<textarea placeholder="댓글을 입력하세요"></textarea>
-						<button>등록</button>
+						<textarea name="r_c_comment" placeholder="댓글을 입력하세요"></textarea>
+						<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
+						<input type="hidden" name="currentPage" value="<%=currentPage %>"/>
+						<button>등록</button>											
 					</div>
-				</div>
-				
-				<div class="list-btn">
-				<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
-					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
-					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
-				<%}else{ %>
+					</form>	
+						
+					<%}else{ %>
+					<div class="box-write-comment">	
+						<div class="user-nick">
+							<p>none</p>
+						</div>
+						<textarea disabled placeholder="로그인 후 사용해주세요"></textarea>
+						<button disabled>등록</button>
+						<%--추루 여기다 location.replace를 줘서 로그인 페이지로 돌아가게 만들 예정 --%>
+					</div>	
+					<%} %>
 					
+					
+				</div>
+	
+				<div class="list-btn">
+				<%if(m!=null){ %>
+				<form display="none">
+					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
+				</form>
+
+				<%}else{ %>			
 					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
 					<button class="btn-m btn-update" disabled>수정</button>
-					<button class="btn-m btn-golist"><a href="./reviewSelectAllListPage.jsp">목록</a></button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
 				<%} %>
 				</div>
 			</div>

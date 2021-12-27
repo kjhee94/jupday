@@ -1,3 +1,5 @@
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +21,12 @@
 </head>
 <body>
 
+	<%
+	//서블릿에서 보내는 값 가져오기
+	ArrayList<Crew> manageList = (ArrayList<Crew>)request.getAttribute("manageList");
+	ArrayList<Crew> joinList = (ArrayList<Crew>)request.getAttribute("joinList");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -36,30 +44,37 @@
 			</div>
 			
 			<div class="area-created-crew">
-			
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="./crewOnePage.jsp">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">오늘도 내가 해냄</p>
-							<div class="crew-m-count">
-								<i class="far fa-user"></i>
-								<span>37명</span>
-							</div>
+				
+				<%for(Crew c:manageList) {%>
+					<div class="box-crew">
+						<div class="area-img">
+							<a href="/crew/crewOnePage.do?crewNo=<%=c.getCrewNo()%>">
+								<%if(c.getCrewImg()!=null) { %>
+								<img alt="크루이미지" src="<%=c.getCrewImg()%>">
+								<%}else { %>
+								<img alt="크루이미지" src="/assets/images/crew.png">
+								<%} %>
+							</a>
 						</div>
-						<button class="crew-setting">
-							<a href="./crewSetting.jsp">설정</a>
-						</button>
+						<div class="area-bottom">
+							<div class="area-txt">
+								<p class="crew-name"><%=c.getCrewName() %></p>
+								<div class="crew-m-count">
+									<i class="far fa-user"></i>
+									<span><%=c.getCrewCount() %></span>
+								</div>
+							</div>
+							<button class="crew-setting">
+								<a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">설정</a>
+							</button>
+						</div>
 					</div>
-				</div>
+				<%} %>
+				
 				
 				<div class="box-crew">
 					<button class="crew-create">
-						<a href="./crewCreate.jsp">
+						<a href="/views/crew/crewCreate.jsp">
 							<i class="fas fa-plus"></i>
 						</a>
 					</button>
@@ -67,42 +82,33 @@
 			</div>
 			
 			<div class="area-joined-crew">
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">연신내 줍데이</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>227명</span>
+			
+				<%for(Crew c:joinList) {%>
+					<div class="box-crew">
+						<div class="area-img">
+							<a href="/crew/crewOnePage.do?crewNo=<%=c.getCrewNo()%>">
+								<%if(c.getCrewImg()!=null) { %>
+								<img alt="크루이미지" src="<%=c.getCrewImg()%>">
+								<%}else { %>
+								<img alt="크루이미지" src="/assets/images/crew.png">
+								<%} %>
+							</a>
+						</div>
+						<div class="area-bottom">
+							<div class="area-txt">
+								<p class="crew-name"><%=c.getCrewName() %></p>
+								<div class="crew-m-count">
+									<i class="far fa-user"></i>
+									<span><%=c.getCrewCount() %></span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="box-crew">
-					<div class="area-img">
-						<a href="">
-							<img alt="크루이미지" src="/assets/images/crew.png">
-						</a>
-					</div>
-					<div class="area-bottom">
-						<div class="area-txt">
-							<p class="crew-name">내가 제일 잘주워</p>
-							<div class="crew-m-number">
-								<i class="far fa-user"></i>
-								<span>374명</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				<%} %>
 					
 				<div class="box-crew">
 					<button class="crew-create">
-						<a href="./crewSearchList.jsp">
+						<a href="/crew/crewAllList.do">
 							<i class="fas fa-plus"></i>
 						</a>
 					</button>

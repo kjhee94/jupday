@@ -47,7 +47,7 @@
 				</div>
 				<div class="box-button">
 					<input type="submit" value="수정" class="btn-m">
-					<button class="btn-m"><a href="./crewOneFeed.jsp">취소</a></button>
+					<button class="btn-m"><a href="/views/crews/crewOneFeed.jsp">취소</a></button>
 				</div>
 			</form>
 			

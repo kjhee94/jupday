@@ -47,7 +47,7 @@
 				</div>
 				<div class="box-button">
 					<input type="submit" value="완료" class="btn-m">
-					<button class="btn-m"><a href="./crewOnePage.jsp">목록</a></button>
+					<button class="btn-m"><a href="/views/crews/crewOnePage.jsp">목록</a></button>
 				</div>
 			</form>
 			

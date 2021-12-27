@@ -1,6 +1,7 @@
 package kr.or.iei.review.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Review {
 
@@ -14,6 +15,7 @@ public class Review {
 	private char best_YN;
 	private char del_YN;
 	private String nick;
+	private ArrayList<ReviewComment> comments;
 	
 	public Review() {
 		super();
@@ -33,6 +35,14 @@ public class Review {
 		this.best_YN = best_YN;
 		this.del_YN = del_YN;
 		this.nick = nick;
+	}
+
+	public ArrayList<ReviewComment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<ReviewComment> comments) {
+		this.comments = comments;
 	}
 
 	public int getPostNum() {

@@ -159,7 +159,7 @@
 			
 			<div class="box-write-search">
 				<button class="btn-rec">
-					<a href="./reviewWriteForm.jsp">글쓰기</a>
+					<a href="/views/review/reviewWriteForm.jsp">글쓰기</a>
 				</button>
 				
 				<div class="box-search">
@@ -209,20 +209,11 @@
 				
 				<div id="page_wrap">
                    <ul class="page_ul">
-                       <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-                       <li><%=pageNavi %></li>
-                       
-                      <%-- 기존 코드는 일단 주석처리
-                       <li><a href="" class="page_active">1</a></li>
-                       <li><a href="">2</a></li>
-                       <li><a href="">3</a></li>
-                       <li><a href="">4</a></li>
-                       <li><a href="">5</a></li>
-                      --%>
-                       <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
-                   	</ul>
+                     	<%=pageNavi %>         
+                   </ul>
                	</div>
 			</div>
+
 			
 		</div>
 	

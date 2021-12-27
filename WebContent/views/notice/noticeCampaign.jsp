@@ -34,10 +34,10 @@
          <div class="notice-top">
          	 <div class="box-button">
 				<button class="btn-notice">
-					<a href="./noticeNews.jsp">공지사항</a>
+					<a href="/views/notice/noticeNews.jsp">공지사항</a>
 				</button>
 				<button class="btn-campaign">
-					<a href="./noticeCampaign.jsp">캠페인 안내</a>
+					<a href="/views/notice/noticeCampaign.jsp">캠페인 안내</a>
 				</button>
 			 </div>
 		 </div>
@@ -63,7 +63,7 @@
 			 
 			 <div class="box-campaign-list">
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="/views/notice/noticeCampaineContent.jsp">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign01.jpg">
 				 		</div>
@@ -75,7 +75,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign02.png">
 				 		</div>
@@ -87,7 +87,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign03.jpg">
 				 		</div>
@@ -99,7 +99,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign04.jpg">
 				 		</div>
@@ -111,7 +111,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign05.jpg">
 				 		</div>
@@ -123,7 +123,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign06.jpg">
 				 		</div>
@@ -135,7 +135,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign07.png">
 				 		</div>
@@ -147,7 +147,7 @@
 			 	</div>
 			 	
 			 	<div class="box-campaign">
-			 		<a href="noticeCampaineContent.jsp">
+			 		<a href="">
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign08.png">
 				 		</div>

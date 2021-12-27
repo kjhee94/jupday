@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
 import kr.or.iei.review.model.vo.Review;
+import kr.or.iei.review.model.vo.ReviewComment;
 
 /**
  * Servlet implementation class ReviewSelectContentServlet

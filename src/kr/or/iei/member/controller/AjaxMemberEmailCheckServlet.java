@@ -1,8 +1,8 @@
 package kr.or.iei.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +13,16 @@ import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.member.model.service.MemberServiceImpl;
 
 /**
- * Servlet implementation class MemberNickCheckServlet
+ * Servlet implementation class AjaxMemberEmailCheckServlet
  */
-@WebServlet("/member/nickCheck.do")
-public class MemberNickCheckServlet extends HttpServlet {
+@WebServlet("/member/memberEmailCheck.do")
+public class AjaxMemberEmailCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberNickCheckServlet() {
+    public AjaxMemberEmailCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,19 +31,16 @@ public class MemberNickCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		//중복 체크를 확인할 nick 값을 받아와야 한다.
-		String nick = request.getParameter("nick");
-		
-		MemberService mService = new MemberServiceImpl();
-		boolean result= mService.selectNickCheck(nick);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/views/member/nickCheck.jsp");
-		
-		request.setAttribute("nickCheck", result);// true 또는 false 값을 담아준다.
-		request.setAttribute("nick", nick);// JSP 페이지에서 id 값을 사용 할 수 있도록 보내줌
-		
-		view.forward(request, response);
+		        //email 값을 받아서, 비즈니스로직 처리로 해당 email가 있는 지 없는지를 판단하는 역할의 Servlet
+
+				String email = request.getParameter("email");
+				MemberService mService = new MemberServiceImpl();
+				
+				boolean result = mService.selectEmailCheck(email);
+				
+				PrintWriter out = response.getWriter();
+				
+				out.print(result);
 	}
 
 	/**

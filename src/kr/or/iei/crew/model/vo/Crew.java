@@ -30,9 +30,38 @@ public class Crew {
 		this.crewCount = crewCount;
 	}
 	
+	//크루목록에서 사용하는 생성자
+	public Crew(int crewNo, String crewName, String crewImg, int crewCount) {
+		super();
+		this.crewNo = crewNo;
+		this.crewName = crewName;
+		this.crewImg = crewImg;
+		this.crewCount = crewCount;
+	}
+	
 	//크루생성에서 사용하는 생성자
 	public Crew(String crewName, String crewInfo, String crewImg) {
 		super();
+		this.crewName = crewName;
+		this.crewInfo = crewInfo;
+		this.crewImg = crewImg;
+	}
+	
+	//크루를 한개 검색할때 사용하는 생성자
+	public Crew(int crewNo, String crewName, Date crewCreateDate, String crewInfo, String crewImg, char crewDelYN) {
+		super();
+		this.crewNo = crewNo;
+		this.crewName = crewName;
+		this.crewCreateDate = crewCreateDate;
+		this.crewInfo = crewInfo;
+		this.crewImg = crewImg;
+		this.crewDelYN = crewDelYN;
+	}
+	
+	//크루수정에서 사용하는 생성자 
+	public Crew(int crewNo, String crewName, String crewInfo, String crewImg) {
+		super();
+		this.crewNo = crewNo;
 		this.crewName = crewName;
 		this.crewInfo = crewInfo;
 		this.crewImg = crewImg;

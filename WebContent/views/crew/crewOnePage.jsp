@@ -39,7 +39,7 @@
 			
 			<div class="box-write-search">
 				<button class="btn-rec">
-					<a href="./crewWriteFeed.jsp">글쓰기</a>
+					<a href="/views/crew/crewWriteFeed.jsp">글쓰기</a>
 				</button>
 				
 				<div class="box-search">
@@ -63,7 +63,7 @@
 			
 			<div class="box-feed">
 				<div class="list-crew-feed">
-					<a href="./crewOneFeed.jsp">
+					<a href="/views/crew/crewOneFeed.jsp">
 						<div class="box-writer">
 							<div class="user-img">
 								<img alt="" src="/assets/images/profile.png">
@@ -79,195 +79,6 @@
 						<div class="feed-bottom">
 							<i class="far fa-heart"></i><span>11</span>
 							<i class="far fa-comment"></i><span>3</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
-						</div>
-					</a>
-				</div>
-				
-				<div class="list-crew-feed">
-					<a href="">
-						<div class="box-writer">
-							<div class="user-img">
-								<img alt="" src="/assets/images/profile.png">
-							</div>
-							<div class="user-name">
-								<p>최강주희</p>
-								<span>2021.11.23</span>
-							</div>
-						</div>
-						<div class="feed-content">
-							<p>오늘 신한은행 앞에 타코야끼 트럭 있나요? </p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span>1,202</span>
-							<i class="far fa-comment"></i><span>657</span>
 						</div>
 					</a>
 				</div>

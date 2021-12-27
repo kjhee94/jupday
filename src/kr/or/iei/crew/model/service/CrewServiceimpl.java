@@ -7,6 +7,7 @@ import java.util.HashMap;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.crew.model.vo.CrewMember;
 
 public class CrewServiceimpl implements CrewService {
 	
@@ -102,6 +103,106 @@ public class CrewServiceimpl implements CrewService {
 			JDBCTemplate.close(conn);
 			return false;
 		}
+	}
+
+	@Override
+	public ArrayList<Crew> selectManageCrew(String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Crew> list = cDAO.selectManageCrew(conn, userId);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	@Override
+	public ArrayList<Crew> selectJoinedCrew(String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Crew> list = cDAO.selectJoinedCrew(conn, userId);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	@Override
+	public Crew selectOneCrew(int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		Crew c = cDAO.selectOneCrew(conn, crewNo);
+		JDBCTemplate.close(conn);
+		return c;
+	}
+
+	@Override
+	public int UpdateOneCrew(Crew c) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateOneCrew(conn, c);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<CrewMember> selectApproveList(int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<CrewMember> list = cDAO.selectApproveList(conn, crewNo);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	@Override
+	public int updateCrewJoinStateAccept(String userId, int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewJoinStateAccept(conn, userId, crewNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int updateCrewJoinStateRefusal(String userId, int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewJoinStateRefusal(conn, userId, crewNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public String selectCrewName(int crewNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		String crewName = cDAO.selectCrewName(conn, crewNo);
+		JDBCTemplate.close(conn);
+		return crewName;
+	}
+
+	@Override
+	public int deleteOneCrew(int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.deleteOneCrew(conn, crewNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 	
 	

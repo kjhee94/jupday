@@ -3,6 +3,7 @@ package kr.or.iei.review.model.service;
 import java.util.HashMap;
 
 import kr.or.iei.review.model.vo.Review;
+import kr.or.iei.review.model.vo.ReviewComment;
 
 public interface ReviewService {
 
@@ -16,17 +17,26 @@ public interface ReviewService {
 	
 	HashMap<String, Object> selectAllPostList(int currentPage);
 	
-
-	Review selectOnePost(int postNum);
-
+	
+	Review memberSelectOnePost(int postNum);
 
 	/*HashMap<String, Object> selectMemberAllPostList(String userId, int currentPage);*/
 
-
 	/*Review memberReview(String userId);*/
 
-
 	HashMap<String, Object> selectSearchPost(int currentPage, String userId);
+
+	Review selectOnePost(int postNum);
+
+	int insertBoardComment(ReviewComment co);
+
+	int updateReviewComment(ReviewComment co);
+
+	int deleteReviewComment(int r_c_no, String userId);
+
+	int insertPostWrite(Review review);
+
+	int searchReviewNo(Review review);
 
 	
 }
