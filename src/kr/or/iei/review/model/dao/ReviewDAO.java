@@ -96,7 +96,6 @@ public class ReviewDAO {
             }else {
                 sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"'>"+i+"</a></li>");
             }
-
         }
 
         if(endNavi!=pageTotalCount) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li> ");}
