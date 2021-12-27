@@ -352,7 +352,7 @@ textarea {
 	color: #2A2A2A;
     padding: 10px;
     border-radius: 50%;
-    transition: ease 0.3s;
+/*     transition: ease 0.3s; */
 }
 #page_wrap .page_ul li a.page_active {
     background-color: #AFD485;
