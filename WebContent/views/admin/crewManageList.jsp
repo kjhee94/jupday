@@ -99,9 +99,9 @@
                                 <td><button class="man_btn"><a href="crewFeedManageList.jsp">관리</a></button>
                                 <td>
                                 <%if(cr.getCrewDelYN()=='N') {%>
-                                <a href="/admin/memberEndYNChange.do?userId=<%=cr.getCrewNo()%>&endYN=<%=cr.getCrewDelYN()%>"><button class="del_btn">삭제</button></a>
+                                <a href="/admin/crewDelYNChange.do?c_No=<%=cr.getCrewNo()%>&c_Del_YN=<%=cr.getCrewDelYN()%>"><button class="del_btn">삭제</button></a>
                                 <%}else {%>
-                                <a href="/admin/memberEndYNChange.do?userId=<%=cr.getCrewNo()%>&endYN=<%=cr.getCrewDelYN()%>"><button class="re_btn">복원</button></a>
+                                <a href="/admin/crewDelYNChange.do?c_No=<%=cr.getCrewNo()%>&c_Del_YN=<%=cr.getCrewDelYN()%>"><button class="re_btn">복원</button></a>
                                 <%} %>
                                 </td>
                             </tr>

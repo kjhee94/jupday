@@ -11,4 +11,6 @@ public interface AdminCrewService {
 
 	HashMap<String, Object> selectAllCrewPageList(int currentPage);
 
+	public int updateCrewDelYN(int crewNo, char delYN);
+
 }

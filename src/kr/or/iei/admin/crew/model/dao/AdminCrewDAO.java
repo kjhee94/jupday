@@ -137,5 +137,27 @@ public class AdminCrewDAO {
 		
 		return count;
 	}
+
+	public int updateCrewDelYN(int crewNo, char delYN, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW SET C_DEL_YN=? WHERE C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, String.valueOf(delYN));
+			pstmt.setInt(2, crewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
 

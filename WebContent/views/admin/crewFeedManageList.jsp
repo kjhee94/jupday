@@ -23,6 +23,13 @@
     
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
+      
+        <% Member m = (Member)session.getAttribute("member"); %>
+            
+		<%//페이징 처리 된 데이터 가져오기
+		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+		ArrayList<CrewFeed> list = (ArrayList<CrewFeed>)pageDataMap.get("list");
+		String pageNavi = (String)pageDataMap.get("pageNavi");%>
 
         <div id="header">
             <div class="admin-path">
@@ -32,7 +39,7 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -70,12 +77,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th width="200">게시번호</th>
+                                <th width="100">게시번호</th>
                                 <th width="300">게시글제목</th>
                                 <th width="300">게시글내용</th>
-                                <th width="300">작성자</th>
-                                <th width="200">조회수</th>
-                                <th width="200">좋아요</th>
+                                <th width="200">작성자</th>
+                                <th width="100">조회수</th>
+                                <th width="100">좋아요</th>
                                 <th width="200">작성일자</th>
                                 <th width="150">삭제 / 복원</th>
                             </tr>

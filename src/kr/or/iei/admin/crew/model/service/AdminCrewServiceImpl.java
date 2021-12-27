@@ -36,4 +36,15 @@ public class AdminCrewServiceImpl implements AdminCrewService{
 		
 	}
 
+	@Override
+	public int updateCrewDelYN(int crewNo, char delYN) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adcDAO.updateCrewDelYN(crewNo,delYN,conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+
 }
