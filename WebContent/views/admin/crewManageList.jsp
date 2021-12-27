@@ -124,15 +124,16 @@
         </footer>
     </div>
     
-    <%-- 
-        <script>
+    
+    
+    <%--<script>
 	$('.del_btn').click(function(){
 		
 		var data = $(this).html();
 		
 		if(data=='Y')
 		{
-			window.confirm(<%=c.getCrewName() %> + " 크루를 삭제처리하시겠습니까?");
+			window.confirm(<%=cr.getCrewName() %> + " 크루를 삭제처리하시겠습니까?");
 			
 		}
 		
@@ -144,10 +145,10 @@
 		
 		if(data=='Y')
 		{
-			window.confirm(<%=c.getCrewName %> + " 크루를 복원하시겠습니끼?");	
+			window.confirm(<%=cr.getCrewName %> + " 크루를 복원하시겠습니끼?");	
 		}
 		
 	});
-    </script> --%>
+    </script>  --%>
 </body>
 </html>

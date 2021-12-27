@@ -35,12 +35,14 @@ public class AdminCrewDAO {
 				Crew cr = new Crew();
 				cr.setCrewNo(rset.getInt("c_No"));
 				cr.setCrewName(rset.getString("c_Name"));
-				cr.setCrewInfo(rset.getString("c_Info"));
+				cr.setCrewInfo(rset.getString("c_info"));
 				cr.setCrewCount(rset.getInt("c_count"));
-				cr.setCrewCreateDate(rset.getDate("c_CreateDate"));
-				cr.setCrewDelYN(rset.getString("crewDel_YN").charAt(0));
+				cr.setCrewCreateDate(rset.getDate("c_createDate"));
+				cr.setCrewDelYN(rset.getString("c_Del_YN").charAt(0));
 				list.add(cr);
 			}
+			
+			System.out.println(list);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

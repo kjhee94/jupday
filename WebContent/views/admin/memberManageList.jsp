@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 <%@page import="kr.or.iei.admin.model.dao.AdminMemberDAO"%>
-=======
->>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
@@ -32,11 +29,9 @@
 	%>
 	
 	<%//페이징 처리 된 데이터 가져오기
-		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
-	
+		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
 		ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
 		String pageNavi = (String)pageDataMap.get("pageNavi");
-		int currentPage = (int)request.getAttribute("currentPage");
 	%>
 
     <div id="wrap">
@@ -50,19 +45,7 @@
                 <p>회원 정보 관리</p>
             </div>
            
-<<<<<<< HEAD
-	<%
-		Member m = (Member)session.getAttribute("member");
-	%>
 	
-	<%//페이징 처리 된 데이터 가져오기
-	HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
-	ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
-	String pageNavi = (String)pageDataMap.get("pageNavi");
-	%>
-	
-=======
->>>>>>> f93397b939848e98cbef78726858accdef6ad98d
             <div class="box-user">
                 <a href="/"><%=m.getNick()%></a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -120,7 +103,7 @@
                                 <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
 	                                <%if(mem.getEnd_YN()=='N') {%>
 	                               		<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
-	                               			<button class="del_btn">탈퇴</button>
+	                               			<button class="del_btn" onclick="deleteMember('<%=mem.getUserId()%>');">탈퇴</button>
 	                               		</a>
 	                                <%}else {%>
 	                                	<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
@@ -149,8 +132,14 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>
-    
+    <%-- 
     <script>
+    function deleteMember(userId) {
+		alert(userId);
+
+		return false;
+	}
+    
 	$('.del_btn').click(function(){
 		
 		var data = $(this).html();
@@ -160,8 +149,9 @@
 			window.confirm(<%=m.getUserId() %> + " 회원을 탈퇴처리하시겠습니까?");
 			
 		}
-		
+		return false;
 	});
+	
 	
 	$('.re_btn').click(function(){
 		
@@ -171,8 +161,8 @@
 		{
 			window.confirm(<%=m.getUserId() %> + " 회원을 복원하시겠습니끼?");	
 		}
-		
+		return false;
 	});
-    </script>
+    </script>--%>
 </body>
 </html>

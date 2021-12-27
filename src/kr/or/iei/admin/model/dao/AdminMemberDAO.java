@@ -11,13 +11,10 @@ import kr.or.iei.member.model.vo.Member;
 
 public class AdminMemberDAO {
 	
-<<<<<<< HEAD
 /*	public ArrayList<Member> SelectAllMemberList(String authorityId, Connection conn)
 	{
-=======
 	public ArrayList<Member> selectAllMemberList(Connection conn, int currentPage, int recordCountPerPage) {
 
->>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Member> list = new ArrayList<Member>();
@@ -115,12 +112,11 @@ public class AdminMemberDAO {
 	
 	public int totalCount(Connection conn)
 	{
-<<<<<<< HEAD
 		String query = "SELECT * FROM MEMBER"; 
 		return query;
-	}*/
+	}
 
-=======
+
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -144,9 +140,9 @@ public class AdminMemberDAO {
 		
 		return count;
 	}
+*/
 	
 	
->>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 	public int updateMemberEndYN(String userId, char endYN, Connection conn) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -169,7 +165,6 @@ public class AdminMemberDAO {
 		return result;
 	}
 
-<<<<<<< HEAD
 	public ArrayList<Member> selectAllMemberPageList(Connection conn, int currentPage, int recordCountPerPage) {
 
 		PreparedStatement pstmt = null;
@@ -267,9 +262,6 @@ public class AdminMemberDAO {
 		return sb.toString();
 				
 	}
-=======
-	
->>>>>>> f93397b939848e98cbef78726858accdef6ad98d
 	
 	public int totalCount(Connection conn)
 	{
@@ -300,4 +292,5 @@ public class AdminMemberDAO {
 		return count;
 	}
 }
+
 

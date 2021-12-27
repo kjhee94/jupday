@@ -29,6 +29,9 @@ public class AdminCrewServiceImpl implements AdminCrewService{
 		
 		hm.put("list", list);
 		hm.put("pageNavi", pageNavi);
+		// DEBUG
+		System.out.println(list);
+		System.out.println(pageNavi);
 
 		JDBCTemplate.close(conn);
 		return hm;
