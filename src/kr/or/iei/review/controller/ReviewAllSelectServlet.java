@@ -1,6 +1,7 @@
 package kr.or.iei.review.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
+import kr.or.iei.review.model.vo.Review;
 
 /**
  * Servlet implementation class ReviewAllSelectServlet
@@ -32,6 +34,10 @@ public class ReviewAllSelectServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
 		//main 페이지에서 가므로 일단은 null값을 가지고 감, 그래서 currentPage는 일단 1로 잡음
 		int currentPage;
 		if (request.getParameter("currentPage") == null) {
@@ -40,8 +46,9 @@ public class ReviewAllSelectServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		//요청한 페이지값을 가지고 service로 감
+		//요청한 페이지값을 가지고 service로 감 (리뷰 부분 페이징 된거)	
 		ReviewService rService = new ReviewServiceImpl();
+		ArrayList<Review> list2 = rService.selectAllBestReview();
 		HashMap<String, Object> pageDataMap = rService.selectAllPostList(currentPage);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewSelectAllListPage.jsp");

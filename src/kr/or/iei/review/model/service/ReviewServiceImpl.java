@@ -143,6 +143,14 @@ public class ReviewServiceImpl implements ReviewService{
 		JDBCTemplate.close(conn);
 		return result;
 	}
+
+	@Override
+	public ArrayList<Review> selectAllBestReview() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Review> list2 = rDAO.selectAllBestReview(conn);
+		JDBCTemplate.close(conn);
+		return list2;
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 package kr.or.iei.review.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.or.iei.review.model.vo.Review;
@@ -34,6 +35,8 @@ public interface ReviewService {
 	HashMap<String, Object> selectSearchPost(int currentPage, String keyword, String type);
 
 	int deletePost(int postNum, String userId);
+
+	ArrayList<Review> selectAllBestReview();
 
 	
 

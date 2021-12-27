@@ -590,4 +590,48 @@ public class ReviewDAO {
 
 		return result;
 	}
+
+	public ArrayList<Review> selectAllBestReview(Connection conn) {
+	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Review> list2 = new ArrayList<Review>();
+		
+		String query = "select review.*,nick from review " + 
+				"left join member on (review.userid = member.userid) " + 
+				"where BEST_YN='Y' " + 
+				"order by postnum desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review review = new Review();
+				
+				review.setPostNum(rset.getInt("postNum"));
+				review.setUserId(rset.getString("userId"));
+				review.setRegDate(rset.getDate("regDate"));
+				review.setPostTitle(rset.getString("postTitle"));
+				review.setPostContent(rset.getString("postContent"));
+				review.setHits(rset.getInt("hits"));
+				review.setGood(rset.getInt("good"));
+				review.setBest_YN(rset.getString("best_YN").charAt(0));
+				review.setDel_YN(rset.getString("del_YN").charAt(0));
+				review.setNick(rset.getString("nick"));
+				
+				list2.add(review);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list2;
+	}
 }
