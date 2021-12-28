@@ -5,6 +5,7 @@ import java.sql.Date;
 public class AdminCrewFeed {
 
 	private int c_No;
+	private String c_Name;
 	private String nick;
 	private int c_f_No;
 	private Date c_f_RegDate;
@@ -15,14 +16,16 @@ public class AdminCrewFeed {
 	private int likeCount;
 	
 	
+	
 	public AdminCrewFeed() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AdminCrewFeed(int c_No, String nick, int c_f_No, Date c_f_RegDate, String c_f_Subject, String c_f_Content,
+	public AdminCrewFeed(int c_No, String nick, String c_Name, int c_f_No, Date c_f_RegDate, String c_f_Subject, String c_f_Content,
 			char c_f_Del_YN, char c_f_Like_YN, int likeCount) {
 		super();
 		this.c_No = c_No;
+		this.c_Name = c_Name;
 		this.nick = nick;
 		this.c_f_No = c_f_No;
 		this.c_f_RegDate = c_f_RegDate;
@@ -38,6 +41,13 @@ public class AdminCrewFeed {
 	public void setC_No(int c_No) {
 		this.c_No = c_No;
 	}
+	public String getC_Name() {
+		return c_Name;
+	}
+	public void setC_Name(String C_Name) {
+		this.c_Name = c_Name;
+	}
+	
 	public String getnick() {
 		return nick;
 	}

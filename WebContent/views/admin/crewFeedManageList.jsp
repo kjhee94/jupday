@@ -54,8 +54,9 @@
             <div class="container">
                 <div class="container_top">
                     <div class="count-all">
-                    	<p><span id="green">연신내 6번출구</span> > 전체 <span>7,777</span> 건</p>
+                    	<p><span id="green">크루명 받아서 넣기</span> > 전체 <span>7,777</span> 건</p>
                     </div>
+                    
                     
                     <div class="box-search">
 						<form action="">
@@ -103,9 +104,9 @@
                                 <td><%=f.getC_f_RegDate() %></td>
                                 <td>
                                 <%if(f.getC_f_Del_YN()=='N') {%>
-                                <a href="/admin/crewDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <a href="/admin/crewFeedDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="del_btn">삭제</button></a>
                                 <%}else {%>
-                                <a href="/admin/crewDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <a href="/admin/crewFeedDelYNChange.do?c_No=<%=f.getC_f_No() %>&c_Del_YN=<%=f.getC_f_Del_YN()%>"><button class="re_btn">복원</button></a>
                                 <%} %>
                                 </td>
                             </tr>

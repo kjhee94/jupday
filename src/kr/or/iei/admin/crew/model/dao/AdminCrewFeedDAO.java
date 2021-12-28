@@ -35,8 +35,9 @@ public class AdminCrewFeedDAO<CrewNo> {
          while(rset.next()) 
          {
             AdminCrewFeed f = new AdminCrewFeed();
-            f.setC_No(rset.getInt("c_No"));
+         
             f.setC_f_No(rset.getInt("c_f_No"));
+            f.setC_Name(rset.getString("c_Name"));
             f.setC_f_Subject(rset.getString("c_f_Subject"));
             f.setC_f_Content(rset.getString("c_f_Content"));
             f.setC_f_RegDate(rset.getDate("c_f_RegDate"));

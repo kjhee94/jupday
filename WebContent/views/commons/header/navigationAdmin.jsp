@@ -62,7 +62,7 @@
                             </li>
                             <ul class="sub_nav">
                                 <li>
-                                    <a href="/views/admin/noticeManageList.jsp">· 공지사항 관리</a>
+                                    <a href="/admin/noticeManageList.do">· 공지사항 관리</a>
                                 </li>
                                 <li>
                                     <a href="/views/admin/noticeCampaignManageList.jsp">· 캠페인 안내 관리</a>

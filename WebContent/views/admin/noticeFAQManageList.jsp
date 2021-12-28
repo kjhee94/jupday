@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +22,16 @@
 </head>
 
 <body>
+	<%
+      //세션에서 멤버가져오기
+      Member m = (Member)session.getAttribute("member"); %>
+   
+   <%//페이징 처리 된 데이터 가져오기
+      HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
+      ArrayList<AdminFAQ> list = (ArrayList<AdminFAQ>)pageDataMap.get("list");
+      String pageNavi = (String)pageDataMap.get("pageNavi");
+   %>
+   
     <div id="wrap">
     
         <!-- navigation -->
