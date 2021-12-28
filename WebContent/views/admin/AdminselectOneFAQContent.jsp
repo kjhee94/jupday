@@ -8,19 +8,5 @@
 </head>
 <body>
 
-   <%
-      boolean result = (boolean)request.getAttribute("result");
-   %>
-   
-
-   <script>
-   <%if(result) {%>
-      alert('정상적으로 처리가 완료되었습니다. :)');
-   <%}else {%>
-      alert('정상적으로 처리되지않았습니다.');
-   <%} %>
-   location.replace("/admin/adminCampaignManageList.do");
-   </script>
-
 </body>
 </html>

@@ -1,7 +1,6 @@
 package kr.or.iei.admin.notice.model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +10,7 @@ import kr.or.iei.admin.notice.model.vo.AdminCampaign;
 import kr.or.iei.admin.notice.model.vo.AdminFAQ;
 import kr.or.iei.admin.notice.model.vo.AdminNotice;
 import kr.or.iei.common.JDBCTemplate;
+import kr.or.iei.notice.model.vo.Notice;
 
 public class AdminNoticeDAO {
 
@@ -406,7 +406,7 @@ public class AdminNoticeDAO {
 			pstmt.setInt(2, ncNo);
 			
 			result = pstmt.executeUpdate();
-			
+						
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -433,8 +433,84 @@ public class AdminNoticeDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+				
 		return result;
+	}
+
+	public void selectNoticeOnePost(Connection conn, int nNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		Notice notice = null;
+		
+		String query = "SELECT N_NO, N_TITLE, N_CONTENT, N_REGDATE, N_DEL_YN FROM NOTICE WHERE N_NO=? AND N_DEL_YN=N";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, nNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				notice = new Notice();
+				
+				notice.setNoticeNo(rset.getInt("noticeNo"));
+				notice.setNoticeTitle(rset.getString("title"));
+				notice.setNoticeContent(rset.getString("content"));
+				notice.setNoticeRegDate(rset.getDate("regDate"));
+				//notice.set
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	
+	public AdminFAQ selectOneFAQContent(Connection conn, int faqNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		AdminFAQ adfaq = null;
+		
+		String query =" SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, FAQ_DEL_YN " + 
+					" FROM FAQBOX WHERE FAQ_NO=? AND FAQ_DEL_YN='N'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, faqNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				AdminFAQ afaq = new AdminFAQ();
+				
+				afaq.setFaq_No(rset.getInt("faq_No"));
+				afaq.setFaq_Title(rset.getString("faq_Title"));
+				afaq.setFaq_Content(rset.getString("faq_Content"));
+				afaq.setFaq_Del_YN(rset.getString("faq_Del_YN").charAt(0));
+								
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return adfaq;
+		
+		
 	}
 
 

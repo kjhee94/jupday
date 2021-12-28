@@ -8,4 +8,8 @@ public interface AdminNoticeService {
 
 	int updateNoticeDelYN(int nNo, char delYN);
 
+	void selectNoticeOnePost(int nNo);
+	
+	
+
 }

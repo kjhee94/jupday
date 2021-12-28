@@ -19,7 +19,7 @@
 	<%}else {%>
 		alert('정상적으로 처리되지않았습니다.');
 	<%} %>
-	location.replace("/admin/noticeFAQDelYNChange.do");
+	location.replace("/admin/adminFAQManageList.do");
 	</script>
 
 </body>
