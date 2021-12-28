@@ -21,6 +21,6 @@
 	<%}%>
 	location.replace('/review/reviewAllSelect.do');
 	</script>
-
+	
 </body>
 </html>

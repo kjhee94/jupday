@@ -46,11 +46,11 @@
 				<!-- Swiper -->
 			    <div class="swiper mySwiper">
 					<div class="swiper-wrapper">
-					<%for(Review review:list2){ %>
+					<%--for(Review review:list2){ --%>
 						<div class="swiper-slide">
 							<a href="">
 								<div class="box-review-hover">
-									<p class="tit-review">첫 플로깅 후기입니다:)</p>
+									<p class="tit-review"><%--=review.getPostTitle() --%></p>
 									<i class="far fa-heart"></i><span>1,202</span>
 									<i class="far fa-comment"></i><span>657</span>
 									<!--<i class="far fa-comment-dots"></i>-->
@@ -58,7 +58,7 @@
 								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰1.jpeg">
 							</a>
 						</div>
-					<%} %>	
+					<%--} --%>	
 					<%--DB가 업데이트 되면, 이부분 주석을 풀고 돌려보면 완성임 --%>					
 						<div class="swiper-slide">
 							<a href="">
@@ -126,7 +126,7 @@
 					</div>
 					<div class="box-txt">
 						<p><%=review.getPostTitle() %></p>
-						<p class="review-writer"><%=review.getUserId() %></p>
+						<p class="review-writer"><%=review.getNick() %></p>
 						<div class="review-info">
 							<i class="far fa-heart"></i><span><%=review.getHits() %></span>
 							<i class="far fa-comment"></i><span>5</span>

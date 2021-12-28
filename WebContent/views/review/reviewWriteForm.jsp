@@ -67,7 +67,7 @@
 								<span>위치추가</span>
 								<i class="fas fa-chevron-down"></i>
 							</div>
-							<div class="map-content" id='map'>
+							<div class="map-content" id='map' style="width:100%;height:350px;">
 								<!-- 여기가 지도html부분 -->
 							</div>
 						</div>
@@ -92,10 +92,12 @@
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	
 	</div>
-	
-	
-	
+
 	<!-- 지도 스크립트 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa153422867c293a7226f0c302b5e6b3"></script>
+	
+	<%-- 나중에 시연시엔  appkey=[aa153422867c293a7226f0c302b5e6b3] 대괄호 부분은 시연하고자 하는 계정의 자바스크립트 키를 가져오고 플랫폼은 127.0.0.1/포트번호 입력하면 됨 --%>
+	
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	    mapOption = { 
@@ -369,6 +371,7 @@
 	    content += '</ul>'
 	
 	    return content;
+	    //이 리턴의 의미가 뭐지? 이게 객체야? 이걸 가지고 보내주려면 어떻게 해야 되는거지?
 	}
 	    
 	</script>

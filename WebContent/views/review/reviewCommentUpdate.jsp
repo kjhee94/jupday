@@ -27,6 +27,10 @@
 		<button>수정</button>
 	</form>
 	
+	<script>
+		location.replace('/review/reviewSelectContent.do');
+	</script>
+	
 	<%--다 하고나면 창을 닫는 코드가 필요한데, 어떤게 있으려나.. --%>
 	
 </body>
