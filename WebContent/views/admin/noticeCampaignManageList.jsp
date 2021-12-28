@@ -28,10 +28,10 @@
       Member m = (Member)session.getAttribute("member");
    %>
    
-   <%//페이징 처리 된 데이터 가져오기
+   <%
       HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
       ArrayList<AdminCampaign> list = (ArrayList<AdminCampaign>)pageDataMap.get("list");
-      String pageNavi = (String)pageDataMap.get("pageNavi");
+      String pageCamNavi = (String)pageDataMap.get("pageCamNavi");
    %>
     <div id="wrap">
     
@@ -105,9 +105,9 @@
                                 <td><button class="modify_btn"><a href="./noticeCampaignUpdate.jsp">수정</a></button>
                                 <td>
                                 <%if(ac.getNc_Del_YN()=='N') {%>
-                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <a href="/admin/adminCampaignDelYNChange.do?nc_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>
                                 <%}else {%>
-                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <a href="/admin/adminCampaignDelYNChange.do?nc_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="re_btn">복원</button></a>
                                 <%} %>
                                 </td>
                             </tr>
@@ -117,7 +117,7 @@
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-					        <%=pageNavi %>
+					        <%=pageCamNavi %>
                         </ul>
                     </div>                    
                     

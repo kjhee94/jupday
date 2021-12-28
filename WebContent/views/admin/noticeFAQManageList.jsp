@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.admin.notice.model.vo.AdminFAQ"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
@@ -29,7 +30,7 @@
    <%//페이징 처리 된 데이터 가져오기
       HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
       ArrayList<AdminFAQ> list = (ArrayList<AdminFAQ>)pageDataMap.get("list");
-      String pageNavi = (String)pageDataMap.get("pageNavi");
+      String pageFAQNavi = (String)pageDataMap.get("pageFAQNavi");
    %>
    
     <div id="wrap">
@@ -44,7 +45,7 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -86,123 +87,35 @@
                     <table>
                         <thead>
                            <tr>
-                                <th width="100">게시번호</th>
+                                <th width="50">게시번호</th>
                                 <th width="250">게시글제목</th>
                                 <th width="300">게시글내용</th>
-                                <th width="100">작성자</th>
-                                <th width="100">조회수</th>
-                                <th width="100">작성일자</th>
                                 <th width="150">수정하기</th>
                                 <th width="150">삭제 / 복원</th>
                             </tr>
                         </thead>
+                         <%for(AdminFAQ afaq : list) {%>                        
                         <tbody>
                             <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
+                                <td><%=afaq.getFaq_No() %></td>
+                                <td><div class="text-ellipsis subject"><%=afaq.getFaq_Title() %></div></td>
+                                <td><div class="text-ellipsis"><%=afaq.getFaq_Content() %></div></td>
                                 <td><button class="modify_btn"><a href="./noticeFAQUpdate.jsp">수정</a></button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">아이디는 어떻게 찾나요?</div></td>
-                                <td><div class="text-ellipsis">관리자에게 문의주세요. 문의주실 곳은 ~~~</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
+                                <td>
+                                <%if(afaq.getFaq_Del_YN()=='N') {%>
+                                <a href="/admin/noticeFAQDelYNChange.do?faq_No=<%=afaq.getFaq_No() %>&faq_Del_YN=<%=afaq.getFaq_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/noticeFAQDelYNChange.do?faq_No=<%=afaq.getFaq_No() %>&faq_Del_YN=<%=afaq.getFaq_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                             </tr>
                         </tbody>
+                        <%} %>
                     </table>
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-					        <%=pageNavi %>
+					        <%=pageFAQNavi %>
                         </ul>
                     </div>                    
                     

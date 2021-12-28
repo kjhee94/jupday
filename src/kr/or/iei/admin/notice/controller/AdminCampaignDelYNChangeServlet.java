@@ -1,7 +1,6 @@
 package kr.or.iei.admin.notice.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,19 +13,18 @@ import kr.or.iei.admin.notice.model.service.AdminCampaignService;
 import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
 import kr.or.iei.admin.notice.model.service.AdminNoticeService;
 import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
-import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
- * Servlet implementation class AdminCampaignManageListServlet
+ * Servlet implementation class AdminCampaignDelYNChangeServlet
  */
-@WebServlet("/admin/adminCampaignManageList.do")
-public class AdminCampaignManageListServlet extends HttpServlet {
+@WebServlet("/admin/adminCampaignDelYNChange.do")
+public class AdminCampaignDelYNChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminCampaignManageListServlet() {
+    public AdminCampaignDelYNChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,34 +33,21 @@ public class AdminCampaignManageListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩 처리
-		
+		//인코딩
 		request.setCharacterEncoding("UTF-8");
-
-		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
-		if(authorityId==null) {
-			response.sendRedirect("/views/commons/error.jsp");
-			return;
-		}
+		int ncNo = Integer.parseInt(request.getParameter("nc_No"));
+		char delYN = request.getParameter("nc_Del_YN").charAt(0);
 		
-		//캠페인 페이징처리
-		int currentPage;
-		if(request.getParameter("currentPage")==null)
-		{
-				currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
+		if(delYN=='Y') delYN='N';
+		else			delYN='Y';
+		AdminCampaignService adnService = new AdminCampaignServiceImpl();
+		int result = adnService.updateCampaignDelYN(ncNo,delYN);
 		
-		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminCampaignService adcService = new AdminCampaignServiceImpl();
-		HashMap<String,Object> pageDataMap = adcService.selectAllCampaignPageList(currentPage);
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/updateCampaignDelYN.jsp");
+		if(result>0) request.setAttribute("result", true);
+		else request.setAttribute("result", false);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeCampaignManageList.jsp");
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
 		view.forward(request, response);
 	}
 

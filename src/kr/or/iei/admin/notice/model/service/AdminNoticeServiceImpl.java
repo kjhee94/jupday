@@ -36,4 +36,14 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		return hm;
 	}
 
+	@Override
+	public int updateNoticeDelYN(int nNo, char delYN) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adnDAO.updateNoticeDelYN(nNo,delYN,conn);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }

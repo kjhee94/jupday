@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import kr.or.iei.admin.notice.model.vo.AdminCampaign;
-//import kr.or.iei.admin.notice.model.vo.AdminCampaign;
-//import kr.or.iei.admin.notice.model.vo.AdminFAQ;
+import kr.or.iei.admin.notice.model.vo.AdminFAQ;
 import kr.or.iei.admin.notice.model.vo.AdminNotice;
 import kr.or.iei.common.JDBCTemplate;
 
@@ -134,5 +133,312 @@ public class AdminNoticeDAO {
 		return count;
 	}
 
+	public ArrayList<AdminCampaign> selectAllCampaignPageList(Connection conn, int currentPage, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<AdminCampaign> list = new ArrayList<AdminCampaign>();
+		
+		int start = currentPage * recordCountPerPage - (recordCountPerPage-1);
+		int end = currentPage * recordCountPerPage;		
+		
+		String query = " SELECT NC_NO, NC_TITLE, NC_CONTENT, NC_REGDATE, NC_DEL_YN FROM NOTICE_CAMPAIGN " + 
+						" WHERE NC_NO BETWEEN ? AND ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) 
+			{
+				AdminCampaign ac = new AdminCampaign();
+				
+				ac.setNc_No(rset.getInt("nc_No"));
+				ac.setNc_Title(rset.getString("nc_Title"));
+				ac.setNc_Content(rset.getString("nc_Content"));
+				ac.setNc_regDate(rset.getDate("nc_regDate"));
+				ac.setNc_Del_YN(rset.getString("nc_Del_YN").charAt(0));
+				
+				list.add(ac);
+			}
+						
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	public String getpageCamNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage) {
+		
+		//전체 공지수
+		int recordTotalCount = totalCamCount(conn);
+		
+		//전체 페이지수
+		int pageTotalCount = 0;
+		
+		if((recordTotalCount % recordCountPerPage)>0)
+		{
+			pageTotalCount = (recordTotalCount / recordCountPerPage) + 1;
+		}else
+		{
+			pageTotalCount = (recordTotalCount / recordCountPerPage);
+		}
+		
+		int startNavi = (((currentPage-1) / naviCountPerPage) * naviCountPerPage) +1;
+		int endNavi = startNavi + (naviCountPerPage-1);
+		
+		//endNavi가 총 page수보다 클 경우 총 page수로 셋팅
+		if(endNavi > pageTotalCount)
+		{
+			endNavi = pageTotalCount;
+		}
+				
+		//pageNavi 모양 만들기
+		StringBuilder sb = new StringBuilder();
+		
+		if(startNavi!=1) {
+			sb.append("<li><a href='/admin/adminCampaignManageList.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+		}
+
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentPage) {
+				sb.append("<li><a href='/admin/adminCampaignManageList.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/admin/adminCampaignManageList.do?currentPage="+i+"'>"+i+"</a></li>");
+			}
+		}
+
+		if(endNavi!=pageTotalCount) {
+			sb.append("<li><a href='/admin/adminCampaignManageList.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+		}
+		
+		return sb.toString();
+				
+	}
 	
-}
+	public int totalCamCount(Connection conn)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query = "SELECT COUNT(*) as count FROM NOTICE_CAMPAIGN";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
+	}
+
+	public ArrayList<AdminFAQ> selectAllFAQPageList(Connection conn, int currentPage, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<AdminFAQ> list = new ArrayList<AdminFAQ>();
+		
+		int start = currentPage * recordCountPerPage - (recordCountPerPage-1);
+		int end = currentPage * recordCountPerPage;		
+		
+		String query = " SELECT FAQ_NO, FAQ_TITLE, FAQ_CONTENT, FAQ_DEL_YN FROM FAQBOX WHERE FAQ_NO BETWEEN ? AND ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) 
+			{
+				AdminFAQ afaq = new AdminFAQ();
+				
+				afaq.setFaq_No(rset.getInt("faq_No"));
+				afaq.setFaq_Title(rset.getString("faq_Title"));
+				afaq.setFaq_Content(rset.getString("faq_Content"));
+				afaq.setFaq_Del_YN(rset.getString("faq_Del_YN").charAt(0));
+				
+				list.add(afaq);
+								
+			}
+						
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+
+	}
+
+	public String getpageFAQNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage) {
+				//전체 공지수
+				int recordTotalCount = totalFAQCount(conn);
+				
+				//전체 페이지수
+				int pageTotalCount = 0;
+				
+				if((recordTotalCount % recordCountPerPage)>0)
+				{
+					pageTotalCount = (recordTotalCount / recordCountPerPage) + 1;
+				}else
+				{
+					pageTotalCount = (recordTotalCount / recordCountPerPage);
+				}
+				
+				int startNavi = (((currentPage-1) / naviCountPerPage) * naviCountPerPage) +1;
+				int endNavi = startNavi + (naviCountPerPage-1);
+				
+				//endNavi가 총 page수보다 클 경우 총 page수로 셋팅
+				if(endNavi > pageTotalCount)
+				{
+					endNavi = pageTotalCount;
+				}
+						
+				//pageNavi 모양 만들기
+				StringBuilder sb = new StringBuilder();
+				
+				if(startNavi!=1) {
+					sb.append("<li><a href='/admin/adminFAQManageList.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+				}
+
+				for(int i=startNavi; i<=endNavi; i++) {
+					
+					if(i==currentPage) {
+						sb.append("<li><a href='/admin/adminFAQManageList.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+					}else {
+						sb.append("<li><a href='/admin/adminFAQManageList.do?currentPage="+i+"'>"+i+"</a></li>");
+					}
+				}
+
+				if(endNavi!=pageTotalCount) {
+					sb.append("<li><a href='/admin/adminFAQManageList.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+				}
+				
+				return sb.toString();
+	}
+	
+	public int totalFAQCount(Connection conn)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query = "SELECT COUNT(*) as count FROM FAQBOX";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
+	}
+
+	public int updateNoticeDelYN(int nNo, char delYN, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE NOTICE SET N_DEL_YN=? WHERE N_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, String.valueOf(delYN));
+			pstmt.setInt(2, nNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int updateCampaignDelYN(int ncNo, char delYN, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE NOTICE_CAMPAIGN SET NC_DEL_YN=? WHERE NC_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, String.valueOf(delYN));
+			pstmt.setInt(2, ncNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int updateFAQDelYN(int faqNo, char delYN, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE FAQBOX SET FAQ_DEL_YN=? WHERE FAQ_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, String.valueOf(delYN));
+			pstmt.setInt(2, faqNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+
+
+	}
+
+	
