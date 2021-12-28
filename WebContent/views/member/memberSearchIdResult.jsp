@@ -32,7 +32,7 @@
 			<div class="box-result">
 				<p>입력하신 정보와 일치하는 아이디입니다.</p>
 				<div class="box-userInfo">
-					<span id="userId">[<%=m.getUserId()%>] 님</span> 
+					<span id="userId"><%=m.getUserId()%> 님</span> 
 					<span id="enrollDate"><%=m.getEnrollDate()%> 가입</span>
 				</div>
 			</div>

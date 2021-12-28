@@ -125,10 +125,18 @@
 	text-align: center;
 	padding-bottom: 80px;
 }
+.btn-m {
+	margin-left: 30px;
+}
+.btn-m:last-child {
+	margin-right: 0;
+}
 .btn-update {
-	background-color: #1D5B22;
+	background-color: #5EB656;
 }
 .btn-golist {
-	background-color: #5EB656;
-	margin-left: 30px;
+	background-color: #C8C8C8;
+}
+.btn-delete {
+	background-color: #1D5B22;
 }

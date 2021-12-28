@@ -56,7 +56,14 @@ table td {
 	float: right;
 }
 .btn-s {
+	display: inline-block;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 16px;
+	line-height: 40px;
 	background-color: #AFD485;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
 	margin-left: 20px;
 }
 

@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.notice.model.vo.NoticeCampaign"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,11 +20,24 @@
 <script src="/assets/js/ui.js"></script>
 </head>
 
+<%
+	//Servlet에서 보내온 데이터를 가져오도록 하겠습니다.
+	NoticeCampaign noticeCampaign = (NoticeCampaign)request.getAttribute("noticeCampaign");//데이터를 가져왔다.
+	//noticeCampaign 안에는 두가지 상황이 있다. 
+	//1. noticeCampaign 객체가 담겨있는 상황 (정상적으로 해당 글의 정보를 가져왔을때)
+	//2. null이 담겨 있는  상황 (정상적으로 해당 글의 정보를 읽어오지 못했을때)
+	int currentPage =(int)request.getAttribute("currentPage");
+
+
+%>
+
+
 	<div id="wrap">
    
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
-
+		
+<%if(noticeCampaign!=null){%>
 		<div id="content">
 			<div class="box-title">
 				<p class="tit-small">J U P : D A Y</p>
@@ -33,15 +47,15 @@
          	<div class="box-notice">
 	         	<div class="notice-top">
 	         		<div class="box-subject">
-	         			<p>온라인 싹쓰리 챌린지 1탄 싹줍깅</p>
+	         			<p><%=noticeCampaign.getCampaignTitle() %></p>
 	         		</div>
 	         		<div class="box-notice-info">
 	         			<div class="box-gray">조회수</div>
-	         			<span>53</span>
+	         			<span><%=noticeCampaign.getCampaignHits()%></span>
 	         		</div>
 	         		<div class="box-notice-info">
 	         			<div class="box-gray">작성일</div>
-	         			<span>2021/11/08</span>
+	         			<span><%=noticeCampaign.getCampaignRegDate() %></span>
 	         		</div>
 	         	</div>
 	         	
@@ -49,19 +63,21 @@
 	         		<div class="img-box">
 	         			<img alt="" src="/assets/images/campaign01.jpg">
 	         		</div>
-	         		<p>
-	         		뼈 청춘의 들어 청춘의 붙잡아 그들은 보내는 힘있다. 기쁘며, 주며, 같은 풍부하게 천고에 트고, 모래뿐일 끝에 주는 철환하였는가? 그들의 인생을 원대하고, 싸인 힘차게 쓸쓸한 있으랴? 소담스러운 무엇이 수 전인 할지니,
-					 피가 사막이다. 풀이 꽃 그것은 철환하였는가? 주며, 찾아 구할 이상을 청춘은 있는 것이다. 기관과 더운지라 우리 철환하였는가? 피가 듣기만 때까지 간에 남는 방황하여도, 아니다. 바로 거선의 끓는 것이다. 튼튼하며,
-					 창공에 간에 안고, 끝에 듣는다. 바로 인도하겠다는 이 것이다.
-					</p>
+	         		<p> <%=noticeCampaign.getCampaignContent() %></p>
 	         	</div>
          	</div>
          	
          	<div class="box-button">
          		<button class="btn-m">
-	         		<a href="/views/notice/noticeCampaign.jsp">목록</a>
+	         		<a href="/notice/noticeCampaignAllSelect.do?currentPage=<%=currentPage%>">목록</a>
 	         	</button>
          	</div>
+         		<%}else{%>
+				<script>
+				  alert("해당글이 존재 하지 않습니다. 다시 확인해주세요");
+				  location.replace('/notice/noticeCampaignAllSelect.do');
+				</script>		
+				<%} %>
         	
 		</div>
       

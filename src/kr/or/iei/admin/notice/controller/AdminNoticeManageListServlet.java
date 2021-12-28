@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.campaign.model.service.AdminCampaignService;
-import kr.or.iei.admin.notice.campaign.model.service.AdminCampaignServiceImpl;
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
 import kr.or.iei.admin.notice.model.service.AdminNoticeService;
 import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;

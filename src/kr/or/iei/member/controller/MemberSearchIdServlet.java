@@ -40,7 +40,7 @@ public class MemberSearchIdServlet extends HttpServlet {
 		
 		//비즈니스 로직 처리(있는지 없는지)
 		MemberService mService = new MemberServiceImpl();
-		Member m = mService.SearchId(email);//이메일 값을 넘겨주면서 비즈니스로직을 시작한다.
+		Member m = mService.searchId(email);//이메일 값을 넘겨주면서 비즈니스로직을 시작한다.
 		
 
 		if(m!=null) {//이메일있다면
