@@ -8,21 +8,6 @@ import java.sql.Statement;
 
 
 public class JDBCTemplate {
-<<<<<<< HEAD
-	
-	//getConnection
-	public static Connection getConnection() {
-		
-		Connection conn = null;
-		
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			//conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe",
-                    //"jupday","jupday");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
-			//conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
-=======
     
     //getConnection
     public static Connection getConnection() {
@@ -33,7 +18,7 @@ public class JDBCTemplate {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             
             conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
->>>>>>> 384eb492b7b93dd63a9ec874758ca7f6d8c683e7
+
 
             conn.setAutoCommit(false);
             

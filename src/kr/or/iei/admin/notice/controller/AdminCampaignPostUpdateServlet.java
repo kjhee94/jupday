@@ -45,11 +45,6 @@ public class AdminCampaignPostUpdateServlet extends HttpServlet {
 		adc.setNc_Title(title); 
 		adc.setNc_Content(content);
 		
-		//출력
-		System.out.println(ncNo);
-		System.out.println(title);
-		System.out.println(content);
-		
 		//수정 비즈니스로직
 		AdminCampaignService adcService = new AdminCampaignServiceImpl();
 		int result = adcService.updateCampaignPost(adc);
