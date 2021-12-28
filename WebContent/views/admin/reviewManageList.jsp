@@ -1,3 +1,8 @@
+<%@page import="kr.or.iei.admin.review.model.vo.AdminReview"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,9 +34,16 @@
                 <p>줍데이리뷰</p>
                 <p>리뷰게시판 관리</p>
             </div>
+            
+            <% Member m = (Member)session.getAttribute("member"); %>
+            
+			<%
+			HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+			ArrayList<AdminReview> list = (ArrayList<AdminReview>)pageDataMap.get("list");
+			String pageNavi = (String)pageDataMap.get("pageNavi");%>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -72,138 +84,46 @@
                                 <th width="250">게시글제목</th>
                                 <th width="300">게시글내용</th>
                                 <th width="200">작성자</th>
-                                <th width="200">조회수</th>
                                 <th width="200">좋아요</th>
-                                <th width="200">베스트리뷰</th>                                
-                                <th width="200">작성일자</th>                                
+                                <th width="200">작성일자</th>
+                                <th width="200">베스트설정</th>                                                                                              
                                 <th width="150">삭제 / 복원</th>
                             </tr>
                         </thead>
+                        <%for(AdminReview re : list) {%>
                         <tbody>
                             <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">탈퇴</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>30</td>
-                                <td><div class="text-ellipsis subject">이거 언제 다 쓰고</div></td>
-                                <td><div class="text-ellipsis">아마도 제목이겠죠</div></td>
-                                <td>user11</td>
-                                <td>105785</td>
-                                <td>3000</td>
-                                <td><input type="checkbox"></td>
-                                <td>2021/04/16</td>
-                                <td><button class="del_btn">삭제</button></td>
+                                <td><%=re.getPostnum() %></td>
+                                <td><div class="text-ellipsis subject"><%=re.getPostTitle() %></div></td>
+                                <td><div class="text-ellipsis"><%=re.getPostContent() %></div></td>
+                                <td><%=re.getNick() %></td>
+                                <td><%=re.getGood() %></td>
+                                <td><%=re.getRegDate() %></td>
+                                <td>
+                                <%if(re.getBest_YN()=='N') {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
+                                <td>
+                                <%if(re.getDel_YN()=='N') {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/reviewDelYNChange.do?postnum=<%=re.getPostnum() %>&del_YN=<%=re.getDel_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                             </tr>
                         </tbody>
+                       <%} %>
                     </table>
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					        <%=pageNavi %>
                         </ul>
-                    </div>
+                    </div>                    
+                    
                 </div>
             </div>
         </div>

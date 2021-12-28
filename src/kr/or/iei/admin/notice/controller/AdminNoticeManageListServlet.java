@@ -1,8 +1,6 @@
-package kr.or.iei.admin.controller;
+package kr.or.iei.admin.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -12,21 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.model.service.AdminMemberService;
-import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
+import kr.or.iei.admin.notice.model.service.AdminNoticeService;
+import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
- * Servlet implementation class MemberManageListServlet
+ * Servlet implementation class AdminNoticeManageListServlet
  */
-@WebServlet("/admin/MemberManageList.do")
-public class MemberManageListServlet extends HttpServlet {
+@WebServlet("/admin/noticeManageList.do")
+public class AdminNoticeManageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberManageListServlet() {
+    public AdminNoticeManageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +35,11 @@ public class MemberManageListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		//인코딩 처리
 		
+		request.setCharacterEncoding("UTF-8");
+
 		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
 		if(authorityId==null) {
@@ -43,35 +47,7 @@ public class MemberManageListServlet extends HttpServlet {
 			return;
 		}
 		
-		/*
-		
-		//페이징처리
-		int currentPage;
-		
-		if(request.getParameter("currentPage")==null)
-		{
-			currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
-		
-		//비즈니스 로직
-		AdminMemberService adService = new AdminMemberServiceImpl();
-		
-		HashMap<String,Object> pageDataMap = adService.selectAllMemberList(currentPage);
-		
-		//view페이지 이동
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
-		
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
-		
-		view.forward(request, response);
-		*/
-		
-		//페이징처리
+		//notice 페이징처리
 		int currentPage;
 		if(request.getParameter("currentPage")==null)
 		{
@@ -82,15 +58,13 @@ public class MemberManageListServlet extends HttpServlet {
 		}
 		
 		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminMemberService adService = new AdminMemberServiceImpl();
-		HashMap<String,Object> pageDataMap = adService.selectAllMemberPageList(currentPage);
+		AdminNoticeService adnService = new AdminNoticeServiceImpl();
+		HashMap<String,Object> pageDataMap = adnService.selectAllNoticePageList(currentPage);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeManageList.jsp");
 		request.setAttribute("pageDataMap", pageDataMap);
 		request.setAttribute("currentPage", currentPage);
 		view.forward(request, response);
-		
-		
 	
 	}
 

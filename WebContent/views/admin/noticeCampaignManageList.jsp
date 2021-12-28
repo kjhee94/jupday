@@ -1,3 +1,7 @@
+<%@page import="kr.or.iei.admin.notice.model.vo.AdminCampaign"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +23,16 @@
 </head>
 
 <body>
+   <%
+       //세션에서 멤버가져오기
+      Member m = (Member)session.getAttribute("member");
+   %>
+   
+   <%//페이징 처리 된 데이터 가져오기
+      HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
+      ArrayList<AdminCampaign> list = (ArrayList<AdminCampaign>)pageDataMap.get("list");
+      String pageNavi = (String)pageDataMap.get("pageNavi");
+   %>
     <div id="wrap">
     
         <!-- navigation -->
@@ -31,7 +45,7 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
@@ -76,128 +90,37 @@
                                 <th width="100">게시번호</th>
                                 <th width="250">게시글제목</th>
                                 <th width="300">게시글내용</th>
-                                <th width="100">작성자</th>
-                                <th width="100">조회수</th>
                                 <th width="100">작성일자</th>
                                 <th width="150">수정하기</th>
                                 <th width="150">삭제 / 복원</th>
                             </tr>
                         </thead>
+                         <%for(AdminCampaign ac : list) {%>
                         <tbody>
                             <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
+                                <td><%=ac.getNc_No() %></td>
+                                <td><div class="text-ellipsis subject"><%=ac.getNc_Title() %></div></td>
+                                <td><div class="text-ellipsis"><%=ac.getNc_Content() %></div></td>
+                                <td><%=ac.getNc_regDate() %></td>
                                 <td><button class="modify_btn"><a href="./noticeCampaignUpdate.jsp">수정</a></button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="re_btn">복원</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
-                            </tr>
-                            <tr>
-                                <td>20</td>
-                                <td><div class="text-ellipsis subject">★한강 플로깅 안내★</div></td>
-                                <td><div class="text-ellipsis">겨울에도 지치지않는 플로깅의 열기, 한강에서 시작합니다.</div></td>
-                                <td>관리자</td>
-                                <td>777</td>
-                                <td>2021/12/01</td>
-                                <td><button class="modify_btn">수정</button>
-                                <td><button class="del_btn">삭제</button></td>
+                                <td>
+                                <%if(ac.getNc_Del_YN()=='N') {%>
+                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <%}else {%>
+                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <%} %>
+                                </td>
                             </tr>
                             </tbody>
+                        <%} %>                            
                     </table>
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-                            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-                            <li><a href="javascript:" class="page_active">1</a></li>
-                            <li><a href="javascript:">2</a></li>
-                            <li><a href="javascript:">3</a></li>
-                            <li><a href="javascript:">4</a></li>
-                            <li><a href="javascript:">5</a></li>
-                            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
+					        <%=pageNavi %>
                         </ul>
-                    </div>
+                    </div>                    
+                    
                 </div>
             </div>
         </div>
