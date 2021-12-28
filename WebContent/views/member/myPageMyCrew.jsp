@@ -44,7 +44,7 @@
 								<%for(Crew c:manageList) {%>
 							<div class="crew-area">
 								<%if(c.getCrewImg()!=null) { %>
-								<div class="crew-image"><img alt="크루이미지" src="<%=c.getCrewImg()%>"></div>
+								<div class="crew-image"><img alt="크루이미지" src="/upload/<%=c.getCrewImg()%>.png"></div>
 								<%}else { %>
 								<div class="crew-image"><img alt="크루이미지" src="/assets/images/crew.png"></div>
 								<%} %>

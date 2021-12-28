@@ -1,3 +1,6 @@
+<%@page import="kr.or.iei.notice.model.vo.Notice"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +22,16 @@
 </head>
 
 <body>
+<%
+
+
+HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+
+ArrayList<Notice> list = (ArrayList<Notice>)pageDataMap.get("list");//꺼내준다.
+String pageNavi = (String)pageDataMap.get("pageNavi");//꺼내준다
+int currentPage =(int)request.getAttribute("currentPage");
+%>
+
 
    <div id="wrap">
    
@@ -34,10 +47,10 @@
          <div class="notice-top">
          	 <div class="box-button">
 				<button class="btn-notice">
-					<a href="/views/notice/noticeNews.jsp">공지사항</a>
+					<a href="/views/notice/noticeNewsAllSelect.do">공지사항</a>
 				</button>
 				<button class="btn-campaign">
-					<a href="/views/notice/noticeCampaign.jsp">캠페인 안내</a>
+					<a href="/notice/noticeCampaignAllSelect.do">캠페인 안내</a>
 				</button>
 			 </div>
 		 </div>
@@ -73,89 +86,22 @@
 			            </tr>
 			        </thead>
 			        <tbody>
+                    <%for(Notice notice : list){%>			        
 			            <tr>
-			                <td>12</td>
-			                <td><div class="text-ellipsis subject"><a href="/views/notice/noticeNewsContent.jsp">세미 프로젝트 종료 및 발표 안내</a></div></td>
-			                <td>568</td>
-			                <td>관리자</td>
-			                <td>2021/12/28</td>
+			                <td><%=notice.getNoticeNo()%></td>
+			                <td><div class="text-ellipsis subject"><a href="/notice/noticeNewsSelectContent.do?noticeNo=<%=notice.getNoticeNo()%>&currentPage=<%=currentPage%>"><%=notice.getNoticeTitle()%></a></div></td><!-- 누르면 이동하게 -->
+			                <td><%=notice.getNoticeHits()%></td>
+			                <td><%=notice.getNoticeWriter()%></td>
+			                <td><%=notice.getNoticeRegDate()%></td>
 			            </tr>
-			            <tr>
-			                <td>11</td>
-			                <td><div class="text-ellipsis subject">크리스마스입니다 코딩하세요</div></td>
-			                <td>134</td>
-			                <td>관리자</td>
-			                <td>2021/12/25</td>
-			            </tr>
-			            <tr>
-			                <td>10</td>
-			                <td><div class="text-ellipsis subject">크리스마스 이브입니다 코딩하세요</div></td>
-			                <td>356</td>
-			                <td>관리자</td>
-			                <td>2021/12/24</td>
-			            </tr>
-			            <tr>
-			                <td>9</td>
-			                <td><div class="text-ellipsis subject">깃허브 업로드 완료했습니다</div></td>
-			                <td>986</td>
-			                <td>관리자</td>
-			                <td>2021/12/22</td>
-			            </tr>
-			            <tr>
-			                <td>8</td>
-			                <td><div class="text-ellipsis subject">여러분 라이브러리 꼭 추가하세요</div></td>
-			                <td>1240</td>
-			                <td>관리자</td>
-			                <td>2021/12/16</td>
-			            </tr>
-			            <tr>
-			                <td>7</td>
-			                <td><div class="text-ellipsis subject">12월 줍데이 공지</div></td>
-			                <td>124</td>
-			                <td>관리자</td>
-			                <td>2021/12/07</td>
-			            </tr>
-			            <tr>
-			                <td>6</td>
-			                <td><div class="text-ellipsis subject">점검 완료 했습니다</div></td>
-			                <td>534</td>
-			                <td>관리자</td>
-			                <td>2021/12/04</td>
-			            </tr>
-			            <tr>
-			                <td>5</td>
-			                <td><div class="text-ellipsis subject">12월 4일 오전 4시 점검이 있을 예정입니다</div></td>
-			                <td>211</td>
-			                <td>관리자</td>
-			                <td>2021/12/01</td>
-			            </tr>
-			            <tr>
-			                <td>4</td>
-			                <td><div class="text-ellipsis subject">11월 오늘의 리뷰 당첨자 목록</div></td>
-			                <td>231</td>
-			                <td>관리자</td>
-			                <td>2021/11/28</td>
-			            </tr>
-			            <tr>
-			                <td>3</td>
-			                <td><div class="text-ellipsis subject">11월 줍데이 공지(+수정)</div></td>
-			                <td>124</td>
-			                <td>관리자</td>
-			                <td>2021/11/02</td>
-			            </tr>
+			             <% }%> 
 			        </tbody>
 			    </table>
 			
 			    <div id="page_wrap">
-			        <ul class="page_ul">
-			            <li><a href="javascript:"><i class="fas fa-chevron-left"></i></a></li>
-			            <li><a href="javascript:" class="page_active">1</a></li>
-			            <li><a href="javascript:">2</a></li>
-			            <li><a href="javascript:">3</a></li>
-			            <li><a href="javascript:">4</a></li>
-			            <li><a href="javascript:">5</a></li>
-			            <li><a href="javascript:"><i class="fas fa-chevron-right"></i></a></li>
-			        </ul>
+					<ul class="page_ul">
+					<li><%=pageNavi %></li>
+	 				</ul>
 			    </div>
 			</div>
 		</div>

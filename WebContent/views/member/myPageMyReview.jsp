@@ -1,3 +1,4 @@
+<%@page import="oracle.net.aso.r"%>
 <%@page import="kr.or.iei.review.model.dao.ReviewDAO"%>
 <%@page import="kr.or.iei.review.model.vo.Review"%>
 <%@page import="java.util.ArrayList"%>
@@ -67,7 +68,7 @@
 							<div class="box-img">
 								<a
 									href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
-									<img alt="리뷰이미지" src="">
+									<img alt="리뷰이미지" src="/upload/<%--=REVIEW_FILE.get --%>">
 								</a>
 							</div>
 						</div>

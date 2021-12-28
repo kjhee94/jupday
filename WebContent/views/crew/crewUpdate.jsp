@@ -34,7 +34,7 @@
 				<p class="tit-big">크루 정보 수정</p>
 			</div>
 			
-			<form id="crewInfo" action="/crew/crewUpdate.do" method="post">
+			<form id="crewInfo" action="/crew/crewUpdate.do" method="post" enctype="multipart/form-data">
 				<div class="box-name">
 					<span>크루명</span>
 					<input type="text" id="crewName" name="crewName" class="input-style" placeholder="크루명을 입력하세요(10자 이내)" value="<%=c.getCrewName() %>">
@@ -45,13 +45,14 @@
 				</div>
 				<div class="box-upload">
 					<span>크루 대표 사진</span>
+					<span class="file-name"></span>
 					<label for="crewImg" class="btn-s">사진등록</label>
-					<input type="file" id="crewImg" name="crewImg" value="<%=c.getCrewImg() %>" ><br>
+					<input type="file" id="crewImg" name="crewImg"  value="<%=c.getCrewImg() %>" ><br>
 				</div>
 				<input type="hidden" name="crewNo" value="<%=c.getCrewNo() %>">
 				<div class="box-button">
 					<input type="submit" value="수정" class="btn-m">
-					<button class="btn-m"><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">취소</a></button>
+					<button id="fileSubmitBtn" class="btn-m"><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">취소</a></button>
 				</div>
 			</form>
 		</div>
