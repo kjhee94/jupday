@@ -60,7 +60,7 @@
                     <div class="box-search">
                     	<div class="btn-write">
 							<button class="btn-rec">
-								<a href="./noticeCampaignWrite.jsp">글쓰기</a>
+								<a href="./noticeCampaignWrite.jsp" method="post">글쓰기</a>
 							</button>
 						</div>
                     

@@ -44,7 +44,7 @@
 				<form action="">
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요" <%=adfaq.getFaq_Title() %>>
+							<input type="text" placeholder="제목을 입력하세요" ><%=adfaq.getFaq_Title() %>
 						</div>
 						<div class="box-content">
 							<textarea placeholder="내용을 입력하세요" <%=adfaq.getFaq_Content() %>></textarea>

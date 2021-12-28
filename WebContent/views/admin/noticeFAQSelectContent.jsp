@@ -21,16 +21,15 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/assets/js/ui.js"></script>
 </head>
-
 <body>
     <div id="wrap">
-     
-     <%Member m = (Member)session.getAttribute("member"); %>
-     <%AdminFAQ adfaq = (AdminFAQ)request.getAttribute("adfaq"); %>
-      
-        <!-- navigation -->
+	  <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
         
+	<%AdminFAQ admfaq = (AdminFAQ)request.getAttribute("admfaq"); %>
+	<%Member m = (Member)session.getAttribute("member"); %>
+       
+       <%if(admfaq!=null) {%>
         <div id="header">
             <div class="admin-path">
                 <p>줍데이공지</p>
@@ -42,16 +41,15 @@
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
-
         <div id="content">
             <div class="container">
-				<form action="/admin/AdminFAQUpdate.do" id="updateForm" method="post">
+				<form action="">
 					<div class="box-write" name="content" id="content">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요"/><%=adfaq.getFaq_Title() %>
+							<%=admfaq.getFaq_Title() %>
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"><%=adfaq.getFaq_Content() %></textarea>
+							<%=admfaq.getFaq_Content() %>
 						</div>
 					</div>
 					<div class="box-button">
@@ -63,32 +61,17 @@
             </div>
         </div>
         
-    <script>
-	var updateBtnFlag = false;
-	var boardData;
-	$('#updateBtn').click(function(){
-		if(updateBtnFlag==false)
-			{
-				$('#content').prop('disabled',false);
-				$('#updateBtn').text('수정완료');
-				$('#cancleBtn').css('display','inline');	
-				updateBtnFlag=true;
-				boardData = $('#content').html();
-			}
-		else if(updateBtnFlag==true){
-			$('#updateForm').submit();
-		}
-	});
-	
-	$('#cancleBtn').click(function(){
-		location.replace('/admin/adminFAQSelectContent.do?faq_No=<%=adfaq.getFaq_No()%>');
-	});
-	
-</script>
-        
         <footer id="footer">
             <p>2021 ⓒ JUP DAY</p>
         </footer>
-    </div>
+    </div>       
+       <%}else {%>
+       <script>
+       	에러
+       </script>
+       <%} %>
+      
+</body>
+</html>
 </body>
 </html>

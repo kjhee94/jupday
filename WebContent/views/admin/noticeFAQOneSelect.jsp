@@ -24,11 +24,14 @@
 
 <body>
     <div id="wrap">
-     
-     <%Member m = (Member)session.getAttribute("member"); %>
-     <%AdminFAQ adfaq = (AdminFAQ)request.getAttribute("adfaq"); %>
-      
-        <!-- navigation -->
+	<%AdminFAQ admfaq = (AdminFAQ)request.getAttribute("admfaq");%>
+
+글번호 : <%=admfaq.getFaq_No() %> 
+글제목 : <%=admfaq.getFaq_Title() %>
+글내용 : <%=admfaq.getFaq_Content() %>
+삭제여부 : <%=admfaq.getFaq_Del_YN() %>
+
+  <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
         
         <div id="header">
@@ -62,7 +65,7 @@
 				</form>
             </div>
         </div>
-        
+    <%--     
     <script>
 	var updateBtnFlag = false;
 	var boardData;
@@ -85,7 +88,7 @@
 	});
 	
 </script>
-        
+        --%>
         <footer id="footer">
             <p>2021 ⓒ JUP DAY</p>
         </footer>

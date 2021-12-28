@@ -46,13 +46,5 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		return result;
 	}
 
-	@Override
-	public void selectNoticeOnePost(int nNo) {
-		Connection conn = JDBCTemplate.getConnection();
-		
-		adnDAO.selectNoticeOnePost(conn, nNo);
-		return null;
-		
-	}
 
 }

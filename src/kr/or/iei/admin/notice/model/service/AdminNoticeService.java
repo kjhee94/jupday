@@ -7,8 +7,6 @@ public interface AdminNoticeService {
 	HashMap<String, Object> selectAllNoticePageList(int currentPage);
 
 	int updateNoticeDelYN(int nNo, char delYN);
-
-	void selectNoticeOnePost(int nNo);
 	
 	
 

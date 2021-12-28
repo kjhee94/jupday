@@ -47,12 +47,12 @@ public class AdminFAQServiceImpl implements AdminFAQService {
 
 	@Override
 	public AdminFAQ selectOneFAQContent(int faqNo) {
-		
 		Connection conn = JDBCTemplate.getConnection();
 		AdminFAQ adfaq = adnDAO.selectOneFAQContent(conn, faqNo);
 		JDBCTemplate.close(conn);
 		return adfaq;
+		
 	}
-	
+
 
 }

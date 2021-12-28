@@ -31,11 +31,7 @@ public class AdminNoticeSelectContentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int nNo = Integer.parseInt(request.getParameter("nNo"));
-		
-		AdminNoticeService adnService = new AdminNoticeServiceImpl();
-		adnService.selectNoticeOnePost(nNo);
-		
+
 		
 	}
 
