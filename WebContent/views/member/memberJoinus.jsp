@@ -265,7 +265,6 @@
 			    
 		        if(!n_RegExp.test($("#nick").val())){ 
 					$("#nickCheck").html("닉네임을 2~16자의 숫자,한글,영어,'_'로 입력해주세요.").css("color","red");
-			        $("#nick").focus();
 		            return false;
 		        }
 
