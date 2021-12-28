@@ -44,7 +44,7 @@ public class AdminCampaignManageListServlet extends HttpServlet {
 			return;
 		}
 		
-		//페이징처리
+		//캠페인 페이징처리
 		int currentPage;
 		if(request.getParameter("currentPage")==null)
 		{
