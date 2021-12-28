@@ -120,7 +120,7 @@
 							</div>
 							<div class="txt-comment">								
 								<p><%=co.getR_c_comment() %></p>
-<<<<<<< HEAD
+
 									<form action ="/views/review/reviewCommentUpdate.jsp" method="post" id="commentUpdateForm" display="none">			
 										<input type="hidden" name="comment" value="<%=co.getR_c_comment() %>"/>
 										<input type="hidden" name="commentNo" value="<%=co.getR_c_no() %>"/>

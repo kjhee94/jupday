@@ -70,8 +70,8 @@
 								<span>위치추가</span>
 								<i class="fas fa-chevron-down"></i>
 							</div>
-							<div class="map-content" id='map' style="width:100%;height:350px;">
-								<!-- 여기가 지도html부분 -->
+							<div class="map-content">
+								<img alt="" src="/assets/images/kakaomap2.png" style="width:100%; height:100%;">
 							</div>
 						</div>
 					</div>
