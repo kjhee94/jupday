@@ -1,4 +1,5 @@
-	<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
+	<%@page import="kr.or.iei.crew.model.vo.CrewMember"%>
+<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,6 +23,7 @@
 
 	<%
 		CrewBoard cb = (CrewBoard)request.getAttribute("crewBoard");
+		CrewMember cm = (CrewMember)request.getAttribute("crewMember");
 		String crewName = (String)request.getAttribute("crewName");
 		int currentPage = (int)request.getAttribute("currentPage");	
 		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
@@ -30,6 +32,7 @@
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
+			
 			
 		<div id="content">
 			<div class=box-title>
@@ -57,7 +60,6 @@
 			</div>
 			
 			<div class="write-content">
-				<box-content-img>
 				<div class="box-content">
 					<p><%=cb.getFeedContent() %></p>
 				</div>
@@ -121,8 +123,12 @@
 			</div>
 			
 			<div class="list-btn">
-				<button class="btn-m btn-update"><a href="/views/crews/crewUpdateFeed.jsp">수정</a></button>
-				<button class="btn-m btn-golist"><a href="/views/crews/crewOnePage.jsp">목록</a></button>
+				<button class="btn-m btn-golist"><a href="/crew/crewOnePage.do?crewNo=<%=cb.getCrewNo() %>&currentPage=<%=currentPage %>&currentFeedPage=<%=currentFeedPage%>">목록</a></button>
+				<!-- 권한설정 -->
+				<%if(m!=null && m.getNick().equals(cb.getWriter())) {%>
+					<button class="btn-m btn-update"><a href="/crew/crewFeedValue.do?crewNo=<%=cb.getCrewNo() %>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>">수정</a></button>
+					<button class="btn-m btn-delete"><a href="/crew/crewDeleteFeed.do?crewNo=<%=cb.getCrewNo() %>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>">삭제</a></button>
+				<%} %>
 			</div>
 			
 		</div>

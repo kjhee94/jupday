@@ -181,6 +181,47 @@ public interface CrewService {
 	 */
 	CrewBoard selectOneCrewFeed(int feedNo);
 
+	/**
+	 * 작성자 : 강주희
+	 * @param cb
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루피드를 작성하는 메소드
+	 */
+	int insertCrewFeed(CrewBoard cb);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param cb
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 피드번호를 조회하는 메소드
+	 */
+	int searchFeedNo(CrewBoard cb);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param userId
+	 * @param crewNo
+	 * @return CrewMember
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 로그인한 아이디로 크루멤버를 조회하는 메소드
+	 */
+	CrewMember selectCrewMember(String userId, int crewNo);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param cb
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루피드를 수정하는 메소드
+	 */
+	int updateCrewFeed(CrewBoard cb);
+
 	
 
 	

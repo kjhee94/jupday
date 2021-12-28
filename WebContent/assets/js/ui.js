@@ -139,6 +139,11 @@ $(document).ready(function(){
     	$(".file-name").text(fileName);
 	});
 
+    
+    //가입 alert
+    $(".alertJoin").click(function(){
+    	alert("크루에 가입해 주세요");
+    });
 
     
 });

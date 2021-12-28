@@ -725,7 +725,7 @@ public class CrewDAO {
 					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*, NICK, P_IMAGE " + 
 					   "FROM CREW_FEED CF " + 
 					   "LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
-					   "WHERE C_NO=? ) " + 
+					   "WHERE C_NO=? AND C_F_DEL_YN='N') " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
 		try {
@@ -777,7 +777,7 @@ public class CrewDAO {
 		
 		String query = "SELECT C_F_NO, COUNT(*) AS LIKE_COUNT " + 
 					   "FROM CREW_FEED_LIKE " + 
-					   "WHERE C_F_NO=? " + 
+					   "WHERE C_F_NO=? AND C_F_LIKE_YN='Y' " + 
 					   "GROUP BY C_F_NO";
 		
 		try {
@@ -809,7 +809,7 @@ public class CrewDAO {
 		
 		String query = "SELECT C_F_NO, COUNT(*) AS COMMENT_COUNT " + 
 					   "FROM CREW_COMMENT " + 
-					   "WHERE C_F_NO=? " + 
+					   "WHERE C_F_NO=? AND C_C_DEL_YN='N' " + 
 					   "GROUP BY C_F_NO";
 		
 		try {
@@ -954,6 +954,132 @@ public class CrewDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return cb;
+	}
+
+	public int insertCrewFeed(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO CREW_FEED VALUES(?,?,FEED_SEQ.NEXTVAL,SYSDATE,?,?,'N',NULL,NULL)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cb.getCrewNo());
+			pstmt.setString(2, cb.getUserId());
+			pstmt.setString(3, cb.getFeedSubject());
+			pstmt.setString(4, cb.getFeedContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int searchFeedNo(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int feedNo = 0;
+		
+		String query = "SELECT C_F_NO FROM CREW_FEED " + 
+					   "WHERE C_NO=? AND USERID=? AND C_F_SUBJECT=? AND C_F_CONTENT=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cb.getCrewNo());
+			pstmt.setString(2, cb.getUserId());
+			pstmt.setString(3, cb.getFeedSubject());
+			pstmt.setString(4, cb.getFeedContent());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				feedNo = rset.getInt("C_F_NO");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return feedNo;
+	}
+
+	public CrewMember selectCrewMember(Connection conn, String userId, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		CrewMember cm = null;
+		
+		String query = "SELECT CM.*, NICK, P_IMAGE " + 
+					   "FROM CREW_MEMBER CM " + 
+					   "LEFT JOIN MEMBER M ON (CM.USERID=M.USERID) " + 
+					   "WHERE CM.C_NO=? AND CM.USERID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			pstmt.setString(2, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				cm = new CrewMember();
+				
+				cm.setUserId(rset.getString("userId"));
+				cm.setCrewNo(rset.getInt("c_no"));
+				cm.setCrewAuthorityId(rset.getString("c_Authority_Id"));
+				cm.setCrewEnrollDate(rset.getDate("c_EnrollDate"));
+				cm.setCrewJoinState(rset.getString("c_Join_State"));
+				cm.setCrewEndYN(rset.getString("c_End_YN").charAt(0));
+				cm.setNick(rset.getString("nick"));
+				cm.setMemberImg(rset.getString("p_image"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return cm;
+	}
+
+	public int updateCrewFeed(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW_FEED SET C_F_SUBJECT=?, C_F_CONTENT=? WHERE C_NO=? AND C_F_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cb.getFeedSubject());
+			pstmt.setString(2, cb.getFeedContent());
+			pstmt.setInt(3, cb.getCrewNo());
+			pstmt.setInt(4, cb.getFeedNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 	

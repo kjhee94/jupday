@@ -1,4 +1,5 @@
-	<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
+	<%@page import="kr.or.iei.crew.model.vo.CrewMember"%>
+<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.crew.model.vo.Crew"%>
@@ -25,6 +26,7 @@
 
 	<%
 		Crew c = (Crew)request.getAttribute("crew");
+		CrewMember cm = (CrewMember)request.getAttribute("crewMember");
 		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
 		int currentPage = (int)request.getAttribute("currentPage");
 		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
@@ -38,7 +40,6 @@
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
 			
-		<% if(m!=null) {%>
 		<div id="content">
 			<div class="img-crew-profile">
 				<%if(c.getCrewImg()!=null) { %>
@@ -53,16 +54,26 @@
 				<p class="txt-crew-exp">
 					<%=c.getCrewInfo() %>
 				</p>
-				<!-- 권한설정 필요 -->
-				<button>크루 가입하기</button>
+				<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
+					<button><a href="">크루 탈퇴하기</a></button>
+				<%}else if(cm!=null && cm.getCrewJoinState().equals("WAIT") && cm.getCrewEndYN()=='N') { %>
+					<button class="btn-click-non">가입 승인 중</button>
+				<%}else { %>
+					<button><a href="">크루 가입하기</a></button>
+				<%} %>
 			</div>
 			
 			<div class="box-write-search">
-				<button class="btn-rec">
-					<!-- 권한설정 필요 -->
-					<a href="/views/crew/crewWriteFeed.jsp">글쓰기</a>
-					
-				</button>
+			
+				<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
+					<button class="btn-rec">
+						<a href="/views/crew/crewWriteFeed.jsp?crewNo=<%=c.getCrewNo()%>&currentPage=<%=currentPage %>&crewName=<%=c.getCrewName()%>">글쓰기</a>
+					</button>
+				<%}else { %>
+					<button class="btn-rec alertJoin">글쓰기</button>
+				<%} %>
+				
+				
 				
 				<div class="box-search">
 					<form action="">
@@ -76,7 +87,7 @@
 						</div>
 						<div class="input-search">
 							<i class="fas fa-search icon-search"></i>
-							<input type="text" name="keyword" placeholder="검색어을 검색하세요">
+							<input type="text" name="keyword" placeholder="검색어를검색하세요">
 						</div>
 						<input type="submit" class="btn-rec" value="검색">
 					</form>
@@ -84,33 +95,59 @@
 			</div>
 			
 			<div class="box-feed">
-				<!-- 권한설정 필요 -->
+				
 				<%for(CrewBoard cb : list) {%>
-				<div class="list-crew-feed">
-					<a href="/crew/crewOneFeed.do?crewNo=<%=cb.getCrewNo()%>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>">
-						<div class="box-writer">
-							<div class="user-img">
-								<%if(cb.getWriterImg()!=null) { %>
-								<img alt="프로필사진" src="/upload/<%=cb.getWriterImg()%>.png">
-								<%}else { %>
-								<img alt="프로필사진" src="/assets/images/profile.png">
-								<%} %>
-								
+					<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
+						<div class="list-crew-feed">
+							<a href="/crew/crewOneFeed.do?crewNo=<%=cb.getCrewNo()%>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>">
+								<div class="box-writer">
+									<div class="user-img">
+										<%if(cb.getWriterImg()!=null) { %>
+										<img alt="프로필사진" src="/upload/<%=cb.getWriterImg()%>.png">
+										<%}else { %>
+										<img alt="프로필사진" src="/assets/images/profile.png">
+										<%} %>
+										
+									</div>
+									<div class="user-name">
+										<p><%=cb.getWriter() %></p>
+										<span><%=cb.getFeedRegdate() %></span>
+									</div>
+								</div>
+								<div class="feed-content">
+									<p><%=cb.getFeedSubject() %></p>
+								</div>
+								<div class="feed-bottom">
+									<i class="far fa-heart"></i><span><%=cb.getFeedLikeCount() %></span>
+									<i class="far fa-comment"></i><span><%=cb.getFeedCommentCount() %></span>
+								</div>
+							</a>
+						</div>
+					<%}else {%>
+						<div class="list-crew-feed alertJoin">
+							<div class="box-writer">
+								<div class="user-img">
+									<%if(cb.getWriterImg()!=null) { %>
+									<img alt="프로필사진" src="/upload/<%=cb.getWriterImg()%>.png">
+									<%}else { %>
+									<img alt="프로필사진" src="/assets/images/profile.png">
+									<%} %>
+									
+								</div>
+								<div class="user-name">
+									<p><%=cb.getWriter() %></p>
+									<span><%=cb.getFeedRegdate() %></span>
+								</div>
 							</div>
-							<div class="user-name">
-								<p><%=cb.getWriter() %></p>
-								<span><%=cb.getFeedRegdate() %></span>
+							<div class="feed-content">
+								<p><%=cb.getFeedSubject() %></p>
+							</div>
+							<div class="feed-bottom">
+								<i class="far fa-heart"></i><span><%=cb.getFeedLikeCount() %></span>
+								<i class="far fa-comment"></i><span><%=cb.getFeedCommentCount() %></span>
 							</div>
 						</div>
-						<div class="feed-content">
-							<p><%=cb.getFeedSubject() %></p>
-						</div>
-						<div class="feed-bottom">
-							<i class="far fa-heart"></i><span><%=cb.getFeedLikeCount() %></span>
-							<i class="far fa-comment"></i><span><%=cb.getFeedCommentCount() %></span>
-						</div>
-					</a>
-				</div>
+					<%} %>
 				<%} %>
 				
 			</div>
@@ -122,11 +159,6 @@
 		    </div>
 		</div>
 		
-		<% } else { %>
-			<script>
-				location.replace("/views/member/memberLogin.jsp");
-			</script>
-		<%}  %>
 		
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>

@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +20,13 @@
 </head>
 <body>
 
+	<%
+		String crewName = (String)request.getAttribute("crewName");
+		CrewBoard cb = (CrewBoard)request.getAttribute("crewBoard");
+		int currentPage = (int)request.getAttribute("currentPage");	
+		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
+	%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -26,16 +34,16 @@
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
-				<p class="tit-big">오늘도 내가 해냄</p>
+				<p class="tit-big"><%=crewName %></p>
 			</div>
 			
-			<form action="">
+			<form action="/crew/crewUpdateFeed.do" method="post">
 				<div class="box-write">
 					<div class="box-subject">
-						<input type="text" placeholder="제목을 입력하세요" value="오늘 신한은행 앞에 타코야끼 트럭 있나요? ">
+						<input type="text" name="feedSubject" placeholder="제목을 입력하세요" value="<%=cb.getFeedSubject()%>">
 					</div>
 					<div class="box-content">
-						<textarea placeholder="내용을 입력하세요">붕어빵은 있는거 같은데 타코야끼가 안보이네요.. 혹시 사장님이 자리 옮기셨나요.. 아시는 분들은 댓글 달아주세요ㅠㅠㅠㅠㅠㅠ</textarea>
+						<textarea name="feedContent" placeholder="내용을 입력하세요"><%=cb.getFeedContent() %></textarea>
 					</div>
 					<div class="box-upload">
 						<label for="upload">
@@ -44,10 +52,14 @@
 						</label>
 						<input type="file" id="upload">
 					</div>
+					<input type="hidden" name="crewNo" value="<%=cb.getCrewNo()%>">
+					<input type="hidden" name="currentPage" value="<%=currentPage%>">
+					<input type="hidden" name="feedNo" value="<%=cb.getFeedNo()%>">
+					<input type="hidden" name="currentFeedPage" value="<%=currentFeedPage%>">
 				</div>
 				<div class="box-button">
-					<input type="submit" value="수정" class="btn-m">
-					<button class="btn-m"><a href="/views/crews/crewOneFeed.jsp">취소</a></button>
+					<input type="submit" value="완료" class="btn-m">
+					<button class="btn-m"><a href="/crew/crewOneFeed.do?crewNo=<%=cb.getCrewNo() %>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo() %>&currentFeedPage=<%=currentFeedPage%>">취소</a></button>
 				</div>
 			</form>
 			

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewMember;
+import kr.or.iei.member.model.vo.Member;
 
 /**
  * Servlet implementation class CrewOneFeedServlet
@@ -33,25 +35,33 @@ public class CrewOneFeedServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		int feedNo = Integer.parseInt(request.getParameter("feedNo"));
-		int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
+		Member m = (Member)request.getSession().getAttribute("member");
 		
-		CrewService cService = new CrewServiceimpl();
-		
-		String crewName = cService.selectCrewName(crewNo);
-		CrewBoard cb = cService.selectOneCrewFeed(feedNo);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewOneFeed.jsp");
-		
-		request.setAttribute("crewBoard", cb);
-		request.setAttribute("crewName", crewName);
-		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("currentFeedPage", currentFeedPage);
-		
-		view.forward(request, response);
-		
+		if(m==null) {
+			response.sendRedirect("/views/member/memberLogin.jsp");
+		}else {
+			
+			int crewNo = Integer.parseInt(request.getParameter("crewNo"));
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			int feedNo = Integer.parseInt(request.getParameter("feedNo"));
+			int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
+			
+			CrewService cService = new CrewServiceimpl();
+			
+			String crewName = cService.selectCrewName(crewNo);
+			
+			//크루게시판 정보 가져오기
+			CrewBoard cb = cService.selectOneCrewFeed(feedNo);
+			
+			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewOneFeed.jsp");
+			
+			request.setAttribute("crewBoard", cb);
+			request.setAttribute("crewName", crewName);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("currentFeedPage", currentFeedPage);
+			
+			view.forward(request, response);
+		}
 	}
 
 	/**

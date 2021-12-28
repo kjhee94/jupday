@@ -18,6 +18,12 @@
 <script src="/assets/js/ui.js"></script>
 </head>
 <body>
+	
+	<%
+		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		String crewName = request.getParameter("crewName");
+	%>
 
 	<div id="wrap">
 		<!-- header -->
@@ -26,10 +32,10 @@
 		<div id="content">
 			<div class=box-title>
 				<p class="tit-small">J U P : D A Y</p>
-				<p class="tit-big">오늘도 내가 해냄</p>
+				<p class="tit-big"><%=crewName %></p>
 			</div>
 			
-			<form action="">
+			<form action="/crew/crewWriteFeed.do?">
 				<div class="box-write">
 					<div class="box-subject">
 						<input type="text" name="feedSubject" placeholder="제목을 입력하세요">
@@ -44,10 +50,12 @@
 						</label>
 						<input type="file" id="upload">
 					</div>
+					<input type="hidden" name="crewNo" value=<%=crewNo %>>
+					<input type="hidden" name="currentPage" value=<%=currentPage %>>
 				</div>
 				<div class="box-button">
 					<input type="submit" value="완료" class="btn-m">
-					<button class="btn-m"><a href="/views/crews/crewOnePage.jsp">목록</a></button>
+					<button class="btn-m"><a href="/crew/crewOnePage.do?crewNo=<%=crewNo %>&currentPage=<%=currentPage %>">목록</a></button>
 				</div>
 			</form>
 			

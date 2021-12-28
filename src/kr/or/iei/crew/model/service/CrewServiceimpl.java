@@ -242,5 +242,51 @@ public class CrewServiceimpl implements CrewService {
 		return cb;
 	}
 
+	@Override
+	public int insertCrewFeed(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertCrewFeed(conn, cb);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int searchFeedNo(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int feedNo = cDAO.searchFeedNo(conn, cb);
+		JDBCTemplate.close(conn);
+		return feedNo;
+	}
+
+	@Override
+	public CrewMember selectCrewMember(String userId, int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		CrewMember cm = cDAO.selectCrewMember(conn, userId, crewNo);
+		JDBCTemplate.close(conn);
+		return cm;
+	}
+
+	@Override
+	public int updateCrewFeed(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewFeed(conn, cb);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 	
 }
