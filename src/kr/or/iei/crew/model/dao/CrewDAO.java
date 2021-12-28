@@ -12,6 +12,7 @@ import kr.or.iei.crew.model.vo.CrewBoard;
 import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
+import kr.or.iei.review.model.vo.Review;
 import oracle.net.aso.p;
 
 public class CrewDAO {
@@ -405,12 +406,12 @@ public class CrewDAO {
 		ResultSet rset = null;
 		ArrayList<Crew> list = new ArrayList<Crew>();
 		
-		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
+		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,C_CREATEDATE,COUNT(*)AS C_COUNT " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
 					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' " +
 					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루장') " + 
-					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE,C.C_CREATEDATE " +
 					   "ORDER BY C.C_NO DESC";
 		
 		try {
@@ -427,6 +428,7 @@ public class CrewDAO {
 				c.setCrewName(rset.getString("c_name"));
 				c.setCrewImg(rset.getString("c_p_image"));
 				c.setCrewCount(rset.getInt("c_count"));
+				c.setCrewCreateDate(rset.getDate("c_createDate"));
 				
 				list.add(c);
 			}
@@ -447,12 +449,12 @@ public class CrewDAO {
 		ResultSet rset = null;
 		ArrayList<Crew> list = new ArrayList<Crew>();
 		
-		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,COUNT(*)AS C_COUNT " + 
+		String query = "SELECT C.C_NO,C_NAME,C_P_IMAGE,C_CREATEDATE,COUNT(*)AS C_COUNT " + 
 					   "FROM CREW C " + 
 					   "LEFT JOIN CREW_MEMBER CM ON (C.C_NO=CM.C_NO) " + 
 					   "WHERE C_DEL_YN='N' AND C_JOIN_STATE='SUCCESS' " +
 					   "AND C.C_NO IN (SELECT C_NO FROM CREW_MEMBER WHERE USERID=? AND C_AUTHORITY_ID = '크루원') " + 
-					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE " +
+					   "GROUP BY C.C_NO,C_NAME,C_P_IMAGE,C_CREATEDATE " +
 					   "ORDER BY C.C_NO DESC";
 		
 		try {
@@ -469,6 +471,7 @@ public class CrewDAO {
 				c.setCrewName(rset.getString("c_name"));
 				c.setCrewImg(rset.getString("c_p_image"));
 				c.setCrewCount(rset.getInt("c_count"));
+				c.setCrewCreateDate(rset.getDate("c_createDate"));
 				
 				list.add(c);
 			}
@@ -1421,11 +1424,6 @@ public class CrewDAO {
 			
 			return result;
 		}
-
-		
-	
-
-
 
 	
 }

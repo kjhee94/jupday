@@ -1,3 +1,4 @@
+<%@page import="oracle.net.aso.r"%>
 <%@page import="kr.or.iei.review.model.dao.ReviewDAO"%>
 <%@page import="kr.or.iei.review.model.vo.Review"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,29 +21,33 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/assets/js/ui.js"></script>
 
-<link href='/assets/calender/lib/main.css' rel='stylesheet' />
+<!-- <link href='/assets/calender/lib/main.css' rel='stylesheet' />
 <script src='/assets/calender/lib/main.js'></script>
+<script src='fullcalendar/core/locales/ko.js'></script>
 
-<script>
-
+	<script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
+        	locale: 'ko',
+        	initialView: 'dayGridMonth',
         });
         calendar.render();
       });
-
-</script>
-
-
-
-</head>
+    </script> -->
+    
 <body>
+	<%
+	HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
+	ArrayList<Review> list = (ArrayList<Review>)pageDataMap.get("list");
+	String pageNavi = (String)pageDataMap.get("pageNavi");
+	int currentPage = (int)request.getAttribute("currentPage");
+	String keyword = (String)request.getAttribute("keyword"); //getParameter로도 넘기기 가능
+	%>
 	
 	<div id="wrap">
 		<%@ include file="/views/commons/header/header.jsp"%>
-		<% if(m!=null) {%>
+		<% if(m!=null) { %>
 		<div id="content">
 			<div class="user-info">
 				<div class=box-title>
@@ -51,38 +56,30 @@
 				</div>
 				<div class="basic">
 					<div id="calendar" class="calendar">
-						<%-- <%@ include file="/views/member/myPageCalendar.jsp"%> --%>
+						<%@ include file="/views/member/myPageCalendar.jsp"%>
 					</div>
-					
-					
-				<%
-				HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
-				
-				ArrayList<Review> list = (ArrayList<Review>)pageDataMap.get("list");
-				String pageNavi = (String)pageDataMap.get("pageNavi");
-				int currentPage = (int)request.getAttribute("currentPage");
-				String keyword = (String)request.getAttribute("keyword"); //getParameter로도 넘기기 가능
-				
-				%>
-					
 					<div class="board">
-							<%for(Review review : list) { %>
-							<% System.out.println(review.getUserId()); %>
-								<% if(((Member)session.getAttribute("member")).getUserId().equals(review.getUserId())) { %>
-								<div class="box-one-review">
-									<div class="box-img">
-										<a href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
-											<img alt="" src="">
-										</a>
-									</div>
-								</div>
-								 <% }  %>
-							<% } %>
-							<div id="page_wrap">
-						<ul class="page_ul">
-							<%=pageNavi %>
-						</ul>
-					</div>
+						<%if(list.isEmpty()) { %>
+						<div class="review-area-empty"><p class="review-empty">작성하신 리뷰가 존재하지 않습니다.</p></div>
+						<%} else {%>
+						<%for (Review review : list) {%>
+						<%if (((Member) session.getAttribute("member")).getUserId().equals(review.getUserId())) {%>
+						<div class="box-one-review">
+							<div class="box-img">
+								<a
+									href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
+									<img alt="리뷰이미지" src="/upload/<%--=REVIEW_FILE.get --%>">
+								</a>
+							</div>
+						</div>
+						<%} %>
+						<%} %>
+						<div id="page_wrap">
+							<ul class="page_ul">
+								<%=pageNavi%>
+							</ul>
+						</div>
+						<% } %>
 					</div>
 				</div>
 			</div>

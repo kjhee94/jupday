@@ -364,6 +364,19 @@ public class CrewServiceimpl implements CrewService {
 		
 		return result;
 	}
+	@Override
+	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
+		
+		
+		return null;
+	}
 
 	@Override
 	public int insertFeedComment(CrewBoardComment cbc) {

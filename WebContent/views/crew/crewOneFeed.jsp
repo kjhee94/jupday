@@ -94,6 +94,12 @@
 								<div class="txt-comment">
 									<p><%=cbc.getCommentContent() %></p>
 								</div>
+								<div class="txt-comment">
+									
+								</div>
+							</div>
+							<div class="btn-comment">
+								<
 							</div>
 						</div>
 					<%} %>

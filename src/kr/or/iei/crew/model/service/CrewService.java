@@ -170,6 +170,19 @@ public interface CrewService {
 	 *
 	 * Description : 크루개별 페이지의 정보를 가져오는 메소드
 	 */
+	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo);
+
+	
+	/**
+	 * 작성자 : 김서후
+	 * @param currentPage
+	 * @param userId
+	 * @return HashMap<String,Object>
+	 * 작성일 : 2021. 12. 27.
+	 *
+	 * Description : 마이페이지에서 크루의 정보를 가져오는 메소드
+	 */
+	/*HashMap<String, Object> myCrewList(int currentPage, String userId);*/
 	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo, int currentPage);
 
 	/**
@@ -279,11 +292,5 @@ public interface CrewService {
 	 * Description : 피드에 댓글을 작정하는 메소드
 	 */
 	int insertFeedComment(CrewBoardComment cbc);
-
-	
-	
-
-
-	
 
 }
