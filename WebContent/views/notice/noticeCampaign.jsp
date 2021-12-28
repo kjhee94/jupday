@@ -1,3 +1,6 @@
+<%@page import="kr.or.iei.notice.model.vo.NoticeCampaign"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,6 +23,16 @@
 
 <body>
 
+<%
+
+
+HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+
+ArrayList<NoticeCampaign> list = (ArrayList<NoticeCampaign>)pageDataMap.get("list");//꺼내준다.
+String pageNavi = (String)pageDataMap.get("pageNavi");//꺼내준다
+int currentPage =(int)request.getAttribute("currentPage");
+%>
+
    <div id="wrap">
    
       <!-- header -->
@@ -34,10 +47,10 @@
          <div class="notice-top">
          	 <div class="box-button">
 				<button class="btn-notice">
-					<a href="/views/notice/noticeNews.jsp">공지사항</a>
+					<a href="/views/notice/noticeNewsAllSelect.do">공지사항</a>
 				</button>
 				<button class="btn-campaign">
-					<a href="/views/notice/noticeCampaign.jsp">캠페인 안내</a>
+					<a href="/notice/noticeCampaignAllSelect.do">캠페인 안내</a>
 				</button>
 			 </div>
 		 </div>
@@ -62,115 +75,27 @@
 			 </div>
 			 
 			 <div class="box-campaign-list">
+			     <%for(NoticeCampaign noticeCampaign : list){%>			        
 			 	<div class="box-campaign">
-			 		<a href="/views/notice/noticeCampaineContent.jsp">
+			 		<a href="/notice/CampaignContent.do?campaignNo=<%=noticeCampaign.getCampaignNo()%>&currentPage=<%=currentPage%>"><!-- 누르면 이동 -->
 			 			<div class="img-campaign">
 				 			<img alt="" src="/assets/images/campaign01.jpg">
 				 		</div>
 				 		<div class="txt-campaign">
-				 			<p>온라인싹쓰리 챌린지 1탄 싹줍깅</p>
-				 			<p>2021.11.05</p>
+				 			<p><%=noticeCampaign.getCampaignTitle() %></p>
+				 			<p><%=noticeCampaign.getCampaignRegDate() %></p>
 				 		</div>
 			 		</a>
 			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign02.png">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>우리의 미래숲을 위한 '쓰담달리기'</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign03.jpg">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>싹줍깅 봉사활동</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign04.jpg">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>우리동네 쓰담쓰담</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign05.jpg">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>생활 속 지구 지킴 줍깅 챌린지</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign06.jpg">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>어스 앤 런</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign07.png">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>지구를 살리는 플로깅하세요</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
-			 	
-			 	<div class="box-campaign">
-			 		<a href="">
-			 			<div class="img-campaign">
-				 			<img alt="" src="/assets/images/campaign08.png">
-				 		</div>
-				 		<div class="txt-campaign">
-				 			<p>옹기종기 축제 플로깅 챌린지</p>
-				 			<p>2021.11.05</p>
-				 		</div>
-			 		</a>
-			 	</div>
+			 	 <% }%>
 			 </div>
 			 
 			 <div id="page_wrap">
 		        <ul class="page_ul">
-		            <li><a href=""><i class="fas fa-chevron-left"></i></a></li>
-		            <li><a href="" class="page_active">1</a></li>
-		            <li><a href="">2</a></li>
-		            <li><a href="">3</a></li>
-		            <li><a href="">4</a></li>
-		            <li><a href="">5</a></li>
-		            <li><a href=""><i class="fas fa-chevron-right"></i></a></li>
+		            <li><%=pageNavi %></li>
 		        </ul>
 		    </div>
-        </div>
+        </div> 
          
          
       </div>

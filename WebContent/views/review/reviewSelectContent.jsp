@@ -119,18 +119,23 @@
 								<p><%=co.getNick() %><span><%=co.getR_c_regDate() %></span></p>
 							</div>
 							<div class="txt-comment">								
-								<%if(m!=null && m.getUserId().equals(co.getUserId())){ %>
-									
-									<p><%=co.getR_c_comment() %></p>
+								<p><%=co.getR_c_comment() %></p>
 									<input type="text" style="display:none;"/>
-									<form>
-										<button class="coModifyBtn">수정</button>  
-										<button class="coDeleteBtn" commentNo="<%=co.getR_c_comment()%>">삭제</button>
-									</form>
-									<%-- 안되겠다, 이거 팝업으로 만들자, 서블릿~DAO 왕복 로직만 구현하고 servlet 가는 길목만 끊어놓자  --%>
-								<%}else{ %>
-										<p><%=co.getR_c_comment() %></p> 
-								<%} %>
+										<form action ="/review/reviewCommentUpdate.do" method="post" id="commentUpdateForm" display="none">			
+											<input type="hidden" name="content" id="contentArea" value="<%=review.getPostContent()%>"/>
+											<input type="hidden" name="boardNo" value="<%=review.getPostTitle() %>"/>
+											<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
+										</form>
+										
+										<%-- 막상 했지만 이건 고민좀 해봐야할듯, 창을 하나 띄우고 할 것인가, 내가 원하는건 수정 버튼 누르면 입력한 <p>태그에서 수정하고 완료 누르면 수정되는 로직인데--%> 
+										
+										<%if(m!=null && m.getUserId().equals(co.getUserId())) {%>
+										
+											<button class="coModifyBtn">수정</button>  
+											<button class="coDeleteBtn" commentNo="<%=co.getR_c_comment()%>">삭제</button>
+										<%}else{ %>
+										
+										<%} %>
 							</div>
 						</div>
 					</div>
@@ -143,9 +148,8 @@
 					<form action="/review/reviewCommentWrite.do" method="post">
 					<div class="box-write-comment">
 						<div class="user-nick">
-							<p><%=review.getNick() %></p>
-							<%-- 도대체 이게 왜 로그인한 내 정보가 아닌 이 글의 작성자 정보가 나오는 것인가? 
-								이게 표기만 글 작성자가 나오는거지 실제로는 내 아이디로 댓글이 달린다, 다중에 이것만 수정해주자--%>
+							<p><%=m.getNick() %></p>
+							
 						</div>
 						<textarea name="r_c_comment" placeholder="댓글을 입력하세요"></textarea>
 						<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
@@ -157,7 +161,7 @@
 					<%}else{ %>
 					<div class="box-write-comment">	
 						<div class="user-nick">
-							<p><%=review.getNick() %></p>
+							<p>none</p>
 						</div>
 						<textarea disabled placeholder="로그인 후 사용해주세요"></textarea>
 						<button disabled>등록</button>
@@ -170,10 +174,12 @@
 	
 				<div class="list-btn">
 				<%if(m!=null){ %>
+				<form display="none">
 					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
 					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
-				<%}else{ %>
-					
+				</form>
+
+				<%}else{ %>			
 					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
 					<button class="btn-m btn-update" disabled>수정</button>
 					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
