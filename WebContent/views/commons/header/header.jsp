@@ -24,9 +24,9 @@
 		                    <li><a href="/views/review/reviewWriteForm.jsp">리뷰 작성</a></li>
 		                </ul>
 		            </li>
-		            <li><a href="/views/notice/noticeNews.jsp">줍데이공지</a>
+		            <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이공지</a><!-- //여기서부터 시작해본다.// /views/notice/noticeNews.jsp-->
 		                <ul class="lnb-list">
-		                    <li><a href="/views/notice/noticeNews.jsp">줍데이 소식</a></li>
+		                    <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이 소식</a></li>
 		                    <li><a href="/views/notice/noticeFAQ.jsp">자주묻는 질문</a></li>
 		                </ul>
 		            </li>
