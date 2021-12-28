@@ -38,6 +38,7 @@
 		String keyword = (String)request.getAttribute("keyword");
 		String type = (String)request.getAttribute("type");
 	
+		System.out.println(c+"/"+cm+"/"+"/"+currentPage+"/"+currentFeedPage+"/"+list+"/"+pageNavi);
 	%>
 
 	<div id="wrap">
@@ -58,7 +59,7 @@
 				<p class="txt-crew-exp">
 					<%=c.getCrewInfo() %>
 				</p>
-				<%if(cm.getCrewAuthorityId().equals("크루장")) {%>
+				<%if(cm!=null && cm.getCrewAuthorityId().equals("크루장")) {%>
 					<button><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">크루 설정</a></button>
 				<%}else { %>
 					<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
@@ -87,9 +88,9 @@
 						<div class="select-search">
 							<select name="type">
 								<option>검색필터</option>
-								<option value="subject">글제목</option>
+								<option value="subject">제목</option>
 								<option value="writer">작성자</option>
-								<option value="all">글제목+작성자</option>
+								<option value="all">제목+작성자</option>
 							</select>
 							<i class="fas fa-chevron-down icon-arrow"></i>
 						</div>

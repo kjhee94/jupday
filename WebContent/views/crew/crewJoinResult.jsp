@@ -9,20 +9,18 @@
 <body>
 	
 	<%
-		boolean withDrawResult = (boolean)request.getAttribute("withDrawResult");
+		boolean joinResult = (boolean)request.getAttribute("joinResult"); 
 		int crewNo = (int)request.getAttribute("crewNo");
 		int currentPage = (int)request.getAttribute("currentPage");
 	%>
 	
 	<script>
-		<%if(withDrawResult) {%>
-			if(confirm("정말로 크루에서 탈퇴하시겠습니까?")){
-				alert("크루에서 탈퇴했습니다")
-				location.replace("/crew/crewJoinList.do");
-			}
+		<%if(joinResult) {%>
+			alert("크루에 가입했습니다")
+			location.replace("/crew/crewOnePage.do?crewNo="+<%=crewNo%>+"&currentPage="+<%=currentPage%>);
 		<%}else {%>	
-			alert("크루탈퇴에 실패했습니다 \n -지속적인 문제 발생시 관리자에게 문의해주세요")
-			location.replace("/crew/crewOnePage.do?crewNo="+<%=crewNo%>+"&currentPage="+<%=currentPage%>+"&currentFeedPage=1");
+			alert("크루가입에 실패했습니다 \n -지속적인 문제 발생시 관리자에게 문의해주세요")
+			location.replace("/crew/crewOnePage.do?crewNo="+<%=crewNo%>+"&currentPage="+<%=currentPage%>);
 		<%} %>	
 		
 	</script>

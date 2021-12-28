@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 import oracle.net.aso.p;
@@ -955,7 +956,7 @@ public class CrewDAO {
 		}
 		return cb;
 	}
-
+	
 	public int insertCrewFeed(Connection conn, CrewBoard cb) {
 		
 		PreparedStatement pstmt = null;
@@ -1013,6 +1014,53 @@ public class CrewDAO {
 		}
 		return feedNo;
 	}
+	
+	public ArrayList<CrewBoardComment> selectCrewFeedAllComment(Connection conn, int crewNo, int feedNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<CrewBoardComment> coList = new ArrayList<CrewBoardComment>();
+		
+		String query = "SELECT * FROM ( " + 
+					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CC.*, NICK, P_IMAGE " + 
+					   "FROM CREW_COMMENT CC " + 
+					   "LEFT JOIN MEMBER M ON (CC.USERID=M.USERID) " + 
+					   "WHERE C_NO=? AND C_F_NO=?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			pstmt.setInt(2, feedNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				CrewBoardComment cbc = new CrewBoardComment();
+				
+				cbc.setCrewNo(crewNo);
+				cbc.setFeedNo(feedNo);
+				cbc.setCommentNo(rset.getInt("c_c_no"));
+				cbc.setUserId(rset.getString("userId"));
+				cbc.setCommentContent(rset.getString("c_comment"));
+				cbc.setCommentRegdate(rset.getDate("c_c_regdate"));
+				cbc.setCommentDelYN(rset.getString("c_c_del_YN").charAt(0));
+				cbc.setNick(rset.getString("nick"));
+				cbc.setUserImg(rset.getString("p_image"));
+				
+				coList.add(cbc);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return coList;
+	}
+	
 
 	public CrewMember selectCrewMember(Connection conn, String userId, int crewNo) {
 		
@@ -1306,7 +1354,8 @@ public class CrewDAO {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			String query = "UPDATE CREW_MEMBER SET C_END_YN='Y' WHERE C_NO=? AND USERID=?";
+			String query = "UPDATE CREW_MEMBER SET C_AUTHORITY_ID='-', C_JOIN_STATE='NONE', C_END_YN='Y' " +
+						   "WHERE C_NO=? AND USERID=?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -1329,15 +1378,12 @@ public class CrewDAO {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			
-			
-			
-			String query = "UPDATE CREW_MEMBER SET C_END_YN='Y' WHERE C_NO=? AND USERID=?";
+			String query = "INSERT INTO CREW_MEMBER VALUES(?,?,'크루원',SYSDATE,'WAIT','N')";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, crewNo);
-				pstmt.setString(2, userId);
+				pstmt.setString(1, userId);
+				pstmt.setInt(2, crewNo);
 				
 				result = pstmt.executeUpdate();
 				
@@ -1350,6 +1396,33 @@ public class CrewDAO {
 			return result;
 		}
 
+		public int insertFeedComment(Connection conn, CrewBoardComment cbc) {
+			
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "INSERT INTO CREW_COMMENT VALUES(?,?,COMMENT_SEQ.NEXTVAL,?,?,SYSDATE,'N')";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, cbc.getCrewNo());
+				pstmt.setInt(2, cbc.getFeedNo());
+				pstmt.setString(3, cbc.getUserId());
+				pstmt.setString(4, cbc.getCommentContent());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return result;
+		}
+
+		
 	
 
 
