@@ -9,6 +9,7 @@ import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
 import kr.or.iei.crew.model.vo.CrewMember;
+import kr.or.iei.review.model.vo.Review;
 
 public class CrewServiceimpl implements CrewService {
 	
@@ -219,6 +220,29 @@ public class CrewServiceimpl implements CrewService {
 		
 		return null;
 	}
+
+	/*@Override
+	public HashMap<String, Object> myCrewList(int currentPage, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int recordCountPerPage = 5;
+		
+		ArrayList<Review> list = cDAO.myPageMyCrewList(userId, conn, currentPage, recordCountPerPage); 
+		
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getSearchPageNavi(conn, naviCountPerPage, recordCountPerPage, currentPage, userId);
+		
+		JDBCTemplate.close(conn);
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("list", list);
+		map.put("pageNavi", pageNavi);
+		
+		return map;
+	}*/
 	
 	
 	

@@ -3,6 +3,7 @@ package kr.or.iei.review.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.vo.Member;
@@ -143,6 +144,14 @@ public class ReviewServiceImpl implements ReviewService{
 		int postNum = rDAO.searchBoardNo(conn,review);
 		JDBCTemplate.close(conn);
 		return postNum;
+	}
+
+	@Override
+	public ArrayList<Review> selectMonthStamp(String userId, String startDate, String endDate) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Review> list = rDAO.selectMonthStamp(conn, userId, startDate, endDate);
+		JDBCTemplate.close(conn);
+		return list;
 	}
 	
 }

@@ -118,27 +118,6 @@ public class MyPageProfileUpdate extends HttpServlet {
 		System.out.println("1번 비즈니스로직 후");
 		}
 		
-		//미사용코드입니다
-		/*RequestDispatcher view = request.getRequestDispatcher("/views/member/memberFileUpload.jsp");
-		if(result>0) {
-			request.setAttribute("result", true);
-		} else {
-			request.setAttribute("result", false);
-		}
-		view.forward(request, response);*/
-		
-		/*			System.out.println("2번 객체만들기 전");
-		//객체만들기
-		Member m = new Member();
-		m.setP_Image(changedFileName);
-		m.setUserId(fileUser);
-				System.out.println("2번 객체만들기 후");
-				System.out.println("p_image : " + m.getP_Image());
-				System.out.println("2번 비즈니스로직 전");
-		MemberService mService = new MemberServiceImpl();
-		int result2 = mService.insertFileUpdate2(m);
-				System.out.println("2번 비즈니스로직 후");*/
-		
 		request.setCharacterEncoding("UTF-8");
 		
 		String userId = ((Member)(request.getSession()).getAttribute("member")).getUserId();
