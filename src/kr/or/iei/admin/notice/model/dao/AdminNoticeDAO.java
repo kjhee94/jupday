@@ -520,12 +520,14 @@ public class AdminNoticeDAO {
 				
 		AdminNotice adnotice = null;
 		
-		String query = "SELECT N_NO, N_TITLE, N_CONTENT, N_REGDATE, N_DEL_YN\r\n" + 
-				"FROM NOTICE WHERE N_NO=? AND N_DEL_YN='N'";
+		String query = "SELECT N_NO, N_TITLE, N_CONTENT, N_REGDATE, N_DEL_YN " + 
+				" FROM NOTICE WHERE N_NO=? AND N_DEL_YN='N'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, nNo);
+			
+			rset = pstmt.executeQuery();
 			
 			if(rset.next())
 			{
@@ -547,6 +549,30 @@ public class AdminNoticeDAO {
 		}
 		
 		return adnotice;
+	}
+
+	public int updateNoticePost(Connection conn, AdminNotice adnoup) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE NOTICE SET N_TITLE = ?, N_CONTENT= ? WHERE N_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,adnoup.getN_Title());
+			pstmt.setString(2, adnoup.getN_Content());
+			pstmt.setInt(3, adnoup.getN_No());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		} return result;
+		
+		
 	}
 
 

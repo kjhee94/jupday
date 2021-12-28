@@ -12,4 +12,6 @@ public interface AdminNoticeService {
 
 	AdminNotice selectOneNoticeContent(int nNo);
 
+	int updateNoticePost(AdminNotice adnoup);
+
 }

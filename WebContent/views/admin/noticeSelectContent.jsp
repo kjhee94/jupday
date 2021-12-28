@@ -43,17 +43,19 @@
         </div>
         <div id="content">
             <div class="container">
-				<form action="">
+				<form action="/admin/adminNoticePostUpdate.do" method="post" id="textUpdateForm">
 					<div class="box-write" name="content" id="content">
-						<div class="box-subject">
-							<%=adnotice.getN_Title() %>
+						<input type="hidden" name="noticeNo" value="<%=adnotice.getN_No() %>"/>
+						<div class="box-subject"/>
+							<input type="text" disabled='true' name="subjectArea" id="subjectArea" value="<%=adnotice.getN_Title() %>">
 						</div>
 						<div class="box-content">
-							<%=adnotice.getN_Content() %>
+							<textarea disabled='true' name="contenttArea" id="contentArea"><%=adnotice.getN_Content() %>
+							</textarea>
 						</div>
 					</div>
 					<div class="box-button">
-						<input type="submit" value="수정" class="btn-rec" id="updateBtn">
+						<input type="submit" class="btn-rec" id="updateBtn" value="수정">
 						<input type="submit" value="취소" class="btn-rec" id="cancleBtn">
 						<button class="btn-rec"><a href="/admin/noticeManageList.do">목록</a></button>
 					</div>
@@ -70,6 +72,33 @@
        	에러
        </script>
        <%} %>
+       
+       <!-- 수정버튼 클릭시 동작하는 코드 -->
+       <script>
+       $('#updateBtn').click(function(){
+    	  var text = $(this).html;
+    	  
+    	if(text=='수정')
+    	{
+    		$(this).text('완료');
+    		$('#subjectArea').prop('disabled',false);
+    		$('#contentArea').prop('disabled',false);
+    		
+    	}else if(text=='완료')
+    	{
+    		$(this).text('수정');
+    		$('#subjectArea').prop('disabled',true);
+    		$('#contentArea').prop('disabled',true);
+    		$('#textUpdateForm').submit();
+    	}
+    		  
+       });
+       
+       $('#cancleBtn').click(function(){
+    	  location.reload(); 
+       });
+       
+       </script>
       
 </body>
 </html>
