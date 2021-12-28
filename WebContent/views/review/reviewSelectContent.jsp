@@ -120,6 +120,7 @@
 							</div>
 							<div class="txt-comment">								
 								<p><%=co.getR_c_comment() %></p>
+<<<<<<< HEAD
 									<form action ="/views/review/reviewCommentUpdate.jsp" method="post" id="commentUpdateForm" display="none">			
 										<input type="hidden" name="comment" value="<%=co.getR_c_comment() %>"/>
 										<input type="hidden" name="commentNo" value="<%=co.getR_c_no() %>"/>
@@ -231,6 +232,7 @@
 				</div>
 	
 				<div class="list-btn">
+<<<<<<< HEAD
 				<%if(m!=null && m.getUserId().equals(review.getUserId())){ %>
 				<form action="/views/review/reviewUpdateForm.jsp" method="post" display="none">	
 					<input type="hidden" name="postNum" value="<%=review.getPostNum() %>"/>
@@ -270,6 +272,14 @@
 					</script>
 					
 					
+=======
+				<%if(m!=null){ %>
+				<form display="none">
+					<button class="btn-m btn-update"><a href="/review/reviewPostUpdate.do">수정</a></button>
+					<button class="btn-m btn-golist"><a href="/review/reviewAllSelect.do?currentPage=<%=currentPage%>">목록</a></button>
+				</form>
+
+>>>>>>> 70c57844d6e8f20d28ff614c61c37a34d0db1aa5
 				<%}else{ %>			
 					<%-- 현재, 글 작성자가 아닌 경우 수정 버튼을 클릭하면 그냥 disable를 주어 수정하지 않도록 했음 조금 더 발전시킬 여지는 있지만 로직은 동작함 --%>
 					<button class="btn-m btn-update" disabled>수정</button>

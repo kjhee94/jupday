@@ -34,7 +34,7 @@
 		                <ul class="lnb-list">
 		                    <li><a href="/views/member/myPage.jsp">회원 정보</a></li>
 		                    <li><a href="/views/member/myPageMyCrew.jsp">크루 목록</a></li>
-		                    <li><a href="/views/member/myPageMyReview.jsp">리뷰 목록</a></li>
+		                    <li><a href="/member/myPageMyReview.do">리뷰 목록</a></li>
 		                </ul>
 		            </li>
 		        </ul>

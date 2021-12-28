@@ -17,6 +17,15 @@ public interface ReviewService {
 	 */
 	
 	HashMap<String, Object> selectAllPostList(int currentPage);
+	
+	
+	Review memberSelectOnePost(int postNum);
+
+	/*HashMap<String, Object> selectMemberAllPostList(String userId, int currentPage);*/
+
+	/*Review memberReview(String userId);*/
+
+	HashMap<String, Object> selectSearchPost(int currentPage, String userId);
 
 	Review selectOnePost(int postNum);
 
