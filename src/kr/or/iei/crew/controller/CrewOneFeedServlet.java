@@ -1,6 +1,7 @@
 package kr.or.iei.crew.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewMember;
 import kr.or.iei.member.model.vo.Member;
 
@@ -51,7 +53,7 @@ public class CrewOneFeedServlet extends HttpServlet {
 			String crewName = cService.selectCrewName(crewNo);
 			
 			//크루게시판 정보 가져오기
-			CrewBoard cb = cService.selectOneCrewFeed(feedNo);
+			CrewBoard cb = cService.selectOneCrewFeed(crewNo, feedNo);
 			
 			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewOneFeed.jsp");
 			

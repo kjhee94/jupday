@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 
@@ -186,13 +187,14 @@ public interface CrewService {
 
 	/**
 	 * 작성자 : 강주희
+	 * @param crewNo
 	 * @param feedNo
 	 * @return CrewBoard
 	 * 작성일 : 2021. 12. 27.
 	 *
 	 * Description : 크루 피드의 정보를 가져오는 메소드
 	 */
-	CrewBoard selectOneCrewFeed(int feedNo);
+	CrewBoard selectOneCrewFeed(int crewNo, int feedNo);
 
 	/**
 	 * 작성자 : 강주희
@@ -280,5 +282,15 @@ public interface CrewService {
 	 * Description : 크루에 가입하는 메소드
 	 */
 	int joinCrew(int crewNo, String userId);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param cbc
+	 * @return int
+	 * 작성일 : 2021. 12. 29.
+	 *
+	 * Description : 피드에 댓글을 작정하는 메소드
+	 */
+	int insertFeedComment(CrewBoardComment cbc);
 
 }

@@ -1,4 +1,6 @@
-	<%@page import="kr.or.iei.crew.model.vo.CrewMember"%>
+	<%@page import="kr.or.iei.crew.model.vo.CrewBoardComment"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.or.iei.crew.model.vo.CrewMember"%>
 <%@page import="kr.or.iei.crew.model.vo.CrewBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -27,6 +29,8 @@
 		String crewName = (String)request.getAttribute("crewName");
 		int currentPage = (int)request.getAttribute("currentPage");	
 		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
+		
+		ArrayList<CrewBoardComment> coList = cb.getCoList();
 	%>
 
 	<div id="wrap">
@@ -71,54 +75,48 @@
 			
 			<div class="box-comment">
 			
-				<div class="box-one-comment">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="right-comment">
-						<div class="user-comment">
-							<p>최강주희<span>2021-12-06</span></p>
+				<%if(coList.isEmpty()) {%>
+					<p>현재 댓글이 없습니다. 댓글을 작성해 보세요</p>
+				<%}else { %>	
+					<%for(CrewBoardComment cbc:coList) {%>
+						<div class="box-one-comment">
+							<div class="user-img">
+								<%if(cbc.getUserImg()!=null) { %>
+									<img alt="프로필사진" src="/upload/<%=cbc.getUserImg()%>.png">
+								<%}else { %>
+									<img alt="프로필사진" src="/assets/images/profile.png">
+								<%} %>
+							</div>
+							<div class="right-comment">
+								<div class="user-comment">
+									<p><%=cbc.getNick() %><span><%=cbc.getCommentRegdate() %></span></p>
+								</div>
+								<div class="txt-comment">
+									<p><%=cbc.getCommentContent() %></p>
+								</div>
+								<div class="txt-comment">
+									
+								</div>
+							</div>
+							<div class="btn-comment">
+								<
+							</div>
 						</div>
-						<div class="txt-comment">
-							<p>사장님 자리 옮기셨대요! 어디인지는 저도 잘ㅠ</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-one-comment">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="right-comment">
-						<div class="user-comment">
-							<p>연신내핵주먹<span>2021-12-06</span></p>
-						</div>
-						<div class="txt-comment">
-							<p>국민은행 앞 쪽에서 봤습니다! </p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="box-one-comment">
-					<div class="user-img">
-						<img alt="" src="/assets/images/profile.png">
-					</div>
-					<div class="right-comment">
-						<div class="user-comment">
-							<p>난폭한오렌지<span>2021-12-06</span></p>
-						</div>
-						<div class="txt-comment">
-							<p>붕어빵 어디서 파나요ㅠㅠㅠㅠㅠ</p>
-						</div>
-					</div>
-				</div>
+					<%} %>
+				<%} %>
 				
 				<div class="box-write-comment">
 					<div class="user-nick">
-						<p>연신내 독감자</p>
+						<p><%=m.getNick() %></p>
 					</div>
-					<textarea placeholder="댓글을 입력하세요"></textarea>
-					<button>등록</button>
+					<form action="/crew/crewCommendWrite.do" method="post">
+						<textarea name="comment" placeholder="댓글을 입력하세요"></textarea>
+						<input type="hidden" name="crewNo" value="<%=cb.getCrewNo() %>">
+						<input type="hidden" name="currentPage" value="<%=currentPage %>">
+						<input type="hidden" name="feedNo" value="<%=cb.getFeedNo() %>">
+						<input type="hidden" name="currentFeedPage" value="<%=currentFeedPage %>">
+						<input type="submit" value="등록">
+					</form>
 				</div>
 			</div>
 			
