@@ -59,7 +59,10 @@
 								<i class="far fa-image"></i>
 								<span>사진첨부</span>
 							</label>
-							<input type="file" id="upload">
+							<form action="/file/reviewFileUpload.do" method="post" display="none">
+								<input type="file" id="upload"/>
+								<input type="submit"/>
+							</form>
 						</div>
 						<div class="box-map">
 							<div class="map-top">

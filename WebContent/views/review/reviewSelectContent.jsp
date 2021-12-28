@@ -89,7 +89,7 @@
 							<i class="fas fa-chevron-down"></i>
 						</div>
 						<div class="map-content">
-							<!-- 여기가 지도html부분 -->
+							<img alt="" src="/assets/images/kakaomap2.png" style="width:100%; height:100%;">
 						</div>
 					</div>
 					
