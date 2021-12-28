@@ -102,7 +102,7 @@
                                 <td><div class="text-ellipsis subject"><%=ac.getNc_Title() %></div></td>
                                 <td><div class="text-ellipsis"><%=ac.getNc_Content() %></div></td>
                                 <td><%=ac.getNc_regDate() %></td>
-                                <td><button class="modify_btn"><a href="./noticeCampaignUpdate.jsp">수정</a></button>
+                                <td><button class="modify_btn"><a href="/admin/adminCampaignSelectContent.do?nc_No=<%=ac.getNc_No()%>">수정</a></button>
                                 <td>
                                 <%if(ac.getNc_Del_YN()=='N') {%>
                                 <a href="/admin/adminCampaignDelYNChange.do?nc_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>

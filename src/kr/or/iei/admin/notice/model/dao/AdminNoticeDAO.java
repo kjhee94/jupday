@@ -478,6 +478,77 @@ public class AdminNoticeDAO {
 	      
 	   }
 
+	public AdminCampaign selectOneCampaignContent(Connection conn, int ncNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		AdminCampaign adcam = null;
+		
+		String query = " SELECT NC_NO, NC_TITLE, NC_CONTENT, NC_REGDATE, NC_DEL_YN " + 
+						" FROM NOTICE_CAMPAIGN WHERE NC_NO=? AND NC_DEL_YN='N' ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, ncNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				adcam = new AdminCampaign();
+				
+				adcam.setNc_No(rset.getInt("nc_No"));
+				adcam.setNc_Title(rset.getString("nc_Title"));
+				adcam.setNc_Content(rset.getString("nc_Content"));
+				adcam.setNc_regDate(rset.getDate("nc_regDate"));
+				adcam.setNc_Del_YN(rset.getString("nc_Del_YN").charAt(0));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+			
+		return adcam;
+	}
+
+	public AdminNotice selectOneNoticeContent(Connection conn, int nNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+				
+		AdminNotice adnotice = null;
+		
+		String query = "SELECT N_NO, N_TITLE, N_CONTENT, N_REGDATE, N_DEL_YN\r\n" + 
+				"FROM NOTICE WHERE N_NO=? AND N_DEL_YN='N'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, nNo);
+			
+			if(rset.next())
+			{
+				adnotice = new AdminNotice();
+				
+				adnotice.setN_No(rset.getInt("n_No"));
+				adnotice.setN_Title(rset.getString("n_Title"));
+				adnotice.setN_Content(rset.getString("n_Content"));
+				adnotice.setN_regDate(rset.getDate("n_regDate"));
+				adnotice.setN_Del_YN(rset.getString("n_Del_YN").charAt(0));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return adnotice;
+	}
+
 
 	}
 

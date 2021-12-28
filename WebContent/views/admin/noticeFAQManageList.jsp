@@ -99,8 +99,8 @@
                             <tr>
                                 <td><%=afaq.getFaq_No() %></td>
                                 <td><div class="text-ellipsis subject"><%=afaq.getFaq_Title() %></div></td>
-                                <td><div class="text-ellipsis"><a href="/admin/adminFAQSelectContent.do?faqNo=<%=afaq.getFaq_No()%>"><%=afaq.getFaq_Content() %></a></div></td>
-                                <td><button class="modify_btn"><a href="/admin/noticeFAQUpdate.jsp">수정</a></button>
+                                <td><div class="text-ellipsis"><%=afaq.getFaq_Content() %></a></div></td>
+                                <td><button class="modify_btn"><a href="/admin/adminFAQSelectContent.do?faqNo=<%=afaq.getFaq_No()%>">수정</a></button>
                                 <td>
                                 <%if(afaq.getFaq_Del_YN()=='N') {%>
                                 <a href="/admin/noticeFAQDelYNChange.do?faq_No=<%=afaq.getFaq_No() %>&faq_Del_YN=<%=afaq.getFaq_Del_YN()%>"><button class="del_btn">삭제</button></a>

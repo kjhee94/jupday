@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import kr.or.iei.admin.model.dao.AdminMemberDAO;
 import kr.or.iei.admin.notice.model.dao.AdminNoticeDAO;
+import kr.or.iei.admin.notice.model.vo.AdminCampaign;
+import kr.or.iei.admin.notice.model.vo.AdminFAQ;
 import kr.or.iei.admin.notice.model.vo.AdminNotice;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.vo.Member;
@@ -44,6 +46,14 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		else JDBCTemplate.rollback(conn);
 		JDBCTemplate.close(conn);
 		return result;
+	}
+
+	@Override
+	public AdminNotice selectOneNoticeContent(int nNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		AdminNotice adnotice = adnDAO.selectOneNoticeContent(conn, nNo);
+		JDBCTemplate.close(conn);
+		return adnotice;
 	}
 
 

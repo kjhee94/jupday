@@ -9,46 +9,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.model.service.AdminFAQService;
-import kr.or.iei.admin.notice.model.service.AdminFAQServiceImpl;
-import kr.or.iei.admin.notice.model.vo.AdminFAQ;
-import kr.or.iei.common.MemberAuthorityCheck;
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminCampaign;
 
 /**
- * Servlet implementation class AdminFAQSelectContentServlet
+ * Servlet implementation class AdminCampaignSelectContentServlet
  */
-@WebServlet("/admin/adminFAQSelectContent.do")
-public class AdminFAQSelectContentServlet extends HttpServlet {
+@WebServlet("/admin/adminCampaignSelectContent.do")
+public class AdminCampaignSelectContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminFAQSelectContentServlet() {
+    public AdminCampaignSelectContentServlet() {
         super();
-        // TODO Auto-generated constructor stub     
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
 		//인코딩
 		request.setCharacterEncoding("UTF-8");
 		
 		//페이지에서 보낸 데이터 가져오기
-		int faqNo = Integer.parseInt(request.getParameter("faqNo"));
+		int ncNo = Integer.parseInt(request.getParameter("nc_No"));
 		
 		//비즈니스 로직
-		AdminFAQService afaqService = new AdminFAQServiceImpl();
-		AdminFAQ admfaq = afaqService.selectOneFAQContent(faqNo);
+		AdminCampaignService acService = new AdminCampaignServiceImpl();
+		AdminCampaign adcam = acService.selectOneCampaignContent(ncNo);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeFAQSelectContent.jsp");
-		request.setAttribute("admfaq", admfaq);
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeCampaignContent.jsp");
+		request.setAttribute("adcam", adcam);
 		view.forward(request, response);
 		
-				
 	}
 
 	/**
