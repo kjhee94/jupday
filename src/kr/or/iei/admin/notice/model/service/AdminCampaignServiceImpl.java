@@ -54,4 +54,15 @@ public class AdminCampaignServiceImpl implements AdminCampaignService {
 		return adcam;
 	}
 
+	@Override
+	public int updateCampaignPost(AdminCampaign adc) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adnDAO.updateCampaignPost(conn,adc);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }

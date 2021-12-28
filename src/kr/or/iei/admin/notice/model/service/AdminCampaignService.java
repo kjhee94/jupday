@@ -11,5 +11,7 @@ public interface AdminCampaignService {
 	int updateCampaignDelYN(int ncNo, char delYN);
 
 	AdminCampaign selectOneCampaignContent(int ncNo);
+
+	int updateCampaignPost(AdminCampaign adc);
 	
 }

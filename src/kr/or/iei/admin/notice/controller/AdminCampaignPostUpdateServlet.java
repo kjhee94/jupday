@@ -8,21 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.model.service.AdminNoticeService;
-import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
-import kr.or.iei.admin.notice.model.vo.AdminNotice;
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminCampaign;
 
 /**
- * Servlet implementation class AdminNoticePostUpdateServlet
+ * Servlet implementation class AdminCampaignPostUpdateServlet
  */
-@WebServlet("/admin/adminNoticePostUpdate.do")
-public class AdminNoticePostUpdateServlet extends HttpServlet {
+@WebServlet("/admin/adminCampaignPostUpdate.do")
+public class AdminCampaignPostUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticePostUpdateServlet() {
+    public AdminCampaignPostUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,29 +35,33 @@ public class AdminNoticePostUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		//데이터 가져오기
-		int nNo = Integer.parseInt(request.getParameter("noticeNo"));
-		String subject = request.getParameter("subjectArea");
+		int ncNo = Integer.parseInt(request.getParameter("campaignNo"));
+		String title = request.getParameter("subjectArea");
 		String content = request.getParameter("contentArea");
 		
 		//데이터 한 번에 보낼 객체 생성
-		AdminNotice adnoup = new AdminNotice();
-		adnoup.setN_No(nNo);
-		adnoup.setN_Title(subject);
-		adnoup.setN_Content(content);
+		AdminCampaign adc = new AdminCampaign();
+		adc.setNc_No(ncNo);
+		adc.setNc_Title(title); 
+		adc.setNc_Content(content);
+		
+		//출력
+		System.out.println(ncNo);
+		System.out.println(title);
+		System.out.println(content);
 		
 		//수정 비즈니스로직
-		AdminNoticeService adnService = new AdminNoticeServiceImpl();
-		int result = adnService.updateNoticePost(adnoup);
+		AdminCampaignService adcService = new AdminCampaignServiceImpl();
+		int result = adcService.updateCampaignPost(adc);
 		
 		//정상 및 오류 페이지
 		if(result>0)
 		{
-			response.sendRedirect("/admin/adminNoticeSelectContent.do?n_No="+nNo);
+			response.sendRedirect("/admin/adminCampaignSelectContent.do?nc_No="+ncNo);
 		}else
 		{
 			response.sendRedirect("/views/commons/error.jsp");
 		}
-
 	}
 
 	/**

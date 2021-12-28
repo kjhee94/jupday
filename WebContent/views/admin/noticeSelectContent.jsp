@@ -41,23 +41,31 @@
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
+        
         <div id="content">
             <div class="container">
 				<form action="/admin/adminNoticePostUpdate.do" method="post" id="textUpdateForm">
 					<div class="box-write" name="content" id="content">
-						<input type="hidden" name="noticeNo" value="<%=adnotice.getN_No() %>"/>
-						<div class="box-subject"/>
+						<input type="hidden" name="noticeNo" value="<%=adnotice.getN_No() %>">
+							<div class="box-subject">
 							<input type="text" disabled='true' name="subjectArea" id="subjectArea" value="<%=adnotice.getN_Title() %>">
-						</div>
+							</div>
 						<div class="box-content">
-							<textarea disabled='true' name="contenttArea" id="contentArea"><%=adnotice.getN_Content() %>
+							<textarea disabled='true' name="contentArea" id="contentArea"><%=adnotice.getN_Content() %>
 							</textarea>
+						</div>
+						<div class="box-upload">
+							<label for="upload">
+								<i class="far fa-image"></i>
+								<span>사진첨부</span>
+							</label>
+							<input type="file" id="upload">
 						</div>
 					</div>
 					<div class="box-button">
-						<input type="submit" class="btn-rec" id="updateBtn" value="수정">
-						<input type="submit" value="취소" class="btn-rec" id="cancleBtn">
+						<input type="button" class="btn-rec" id="updateBtn" value="수정">
 						<button class="btn-rec"><a href="/admin/noticeManageList.do">목록</a></button>
+						<input type="button" class="btn-rec" id="cancleBtn" value="취소">						
 					</div>
 				</form>
             </div>
@@ -67,6 +75,7 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>       
+    
        <%}else {%>
        <script>
        	에러
@@ -75,9 +84,12 @@
        
        <!-- 수정버튼 클릭시 동작하는 코드 -->
        <script>
+     
        $('#updateBtn').click(function(){
-    	  var text = $(this).html;
+    	  alert($(this).val());
+       });
     	  
+    	<%-- 
     	if(text=='수정')
     	{
     		$(this).text('완료');
@@ -91,12 +103,12 @@
     		$('#contentArea').prop('disabled',true);
     		$('#textUpdateForm').submit();
     	}
-    		  
-       });
+    		  });--%>
        
+       <%--
        $('#cancleBtn').click(function(){
     	  location.reload(); 
-       });
+       });--%>
        
        </script>
       

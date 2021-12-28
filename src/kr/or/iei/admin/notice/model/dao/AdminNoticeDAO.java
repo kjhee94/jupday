@@ -575,6 +575,31 @@ public class AdminNoticeDAO {
 		
 	}
 
+	public int updateCampaignPost(Connection conn, AdminCampaign adc) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE NOTICE_CAMPAIGN SET NC_TITLE = ? , NC_CONTENT = ? WHERE NC_NO= ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adc.getNc_Title());
+			pstmt.setString(2, adc.getNc_Content());
+			pstmt.setInt(3, adc.getNc_No());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);			
+		}return result;
+		
+		
+		
+	}
+
 
 	}
 
