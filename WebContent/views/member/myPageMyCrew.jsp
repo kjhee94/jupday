@@ -1,3 +1,5 @@
+<%@page import="kr.or.iei.crew.model.vo.Crew"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,21 +19,11 @@
 <script src="/assets/js/ui.js"></script>
 </head>
 <body>
-
-<!--
-<c:choose>
-
-<c:when test="">
-	<c:forEach>
-	</c:forEach>
-</c:when>
-<c:otherwise>
-
-</c:otherwise>
-
-</c:choose>
- -->
-	
+	<%
+	//서블릿에서 보내는 값 가져오기
+	ArrayList<Crew> manageList = (ArrayList<Crew>)request.getAttribute("manageList");
+	ArrayList<Crew> joinList = (ArrayList<Crew>)request.getAttribute("joinList");
+	%>
 	
 	<div id="wrap">
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -44,48 +36,48 @@
 				</div>
 				<div>
 					<div class="info">
-						<div class="manage-crew">
-							<div class="tit-manage-crew">운영 크루</div>
-							<table>
-								<!-- 
-								if(데이터 있을떄) {
-									for() {
-										<tr>
-										
-										</tr>
-									}
-								} else {
-								<tr>
-									<td colspan="3">
-									크루가 업습니다.
-									</td>
-								</tr>
-								}
-								 -->
-							 	<!-- jstl core library : c:forEach -->
-								<tr>
-									<td rowspan="2" class="manage-crew-img">image</td>
-									<td class="manage-crew-name"> < % = % ></td>
-									<td rowspan="2" class="manage-crew-set"><button class="btn-s"><a href="">크루 설정</a></button></td>
-								</tr>
-								<tr>
-									<td class="manage-crew-sysdate"> < % = % ></td>
-								</tr>
-							</table>
+						<div class="crew">
+							<div class="tit-crew">운영 크루</div>
+							<%if(manageList.isEmpty()) {%>
+							<div class="crew-area-empty"> <p class="crew-empty">운영중이신 크루가 존재하지 않습니다.<p> </div>
+							<% } else { %>
+								<%for(Crew c:manageList) {%>
+							<div class="crew-area">
+								<%if(c.getCrewImg()!=null) { %>
+								<div class="crew-image"><img alt="크루이미지" src="/upload/<%=c.getCrewImg()%>.png"></div>
+								<%}else { %>
+								<div class="crew-image"><img alt="크루이미지" src="/assets/images/crew.png"></div>
+								<%} %>
+								<div class="crew-info">
+									<p class="crew-name"><%=c.getCrewName() %></p>
+									<p class="crew-reg"><%=c.getCrewCreateDate() %></p>
+								</div>
+								<div class="crew-button"><button class="btn-s"><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">설정</a></button></div>
+								</div>
+							<%} %>	
+							<% } %>
 						</div>
 						
-						<div class="join-crew">
-								<div class="tit-join-crew">가입 크루</div>
-								<table>
-								<tr>
-									<td rowspan="2" class="join-crew-img">image</td>
-									<td class="join-crew-name"> < % = % ></td>
-									<td rowspan="2" class="join-crew-set"><button class="btn-s"><a href="">크루 탈퇴</a></button></td>
-								</tr>
-								<tr>
-									<td class="join-crew-sysdate"> < % = % ></td>
-								</tr>
-							</table>
+							<div class="crew">
+							<div class="tit-crew">가입 크루</div>
+							<%if(joinList.isEmpty()) {%>
+							<div class="crew-area-empty"> <p class="crew-empty">가입중이신 크루가 존재하지 않습니다.<p> </div>
+							<% } else { %>
+							<%for(Crew c:joinList) {%>
+							<div class="crew-area">
+								<%if(c.getCrewImg()!=null) { %>
+								<div class="crew-image"><img alt="크루이미지" src="<%=c.getCrewImg()%>"></div>
+								<%}else { %>
+								<div class="crew-image"><img alt="크루이미지" src="/assets/images/crew.png"></div>
+								<%} %>
+								<div class="crew-info">
+									<p class="crew-name"><%=c.getCrewName() %></p>
+									<p class="crew-reg"><%=c.getCrewCreateDate() %></p>
+								</div>
+								<div class="crew-button"><button class="btn-s"><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">설정</a></button></div>
+								</div>
+							<%} %>	
+							<% } %>
 						</div>
 					</div>
 				</div>

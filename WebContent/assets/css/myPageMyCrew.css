@@ -2,6 +2,7 @@
 
 .user-info {
 	height: 900px;
+	width: 100%;
 }
 
 .info {
@@ -9,75 +10,83 @@
 	height: 100%;
 	width: 100%;
 }
-.manage-crew {
+.crew {
 	width: 50%;
 	height: 100%;
 	position:relative;
 }
-.join-crew {
-	width: 50%;
+.tit-crew {
+	margin-top: 34px;
+	margin-bottom: 42px;
+	font-size: 25px;
+}
+.crew-image>img {
+	display: block;
+	width: 100%;
 	height: 100%;
-	position:relative;
-}
-.tit-manage-crew {
-	margin-top: 34px;
-	margin-bottom: 42px;
-	font-size: 25px;
-}
-.tit-join-crew {
-	margin-top: 34px;
-	margin-bottom: 42px;
-	font-size: 25px;
-}
-.manage-crew-img {
-	border: 1px solid black;
-	width: 100px;
-	height: 100px;
-}
-.manage-crew-name{
-	width: 200px;
-	height: 50px;
-	vertical-align :middle;
-	padding-left: 30px;
-}
-.manage-crew-sysdate {
-	width: 200px;
-	height: 50px;
-	vertical-align :middle;
-	padding-left: 30px;
-	font-size: 14px;
-	color: #AAAAAA;
+	object-fit: cover;
 }
 
-.join-crew-img {
-	border: 1px solid black;
-	width: 100px;
-	height: 100px;
-	
-}
-.join-crew-name{
-	width: 200px;
-	height: 50px;
-	vertical-align :middle;
-	padding-left: 30px;
-}
-.join-crew-sysdate {
-	width: 200px;
-	height: 50px;
-	vertical-align :middle;
-	padding-left: 30px;
-	font-size: 14px;
-	color: #AAAAAA;
-}
-.btn-s {
-	background-color: #5EB656;
-	position:absolute;
-	bottom:0;
-	right:0;
-	margin-right: 60px; 
-}
+
 div {
 	font-family: 'Noto Sans KR', sans-serif;
 	vertical-align :middle;
 	color: #2A2A2A;
+}
+
+
+
+
+.crew-image {
+	width: 18%;
+	height: 12vh;
+	border: 1px solid black;
+	float: left;
+}
+
+.crew-info {
+	width: 40%;
+	height: 12vh;
+	float: left;
+}
+.crew-button {
+	width: 40%;
+	height: 12vh;
+	float: left;
+	text-align: right;
+}
+.crew-name {
+	padding-left: 30px;
+	padding-top: 15px;
+}
+.crew-reg {
+	padding-left: 30px;
+	padding-top: 15px;
+	font-size: 14px;
+    color: #AAAAAA;
+	}
+.crew-button:before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    margin-right: 0;
+    vertical-align: middle;
+}
+.btn-s {
+	background-color: #5EB656;
+	bottom:0;
+	right:0;
+	margin-right: 20px; 
+}
+.crew-area {
+	margin-bottom: 20px;
+	width: 100%;
+	height: 14vh;
+}
+.crew-empty {
+	text-align: center;
+}
+.crew-area-empty {
+	padding: 50px;
 }

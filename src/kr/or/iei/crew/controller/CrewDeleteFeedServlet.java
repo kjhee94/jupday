@@ -1,11 +1,16 @@
 package kr.or.iei.crew.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import kr.or.iei.crew.model.service.CrewService;
+import kr.or.iei.crew.model.service.CrewServiceimpl;
 
 /**
  * Servlet implementation class CrewDeleteFeedServlet
@@ -32,8 +37,23 @@ public class CrewDeleteFeedServlet extends HttpServlet {
 		int feedNo = Integer.parseInt(request.getParameter("feedNo"));
 		int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
 		
+		CrewService cService = new CrewServiceimpl();
 		
+		int result = cService.deleteCrewFeed(feedNo);
+	
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewDeleteFeedResult.jsp");
 		
+		if(result>0) {
+			request.setAttribute("result", true);
+		}else {
+			request.setAttribute("result", false);
+		}
+		
+		request.setAttribute("crewNo", crewNo);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("currentFeedPage", currentFeedPage);
+		
+		view.forward(request, response);
 	}
 
 	/**

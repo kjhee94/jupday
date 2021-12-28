@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 
 public class JDBCTemplate {
+<<<<<<< HEAD
 	
 	//getConnection
 	public static Connection getConnection() {
@@ -21,72 +22,84 @@ public class JDBCTemplate {
                     //"jupday","jupday");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
 			//conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
+=======
+    
+    //getConnection
+    public static Connection getConnection() {
+        
+        Connection conn = null;
+        
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@khds-b1.iptime.org:21521:xe","jupday","jupday");
+>>>>>>> 384eb492b7b93dd63a9ec874758ca7f6d8c683e7
 
-			conn.setAutoCommit(false);
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return conn;
-	} 
-	
-	//commit
-	public static void commit(Connection conn) {
-		
-		try {
-			conn.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//rollback
-	public static void rollback(Connection conn) {
-		
-		try {
-			conn.rollback();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//close Statement
-	public static void close(Statement stmt) {
-		
-		try {
-			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//close ResultSet
-	public static void close(ResultSet rset) {
-		
-		try {
-			rset.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//close Connection
-	public static void close(Connection conn) {
-		
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            conn.setAutoCommit(false);
+            
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return conn;
+    } 
+    
+    //commit
+    public static void commit(Connection conn) {
+        
+        try {
+            conn.commit();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    //rollback
+    public static void rollback(Connection conn) {
+        
+        try {
+            conn.rollback();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    //close Statement
+    public static void close(Statement stmt) {
+        
+        try {
+            stmt.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    //close ResultSet
+    public static void close(ResultSet rset) {
+        
+        try {
+            rset.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    //close Connection
+    public static void close(Connection conn) {
+        
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
 }

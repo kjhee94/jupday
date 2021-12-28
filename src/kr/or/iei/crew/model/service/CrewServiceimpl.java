@@ -8,6 +8,7 @@ import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 import kr.or.iei.file.model.dao.MemberFileDAO;
@@ -234,10 +235,19 @@ public class CrewServiceimpl implements CrewService {
 	}
 
 	@Override
-	public CrewBoard selectOneCrewFeed(int feedNo) {
+	public CrewBoard selectOneCrewFeed(int crewNo, int feedNo) {
 		
 		Connection conn = JDBCTemplate.getConnection();
+		
+		//한개의 게시물 가져오기
 		CrewBoard cb = cDAO.selectOneCrewFeed(conn, feedNo);
+		
+		//해당게시물에 대한 댓글 가져오기
+		ArrayList<CrewBoardComment> coList = cDAO.selectCrewFeedAllComment(conn, crewNo, feedNo);
+		
+		//해당 게시물 객체에 대한 댓글까지 저장
+		cb.setCoList(coList);
+		
 		JDBCTemplate.close(conn);
 		return cb;
 	}
@@ -279,6 +289,100 @@ public class CrewServiceimpl implements CrewService {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int result = cDAO.updateCrewFeed(conn, cb);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteCrewFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewFeed(conn, feedNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> selectCrewFeedSearchList(int currentFeedPage, String keyword, String type, int crewNo, int currentPage) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectCrewFeedSearchList(conn, currentFeedPage, recordCountPerPage, keyword, type, crewNo);
+		
+		//pageNavi에서 보여질 Navi 개수를 설정
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getFeedSearchPageNavi(conn, naviCountPerPage, recordCountPerPage, currentFeedPage, keyword, type, crewNo, currentPage);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+		
+		JDBCTemplate.close(conn);
+		
+		return hm;
+	}
+
+	@Override
+	public int withdrawCrew(int crewNo, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.withdrawCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int joinCrew(int crewNo, String userId) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.joinCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	@Override
+	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
+		
+		
+		return null;
+	}
+
+	@Override
+	public int insertFeedComment(CrewBoardComment cbc) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFeedComment(conn, cbc);
 		
 		if(result>0) JDBCTemplate.commit(conn);
 		else		 JDBCTemplate.rollback(conn);

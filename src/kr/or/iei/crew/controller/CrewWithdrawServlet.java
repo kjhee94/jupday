@@ -11,19 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
-import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.member.model.vo.Member;
 
 /**
- * Servlet implementation class CrewFeedValueServlet
+ * Servlet implementation class CrewWithdrawServlet
  */
-@WebServlet("/crew/crewFeedValue.do")
-public class CrewFeedValueServlet extends HttpServlet {
+@WebServlet("/crew/crewWithdraw.do")
+public class CrewWithdrawServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrewFeedValueServlet() {
+    public CrewWithdrawServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,24 +35,25 @@ public class CrewFeedValueServlet extends HttpServlet {
 		
 		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		int feedNo = Integer.parseInt(request.getParameter("feedNo"));
-		int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
+		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
 		
 		CrewService cService = new CrewServiceimpl();
+		int withDrawResult = cService.withdrawCrew(crewNo, userId);
 		
-		String crewName = cService.selectCrewName(crewNo);
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewWithDrawResult.jsp");
 		
-		CrewBoard cb = cService.selectOneCrewFeed(crewNo, feedNo);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateFeed.jsp");
-		
-		request.setAttribute("crewName", crewName);
-		request.setAttribute("crewBoard", cb);
+		if(withDrawResult>0) {
+			request.setAttribute("withDrawResult", true);
+		}else {
+			request.setAttribute("withDrawResult", false);
+		}
+		request.setAttribute("crewNo", crewNo);
 		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("currentFeedPage", currentFeedPage);
 		
 		view.forward(request, response);
+	
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

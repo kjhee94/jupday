@@ -1,5 +1,6 @@
 package kr.or.iei.review.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.or.iei.review.model.vo.Review;
@@ -38,5 +39,5 @@ public interface ReviewService {
 
 	int searchReviewNo(Review review);
 
-	
+	ArrayList<Review> selectMonthStamp(String userId, String startDate, String endDate);
 }
