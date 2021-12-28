@@ -46,7 +46,7 @@
 				<!-- Swiper -->
 			    <div class="swiper mySwiper">
 					<div class="swiper-wrapper">
-					<%--for(Review review:list2){ --%>
+					<%for(Review review:list2){ %>
 						<div class="swiper-slide">
 							<a href="">
 								<div class="box-review-hover">
@@ -58,9 +58,8 @@
 								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰1.jpeg">
 							</a>
 						</div>
-					<%--} --%>	
-					<%--DB가 업데이트 되면, 이부분 주석을 풀고 돌려보면 완성임 --%>
-						
+					<%} %>	
+					<%--DB가 업데이트 되면, 이부분 주석을 풀고 돌려보면 완성임 --%>					
 						<div class="swiper-slide">
 							<a href="">
 								<div class="box-review-hover">
