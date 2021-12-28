@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.crew.model.service.CrewService;
 import kr.or.iei.crew.model.service.CrewServiceimpl;
+import kr.or.iei.member.model.vo.Member;
 
 /**
- * Servlet implementation class CrewDeleteFeedServlet
+ * Servlet implementation class CrewJoinServlet
  */
-@WebServlet("/crew/crewDeleteFeed.do")
-public class CrewDeleteFeedServlet extends HttpServlet {
+@WebServlet("/crew/crewJoin.do")
+public class CrewJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrewDeleteFeedServlet() {
+    public CrewJoinServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,24 +35,20 @@ public class CrewDeleteFeedServlet extends HttpServlet {
 		
 		int crewNo = Integer.parseInt(request.getParameter("crewNo"));
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		int feedNo = Integer.parseInt(request.getParameter("feedNo"));
-		int currentFeedPage = Integer.parseInt(request.getParameter("currentFeedPage"));
+		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
 		
 		CrewService cService = new CrewServiceimpl();
+		int joinResult = cService.joinCrew(crewNo, userId);
 		
-		int result = cService.deleteCrewFeed(feedNo);
-	
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewDeleteFeedResult.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewJoinResult.jsp");
 		
-		if(result>0) {
-			request.setAttribute("result", true);
+		if(joinResult>0) {
+			request.setAttribute("joinResult", true);
 		}else {
-			request.setAttribute("result", false);
+			request.setAttribute("joinResult", false);
 		}
-		
 		request.setAttribute("crewNo", crewNo);
 		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("currentFeedPage", currentFeedPage);
 		
 		view.forward(request, response);
 	}

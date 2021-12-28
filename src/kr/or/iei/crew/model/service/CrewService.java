@@ -222,6 +222,52 @@ public interface CrewService {
 	 */
 	int updateCrewFeed(CrewBoard cb);
 
+	/**
+	 * 작성자 : 강주희
+	 * @param feedNo
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루피드를 삭제하는 메소드
+	 */
+	int deleteCrewFeed(int feedNo);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param currentFeedPage
+	 * @param keyword
+	 * @param type 
+	 * @param currentPage 
+	 * @param crewNo 
+	 * @return HashMap<String,Object>
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루 피드를 검색하는 메소드
+	 */
+	HashMap<String, Object> selectCrewFeedSearchList(int currentFeedPage, String keyword, String type, int crewNo, int currentPage );
+
+	/**
+	 * 작성자 : 강주희
+	 * @param crewNo
+	 * @param userId 
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루를 탈퇴하는 메소드
+	 */
+	int withdrawCrew(int crewNo, String userId);
+
+	/**
+	 * 작성자 : 강주희
+	 * @param crewNo
+	 * @param userId
+	 * @return int
+	 * 작성일 : 2021. 12. 28.
+	 *
+	 * Description : 크루에 가입하는 메소드
+	 */
+	int joinCrew(int crewNo, String userId);
+
 	
 
 	

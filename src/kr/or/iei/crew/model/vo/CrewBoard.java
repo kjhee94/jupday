@@ -113,4 +113,17 @@ public class CrewBoard {
 	public void setFeedCommentCount(int feedCommentCount) {
 		this.feedCommentCount = feedCommentCount;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "CrewBoard [crewNo=" + crewNo + ", feedNo=" + feedNo + ", userId=" + userId + ", writer=" + writer
+				+ ", writerImg=" + writerImg + ", feedRegdate=" + feedRegdate + ", feedSubject=" + feedSubject
+				+ ", feedContent=" + feedContent + ", feedLikeCount=" + feedLikeCount + ", feedCommentCount="
+				+ feedCommentCount + ", feedDelYN=" + feedDelYN + "]";
+	}
+
+	
 }

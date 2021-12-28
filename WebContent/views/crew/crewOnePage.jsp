@@ -28,11 +28,15 @@
 		Crew c = (Crew)request.getAttribute("crew");
 		CrewMember cm = (CrewMember)request.getAttribute("crewMember");
 		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
+
 		int currentPage = (int)request.getAttribute("currentPage");
 		int currentFeedPage = (int)request.getAttribute("currentFeedPage");
 		
 		ArrayList<CrewBoard> list = (ArrayList<CrewBoard>)pageDataMap.get("list");
 		String pageNavi = (String)pageDataMap.get("pageNavi");
+		
+		String keyword = (String)request.getAttribute("keyword");
+		String type = (String)request.getAttribute("type");
 	
 	%>
 
@@ -54,13 +58,18 @@
 				<p class="txt-crew-exp">
 					<%=c.getCrewInfo() %>
 				</p>
-				<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
-					<button><a href="">크루 탈퇴하기</a></button>
-				<%}else if(cm!=null && cm.getCrewJoinState().equals("WAIT") && cm.getCrewEndYN()=='N') { %>
-					<button class="btn-click-non">가입 승인 중</button>
+				<%if(cm.getCrewAuthorityId().equals("크루장")) {%>
+					<button><a href="/views/crew/crewSetting.jsp?crewNo=<%=c.getCrewNo()%>">크루 설정</a></button>
 				<%}else { %>
-					<button><a href="">크루 가입하기</a></button>
+					<%if(cm!=null && cm.getCrewJoinState().equals("SUCCESS") && cm.getCrewEndYN()=='N') { %>
+						<button><a href="/crew/crewWithdraw.do?crewNo=<%=c.getCrewNo()%>&currentPage=<%=currentPage%>">크루 탈퇴하기</a></button>
+					<%}else if(cm!=null && cm.getCrewJoinState().equals("WAIT") && cm.getCrewEndYN()=='N') { %>
+						<button class="btn-click-non">가입 승인 중</button>
+					<%}else { %>
+						<button><a href="/crew/crewJoin.do?crewNo=<%=c.getCrewNo()%>&currentPage=<%=currentPage%>">크루 가입하기</a></button>
+					<%} %>
 				<%} %>
+				
 			</div>
 			
 			<div class="box-write-search">
@@ -73,22 +82,23 @@
 					<button class="btn-rec alertJoin">글쓰기</button>
 				<%} %>
 				
-				
-				
 				<div class="box-search">
-					<form action="">
+					<form action="/crew/crewFeedSearch.do" method="get"> <!--  -->
 						<div class="select-search">
-							<select>
+							<select name="type">
 								<option>검색필터</option>
-								<option>글제목</option>
-								<option>작성자</option>
+								<option value="subject">글제목</option>
+								<option value="writer">작성자</option>
+								<option value="all">글제목+작성자</option>
 							</select>
 							<i class="fas fa-chevron-down icon-arrow"></i>
 						</div>
 						<div class="input-search">
 							<i class="fas fa-search icon-search"></i>
-							<input type="text" name="keyword" placeholder="검색어를검색하세요">
+							<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 						</div>
+						<input type="hidden" name="crewNo" value="<%=c.getCrewNo() %>">
+						<input type="hidden" name="currentPage" value="<%=currentPage %>">
 						<input type="submit" class="btn-rec" value="검색">
 					</form>
 				</div>

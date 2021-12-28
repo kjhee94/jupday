@@ -288,5 +288,72 @@ public class CrewServiceimpl implements CrewService {
 		return result;
 	}
 
+	@Override
+	public int deleteCrewFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewFeed(conn, feedNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> selectCrewFeedSearchList(int currentFeedPage, String keyword, String type, int crewNo, int currentPage) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectCrewFeedSearchList(conn, currentFeedPage, recordCountPerPage, keyword, type, crewNo);
+		
+		//pageNavi에서 보여질 Navi 개수를 설정
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getFeedSearchPageNavi(conn, naviCountPerPage, recordCountPerPage, currentFeedPage, keyword, type, crewNo, currentPage);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+		
+		JDBCTemplate.close(conn);
+		
+		return hm;
+	}
+
+	@Override
+	public int withdrawCrew(int crewNo, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.withdrawCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int joinCrew(int crewNo, String userId) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.joinCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 	
 }
