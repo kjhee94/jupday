@@ -24,20 +24,21 @@
 
 <body>
 
-	<%
-		Member m = (Member)session.getAttribute("member");
-	%>
-	
-	<%//페이징 처리 된 데이터 가져오기
-		HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");	
-		ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
-		String pageNavi = (String)pageDataMap.get("pageNavi");
-	%>
+   <%
+       //세션에서 멤버가져오기
+      Member m = (Member)session.getAttribute("member");
+   %>
+   
+   <%//페이징 처리 된 데이터 가져오기
+      HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
+      ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
+      String pageNavi = (String)pageDataMap.get("pageNavi");
+   %>
 
     <div id="wrap">
         
         <!-- navigation -->
-		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
+      <%@ include file="/views/commons/header/navigationAdmin.jsp"%>
         
         <div id="header">
             <div class="admin-path">
@@ -45,7 +46,7 @@
                 <p>회원 정보 관리</p>
             </div>
            
-	
+   
             <div class="box-user">
                 <a href="/"><%=m.getNick()%></a>
                 <a href="/member/logout.do">로그아웃</a>
@@ -60,24 +61,24 @@
                     </div>
                     
                     <div class="box-search">
-						<form action="">
-							<div class="select-search">
-								<select>
-									<option>검색필터</option>
-									<option value="subject">글제목</option>
-									<option value="writer">작성자</option>
-								</select>
-								<i class="fas fa-chevron-down icon-arrow"></i>
-							</div>
-							<div class="input-search">
-								<i class="fas fa-search icon-search"></i>
-								<input type="text" name="search" placeholder="검색어를 검색하세요">
-							</div>
-							<input type="submit" class="btn-rec" value="검색">
-						</form>
-					</div>
+                  <form action="">
+                     <div class="select-search">
+                        <select>
+                           <option>검색필터</option>
+                           <option value="subject">글제목</option>
+                           <option value="writer">작성자</option>
+                        </select>
+                        <i class="fas fa-chevron-down icon-arrow"></i>
+                     </div>
+                     <div class="input-search">
+                        <i class="fas fa-search icon-search"></i>
+                        <input type="text" name="search" placeholder="검색어를 검색하세요">
+                     </div>
+                     <input type="submit" class="btn-rec" value="검색">
+                  </form>
+               </div>
                 </div>
-		
+      
                 <div class="table_wrap">
                     <table>
                         <thead>
@@ -92,7 +93,7 @@
                         </thead>
                         
                         <tbody>
-                       	<%for(Member mem : list) {%>
+                          <%for(Member mem : list) {%>
                             <tr>
                                 <td><%=mem.getAuthority_Id() %></td>
                                 <td><%=mem.getUserId() %></td>
@@ -101,15 +102,15 @@
                                 <td><%=mem.getEnrollDate() %></td>
                                 <td>
                                 <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
-	                                <%if(mem.getEnd_YN()=='N') {%>
-	                               		<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
-	                               			<button class="del_btn" onclick="deleteMember('<%=mem.getUserId()%>');">탈퇴</button>
-	                               		</a>
-	                                <%}else {%>
-	                                	<a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
-	                                		<button class="re_btn">복원</button>
-	                                	</a>
-	                                <%} %>
+                                   <%if(mem.getEnd_YN()=='N') {%>
+                                    <button type="button" class="del_btn" onclick="deleteMember('<%=mem.getUserId()%>')">탈퇴</button>
+                                        <!-- <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
+                                        </a> -->
+                                   <%}else {%>
+                                    <button type="button" class="re_btn" onclick="reMember('<%=mem.getUserId()%>')">복원</button>
+                                      <!-- <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
+                                      </a> -->
+                                   <%} %>
                                 <%} %>
                                 </td>
                             </tr>
@@ -117,10 +118,10 @@
                         </tbody> 
                         
                     </table>
-				
+            
                     <div id="page_wrap">
                         <ul class="page_ul">
-					       <%=pageNavi%>
+                      <%=pageNavi%>
                         </ul>
                     </div>
 
@@ -132,37 +133,61 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>
-    <%-- 
-    <script>
-    function deleteMember(userId) {
-		alert(userId);
 
-		return false;
-	}
+    <script>
+
+    // 회원탈퇴
+    function deleteMember(userId) {
+      
+        var confirm = window.confirm(userId + " 회원을 탈퇴처리하시겠습니까?");
     
-	$('.del_btn').click(function(){
-		
-		var data = $(this).html();
-		
-		if(data=='Y')
-		{
-			window.confirm(<%=m.getUserId() %> + " 회원을 탈퇴처리하시겠습니까?");
-			
-		}
-		return false;
-	});
-	
-	
-	$('.re_btn').click(function(){
-		
-		var data = $(this).html();
-		
-		if(data=='Y')
-		{
-			window.confirm(<%=m.getUserId() %> + " 회원을 복원하시겠습니끼?");	
-		}
-		return false;
-	});
-    </script>--%>
+        if(confirm) {
+            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=Y";
+        } else {
+            
+        return false;
+
+        }
+
+   }
+
+
+   // 회원 복원
+   function reMember(userId) {
+        var confirm = window.confirm(userId + " 회원을 복원하시겠습니까?");
+        
+        if (confirm) {
+            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=N";
+        } else {
+    
+            return false;
+    
+        }
+    }
+
+//    $('.del_btn').click(function(){
+      
+//       var data = $(this).html();
+      
+//       if(data=='Y')
+//       {
+//          window.confirm(<%=m.getUserId() %> + " 회원을 탈퇴처리하시겠습니까?");
+         
+//       }
+//       return false;
+//    });
+   
+   
+//    $('.re_btn').click(function(){
+      
+//       var data = $(this).html();
+      
+//       if(data=='Y')
+//       {
+//          window.confirm(<%=m.getUserId() %> + " 회원을 복원하시겠습니끼?");   
+//       }
+//       return false;
+//    });
+    </script>
 </body>
 </html>
