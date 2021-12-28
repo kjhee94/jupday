@@ -1,8 +1,6 @@
-package kr.or.iei.admin.controller;
+package kr.or.iei.admin.review.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -12,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.model.service.AdminMemberService;
-import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
+import kr.or.iei.admin.review.model.service.AdminReviewService;
+import kr.or.iei.admin.review.model.service.AdminReviewServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
- * Servlet implementation class MemberManageListServlet
+ * Servlet implementation class AdminReviewManageListServlet
  */
-@WebServlet("/admin/MemberManageList.do")
-public class MemberManageListServlet extends HttpServlet {
+@WebServlet("/admin/reviewManageList.do")
+public class AdminReviewManageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberManageListServlet() {
+    public AdminReviewManageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,35 +41,6 @@ public class MemberManageListServlet extends HttpServlet {
 			return;
 		}
 		
-		/*
-		
-		//페이징처리
-		int currentPage;
-		
-		if(request.getParameter("currentPage")==null)
-		{
-			currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
-		
-		//비즈니스 로직
-		AdminMemberService adService = new AdminMemberServiceImpl();
-		
-		HashMap<String,Object> pageDataMap = adService.selectAllMemberList(currentPage);
-		
-		//view페이지 이동
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
-		
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
-		
-		view.forward(request, response);
-		*/
-		
-		//페이징처리
 		int currentPage;
 		if(request.getParameter("currentPage")==null)
 		{
@@ -82,16 +51,13 @@ public class MemberManageListServlet extends HttpServlet {
 		}
 		
 		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminMemberService adService = new AdminMemberServiceImpl();
-		HashMap<String,Object> pageDataMap = adService.selectAllMemberPageList(currentPage);
+		AdminReviewService adrService = new AdminReviewServiceImpl();
+		HashMap<String,Object> pageDataMap = adrService.selectAllReviewPageList(currentPage);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/memberManageList.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/reviewManageList.jsp");
 		request.setAttribute("pageDataMap", pageDataMap);
 		request.setAttribute("currentPage", currentPage);
 		view.forward(request, response);
-		
-		
-	
 	}
 
 	/**
