@@ -90,12 +90,9 @@
     		$(this).val('완료');
        		$('#subjectArea').prop('disabled',false);
     		$('#contentArea').prop('disabled',false);
-    		$('#cancleBtn').css('display','inline');
     	   
     	   }else if($(this).val()=='완료'){
    		  	$(this).val('수정');
-     		$('#subjectArea').prop('disabled',true);
-    		$('#contentArea').prop('disabled',true);
     		$('#textUpdateForm').submit();
     	   }     	  
        });
