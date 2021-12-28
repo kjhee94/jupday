@@ -1,7 +1,6 @@
 package kr.or.iei.admin.notice.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,19 +13,22 @@ import kr.or.iei.admin.notice.model.service.AdminCampaignService;
 import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
 import kr.or.iei.admin.notice.model.service.AdminNoticeService;
 import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminCampaign;
+import kr.or.iei.admin.notice.model.vo.AdminNotice;
 import kr.or.iei.common.MemberAuthorityCheck;
 
+
 /**
- * Servlet implementation class AdminCampaignManageListServlet
+ * Servlet implementation class AdminNoticeSelectContentServlet
  */
-@WebServlet("/admin/adminCampaignManageList.do")
-public class AdminCampaignManageListServlet extends HttpServlet {
+@WebServlet("/admin/adminNoticeSelectContent.do")
+public class AdminNoticeSelectContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminCampaignManageListServlet() {
+    public AdminNoticeSelectContentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,35 +37,21 @@ public class AdminCampaignManageListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩 처리
 		
+		//인코딩
 		request.setCharacterEncoding("UTF-8");
-
-		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
-		if(authorityId==null) {
-			response.sendRedirect("/views/commons/error.jsp");
-			return;
-		}
+		//페이지에서 보낸 데이터 가져오기
+		int nNo = Integer.parseInt(request.getParameter("n_No"));
 		
-		//캠페인 페이징처리
-		int currentPage;
-		if(request.getParameter("currentPage")==null)
-		{
-				currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
+		//비즈니스 로직
+		AdminNoticeService adnService = new AdminNoticeServiceImpl();
+		AdminNotice adnotice = adnService.selectOneNoticeContent(nNo);
 		
-		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminCampaignService adcService = new AdminCampaignServiceImpl();
-		HashMap<String,Object> pageDataMap = adcService.selectAllCampaignPageList(currentPage);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeCampaignManageList.jsp");
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeSelectContent.jsp");
+		request.setAttribute("adnotice", adnotice);
 		view.forward(request, response);
+		
 	}
 
 	/**

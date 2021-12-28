@@ -1,7 +1,6 @@
 package kr.or.iei.admin.notice.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.admin.notice.model.service.AdminFAQService;
 import kr.or.iei.admin.notice.model.service.AdminFAQServiceImpl;
-import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
- * Servlet implementation class AdminFAQManageListServlet
+ * Servlet implementation class AdminFAQDelYNChangeServlet
  */
-@WebServlet("/admin/adminFAQManageList.do")
-public class AdminFAQManageListServlet extends HttpServlet {
+@WebServlet("/admin/noticeFAQDelYNChange.do")
+public class AdminFAQDelYNChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminFAQManageListServlet() {
+    public AdminFAQDelYNChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,34 +31,21 @@ public class AdminFAQManageListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩 처리
-		
+		//인코딩
 		request.setCharacterEncoding("UTF-8");
-
-		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
-		if(authorityId==null) {
-			response.sendRedirect("/views/commons/error.jsp");
-			return;
-		}
+		int faqNo = Integer.parseInt(request.getParameter("faq_No"));
+		char delYN = request.getParameter("faq_Del_YN").charAt(0);
 		
-		//페이징처리
-		int currentPage;
-		if(request.getParameter("currentPage")==null)
-		{
-				currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
+		if(delYN=='Y') delYN='N';
+		else			delYN='Y';
+		AdminFAQService adnService = new AdminFAQServiceImpl();
+		int result = adnService.updateFAQDelYN(faqNo,delYN);
 		
-		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminFAQService adfaqService = new AdminFAQServiceImpl();
-		HashMap<String,Object> pageDataMap = adfaqService.selectAllFAQPageList(currentPage);
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/updateFAQDelYN.jsp");
+		if(result>0) request.setAttribute("result", true);
+		else request.setAttribute("result", false);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeFAQManageList.jsp");
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
 		view.forward(request, response);
 	}
 

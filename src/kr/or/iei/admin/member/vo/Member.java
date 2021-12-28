@@ -13,11 +13,6 @@ public class Member {
     private Date enrollDate;//7
 	private char end_YN;//8
     
-    public Member() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-    
 	public Member(String authority_Id, String userId, String userPwd, String nick, String email, String p_Image,
 			Date enrollDate, char end_YN) {
 		super();

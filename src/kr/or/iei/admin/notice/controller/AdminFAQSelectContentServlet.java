@@ -1,7 +1,6 @@
 package kr.or.iei.admin.notice.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,56 +11,44 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.iei.admin.notice.model.service.AdminFAQService;
 import kr.or.iei.admin.notice.model.service.AdminFAQServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminFAQ;
 import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
- * Servlet implementation class AdminFAQManageListServlet
+ * Servlet implementation class AdminFAQSelectContentServlet
  */
-@WebServlet("/admin/adminFAQManageList.do")
-public class AdminFAQManageListServlet extends HttpServlet {
+@WebServlet("/admin/adminFAQSelectContent.do")
+public class AdminFAQSelectContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminFAQManageListServlet() {
+    public AdminFAQSelectContentServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub     
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩 처리
 		
+		//인코딩
 		request.setCharacterEncoding("UTF-8");
-
-		String authorityId = MemberAuthorityCheck.authorityCheck(request, response);
 		
-		if(authorityId==null) {
-			response.sendRedirect("/views/commons/error.jsp");
-			return;
-		}
+		//페이지에서 보낸 데이터 가져오기
+		int faqNo = Integer.parseInt(request.getParameter("faqNo"));
 		
-		//페이징처리
-		int currentPage;
-		if(request.getParameter("currentPage")==null)
-		{
-				currentPage = 1;
-		}else 
-		{
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
+		//비즈니스 로직
+		AdminFAQService afaqService = new AdminFAQServiceImpl();
+		AdminFAQ admfaq = afaqService.selectOneFAQContent(faqNo);
 		
-		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminFAQService adfaqService = new AdminFAQServiceImpl();
-		HashMap<String,Object> pageDataMap = adfaqService.selectAllFAQPageList(currentPage);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeFAQManageList.jsp");
-		request.setAttribute("pageDataMap", pageDataMap);
-		request.setAttribute("currentPage", currentPage);
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeFAQSelectContent.jsp");
+		request.setAttribute("admfaq", admfaq);
 		view.forward(request, response);
+		
+				
 	}
 
 	/**

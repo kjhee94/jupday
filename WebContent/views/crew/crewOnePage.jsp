@@ -84,7 +84,7 @@
 				<%} %>
 				
 				<div class="box-search">
-					<form action="/crew/crewFeedSearch.do" method="get"> <!--  -->
+					<form action="/crew/crewFeedSearch.do" method="get">
 						<div class="select-search">
 							<select name="type">
 								<option>검색필터</option>

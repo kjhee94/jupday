@@ -188,6 +188,7 @@ public class CrewServiceimpl implements CrewService {
 
 	@Override
 	public String selectCrewName(int crewNo) {
+		
 		Connection conn = JDBCTemplate.getConnection();
 		String crewName = cDAO.selectCrewName(conn, crewNo);
 		JDBCTemplate.close(conn);
@@ -217,7 +218,6 @@ public class CrewServiceimpl implements CrewService {
 		int recordCountPerPage = 10;
 		
 		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
-		
 		
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
