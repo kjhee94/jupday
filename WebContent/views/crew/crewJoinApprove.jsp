@@ -43,7 +43,7 @@
 						<div class="box-applicant">
 							<div class="user-img">
 								<%if(cm.getMemberImg()!=null) { %>
-								<img alt="프로필이미지" src="<%=cm.getMemberImg() %>">
+								<img alt="프로필이미지" src="/upload/<%=cm.getMemberImg() %>.png">
 								<%}else { %>
 								<img alt="크루이미지" src="/assets/images/profile.png">
 								<%} %>

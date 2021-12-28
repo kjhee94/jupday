@@ -60,7 +60,7 @@ public class MyPageProfileUpdate extends HttpServlet {
 		//위에서 5가지 정보를 바탕으로 MultipartRequest 객체를 생성하게 되는 순간, 이미 파일은 해당 경로에 업로드 되는 상태가 된다.
 		
 		//파일 사이즈 검증
-		File tmp = new File(uploadFilePath+"\\"+multi.getFilesystemName("files"));
+		File tmp = new File(uploadFilePath+"\\"+multi.getFilesystemName("file"));
 
 		if(tmp.length()>(1024*1024*50)) {
 			tmp.delete();
@@ -117,27 +117,6 @@ public class MyPageProfileUpdate extends HttpServlet {
 		result = mfService.insertFileUpdate(mfd);
 		System.out.println("1번 비즈니스로직 후");
 		}
-		
-		//미사용코드입니다
-		/*RequestDispatcher view = request.getRequestDispatcher("/views/member/memberFileUpload.jsp");
-		if(result>0) {
-			request.setAttribute("result", true);
-		} else {
-			request.setAttribute("result", false);
-		}
-		view.forward(request, response);*/
-		
-		/*			System.out.println("2번 객체만들기 전");
-		//객체만들기
-		Member m = new Member();
-		m.setP_Image(changedFileName);
-		m.setUserId(fileUser);
-				System.out.println("2번 객체만들기 후");
-				System.out.println("p_image : " + m.getP_Image());
-				System.out.println("2번 비즈니스로직 전");
-		MemberService mService = new MemberServiceImpl();
-		int result2 = mService.insertFileUpdate2(m);
-				System.out.println("2번 비즈니스로직 후");*/
 		
 		request.setCharacterEncoding("UTF-8");
 		

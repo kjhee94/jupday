@@ -28,6 +28,7 @@
             if(userPwd.length < 8 || userPwd.length > 16){
                 window.alert('비밀번호는 8글자 이상, 16글자 이하만 이용 가능합니다.');
                 document.getElementById('userPwd').value='';
+                return false;
             }
             for(var i=0;i<SC.length;i++){
                 if(userPwd.indexOf(SC[i]) != -1){
@@ -37,6 +38,7 @@
             if(check_SC == 0){
                 window.alert('비밀번호에 !,@,#,$,%,^,&,*,(,) 의 특수문자가 들어가 있지 않습니다.')
                 document.getElementById('userPwd').value='';
+                return false;
             }//사용자에게 알려주기
             if(document.getElementById('userPwd').value !='' && document.getElementById('userPwdRe').value!=''){
                 if(document.getElementById('userPwd').value==document.getElementById('userPwdRe').value){
@@ -106,23 +108,23 @@
 	        
 	        // ================ ID 유효성검사 ================ //
 	        if(objId.value==''){
-	            alert("ID를 입력해주세요.");
+	            alert("아이디를 입력해주세요.");
 	            return false;
 	        }
 	        if(!RegExp.test(objId.value)){ //아이디 유효성검사
-	            alert("ID는 8~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
+	            alert("아이디는 8~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
 	            return false;
 	        }
 	        
 	        // ================ PASSWORD 유효성검사 ===============//
 	        if(objPwd.value==''){ // 비밀번호 입력여부 검사
-	            alert("Password를 입력해주세요.");
+	            alert("비밀번호를 입력해주세요.");
 	            return false;
 	        }
 	
 	        if(!pRegExp.test(objPwd.value)){ //패스워드 유효성검사
 	
-	            alert("Password는 8~16자의 영문 대소문자와 숫자 특수문자로만 입력하여 주세요.");
+	            alert("비밀번호는 8~16자의 영문 대소문자와 숫자 특수문자로만 입력하여 주세요.");
 	            return false;
 	        }
 	        /*
@@ -143,7 +145,7 @@
 	        }
 	
 	        if(!nRegExp.test(objNick.value)){ //닉네임
-	            alert("닉네임을 2~16자의 숫자,한글,영어,'_'로 입력해주세요.");        
+	            alert("닉네임은 2~16자의 숫자,한글,영어,'_'로 입력해주세요.");        
 	            return false;
 	        }
 	        

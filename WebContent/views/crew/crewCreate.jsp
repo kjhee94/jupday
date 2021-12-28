@@ -30,7 +30,7 @@
 				<p class="tit-big">크루 생성</p>
 			</div>
 			
-			<form id="crewInfo" action="/crew/crewCreate.do" method="post">
+			<form id="crewInfo" action="/crew/crewCreate.do" method="post" enctype="multipart/form-data">
 				<div class="box-name">
 					<span>크루명</span>
 					<input type="text" id="crewName" class="input-style" name="crewName" placeholder="크루명을 입력하세요(10자 이내)" maxlength="10">

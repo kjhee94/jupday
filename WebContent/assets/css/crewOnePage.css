@@ -40,6 +40,9 @@
 	font-size: 18px;
 	float: left;
 }
+.box-title>button.btn-click-non {
+	background-color: #C8C8C8;
+}
 .box-title>button {
 	margin-top: 20px;
 	float: right;
@@ -54,11 +57,22 @@
 	color: #fff;
 }
 
+.box-title>button>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	line-height: 45px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 18px;
+	color: #fff;
+}
+
 .box-write-search {
 	width: 100%;
 	height: 40px;
 	margin: 40px 0 30px;
 }
+
 
 .box-feed {
 	width: 100%;
@@ -73,6 +87,8 @@
 	border: 0.5px solid #D8D8D8;
 	box-sizing: border-box;
 	margin-bottom: 2%; 
+	background-color: #fff;
+	cursor: pointer;
 }
 
 .feed-content {

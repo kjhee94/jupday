@@ -24,7 +24,7 @@
 		                    <li><a href="/views/review/reviewWriteForm.jsp">리뷰 작성</a></li>
 		                </ul>
 		            </li>
-		            <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이공지</a><!-- //여기서부터 시작해본다.// /views/notice/noticeNews.jsp-->
+		            <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이공지</a>
 		                <ul class="lnb-list">
 		                    <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이 소식</a></li>
 		                    <li><a href="/notice/noticeFAQSelect.do">자주묻는 질문</a></li><!--여기서부터 FAQ 작업 시작 -->
@@ -33,7 +33,7 @@
 		            <li><a href="/views/member/myPage.jsp">마이줍데이</a>
 		                <ul class="lnb-list">
 		                    <li><a href="/views/member/myPage.jsp">회원 정보</a></li>
-		                    <li><a href="/views/member/myPageMyCrew.jsp">크루 목록</a></li>
+		                    <li><a href="/member/myPageMyCrew.do">크루 목록</a></li>
 		                    <li><a href="/member/myPageMyReview.do">리뷰 목록</a></li>
 		                </ul>
 		            </li>
