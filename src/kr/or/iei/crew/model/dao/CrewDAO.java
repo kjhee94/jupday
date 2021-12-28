@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 import oracle.net.aso.p;
 
@@ -307,7 +308,7 @@ public class CrewDAO {
 		}
 		return result;
 	}
-
+	
 	private int selectCrewNo(Connection conn, Crew c) {
 		
 		PreparedStatement pstmt = null;
@@ -320,6 +321,65 @@ public class CrewDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, c.getCrewName());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				crewNo = rset.getInt("c_no");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return crewNo;
+	}
+	
+	public int insertFileCreate(Connection conn, CrewFileData cfd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		int crewNo = selectCrewNo(conn, cfd);
+		
+		String query = "INSERT INTO CREW_PROFILE VALUES(C_F_FILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cfd.getUserId());
+			pstmt.setInt(2, crewNo);
+			pstmt.setString(3, cfd.getCrewProfileOriginal());
+			pstmt.setString(4, cfd.getCrewProfileChange());
+			pstmt.setString(5, cfd.getCrewProfilePath());
+			pstmt.setLong(6, cfd.getCrewProfileSize());
+			pstmt.setTimestamp(7, cfd.getCrewProfileUpdateTime());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	private int selectCrewNo(Connection conn, CrewFileData cfd) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int crewNo = 0;
+		
+		String query = "SELECT C_NO FROM CREW WHERE C_P_IMAGE=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cfd.getCrewProfileChange());
 			
 			rset = pstmt.executeQuery();
 			
@@ -481,6 +541,36 @@ public class CrewDAO {
 		}
 		return result;
 	}
+	
+	public int insertFileUpdate(Connection conn, CrewFileData cfd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		int crewNo = selectCrewNo(conn, cfd);
+		
+		String query = "INSERT INTO CREW_PROFILE VALUES(C_F_FILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cfd.getUserId());
+			pstmt.setInt(2, cfd.getCrewNo());
+			pstmt.setString(3, cfd.getCrewProfileOriginal());
+			pstmt.setString(4, cfd.getCrewProfileChange());
+			pstmt.setString(5, cfd.getCrewProfilePath());
+			pstmt.setLong(6, cfd.getCrewProfileSize());
+			pstmt.setTimestamp(7, cfd.getCrewProfileUpdateTime());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
 
 	public ArrayList<CrewMember> selectApproveList(Connection conn, int crewNo) {
 		
@@ -631,14 +721,11 @@ public class CrewDAO {
 		int start = currentFeedPage*recordCountPerPage-(recordCountPerPage-1);
 		int end = currentFeedPage*recordCountPerPage;
 		
-		int feedLikeCount = selectFeedLikeCount(crewNo);
-		int feedCommentCount = selectFeedCommentCount(crewNo);
-		
 		String query = "SELECT * FROM ( " + 
-					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*,NICK " + 
+					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*, NICK, P_IMAGE " + 
 					   "FROM CREW_FEED CF " + 
 					   "LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
-					   "WHERE C_NO=?) " + 
+					   "WHERE C_NO=? AND C_F_DEL_YN='N') " + 
 					   "WHERE NUM BETWEEN ? AND ?";
 		
 		try {
@@ -648,27 +735,624 @@ public class CrewDAO {
 			pstmt.setInt(3, end);
 			rset = pstmt.executeQuery();
 			
+			while(rset.next()) {
+				
+				CrewBoard cb = new CrewBoard();
+				
+				cb.setCrewNo(rset.getInt("c_no"));
+				cb.setUserId(rset.getString("userId"));
+				cb.setFeedNo(rset.getInt("c_f_no"));
+				cb.setFeedRegdate(rset.getDate("c_f_regdate"));
+				cb.setFeedSubject(rset.getString("c_f_subject"));
+				cb.setFeedContent(rset.getString("c_f_content"));
+				cb.setFeedDelYN(rset.getString("c_f_del_YN").charAt(0));
+				cb.setWriter(rset.getString("nick"));
+				cb.setWriterImg(rset.getString("p_image"));
+				
+				int feedNo = cb.getFeedNo();
+				
+				cb.setFeedLikeCount(selectFeedLikeCount(conn, feedNo));
+				cb.setFeedCommentCount(selectFeedCommentCount(conn, feedNo));
+				
+				list.add(cb);
+			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
 		
-		return null;
+		return list;
 	}
 
-	private int selectFeedCommentCount(int crewNo) {
+	private int selectFeedLikeCount(Connection conn, int feedNo) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int feedLikeCount = 0;
 		
-		String query = "";
+		String query = "SELECT C_F_NO, COUNT(*) AS LIKE_COUNT " + 
+					   "FROM CREW_FEED_LIKE " + 
+					   "WHERE C_F_NO=? AND C_F_LIKE_YN='Y' " + 
+					   "GROUP BY C_F_NO";
 		
-		return 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, feedNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				feedLikeCount = rset.getInt("like_count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return feedLikeCount;
+	}
+	
+	private int selectFeedCommentCount(Connection conn, int feedNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int feedCommentCount = 0;
+		
+		String query = "SELECT C_F_NO, COUNT(*) AS COMMENT_COUNT " + 
+					   "FROM CREW_COMMENT " + 
+					   "WHERE C_F_NO=? AND C_C_DEL_YN='N' " + 
+					   "GROUP BY C_F_NO";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, feedNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				feedCommentCount = rset.getInt("comment_count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return feedCommentCount;
 	}
 
-	private int selectFeedLikeCount(int crewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getFeedPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentFeedPage, int crewNo, int currentPage) {
+		
+		//전체 글 개수
+		int recordTotalCount = totalFeedCount(conn, crewNo);
+		
+		//전체 페이지 개수
+		int pageTotalCount = 0;
+		
+		if((recordTotalCount%recordCountPerPage)>0) {
+			pageTotalCount = (recordTotalCount/recordCountPerPage)+1;
+		}else {
+			pageTotalCount = (recordTotalCount/recordCountPerPage);
+		}
+		
+		//네비 시작번호, 끝 번호
+		int startNavi = (((currentFeedPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+		int endNavi = startNavi+(naviCountPerPage-1);
+		
+		//공식으로 구한 endNavi가 총페이지 수 보다 크다면 총 페이지 수로 세팅
+		if(endNavi>pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		//pageNavi 모양 만들기
+		StringBuilder sb = new StringBuilder();
+		
+		if(startNavi!=1) {
+			sb.append("<li><a href='/crew/crewOnePage.do?crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+		}
+		
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentFeedPage) {
+				sb.append("<li><a href='/crew/crewOnePage.do?crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+i+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/crew/crewOnePage.do?crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+i+"'>"+i+"</a></li>");
+			}
+		}
+		
+		if(endNavi!=pageTotalCount) {
+			sb.append("<li><a href='/crew/crewOnePage.do?crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+		}
+		
+		return sb.toString();
 	}
+
+	private int totalFeedCount(Connection conn, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		
+		String query = "SELECT COUNT(*)AS COUNT FROM CREW_FEED WHERE C_F_DEL_YN='N' AND C_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return count;
+	}
+
+	public CrewBoard selectOneCrewFeed(Connection conn, int feedNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CrewBoard cb = null;
+		
+		int feedLikeCount = selectFeedLikeCount(conn, feedNo);
+		int feedCommentCount = selectFeedCommentCount(conn, feedNo);
+		
+		
+		String query = "SELECT CF.*,NICK,P_IMAGE " + 
+					   "FROM CREW_FEED CF " + 
+					   "LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+					   "WHERE C_F_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, feedNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				cb = new CrewBoard();
+				
+				cb.setCrewNo(rset.getInt("c_no"));
+				cb.setUserId(rset.getString("userId"));
+				cb.setFeedNo(rset.getInt("c_f_no"));
+				cb.setFeedRegdate(rset.getDate("c_f_regdate"));
+				cb.setFeedSubject(rset.getString("c_f_subject"));
+				cb.setFeedContent(rset.getString("c_f_content"));
+				cb.setFeedDelYN(rset.getString("c_f_del_YN").charAt(0));
+				cb.setWriter(rset.getString("nick"));
+				cb.setWriterImg(rset.getString("p_image"));
+				
+				cb.setFeedLikeCount(feedLikeCount);
+				cb.setFeedCommentCount(feedCommentCount);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return cb;
+	}
+
+	public int insertCrewFeed(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO CREW_FEED VALUES(?,?,FEED_SEQ.NEXTVAL,SYSDATE,?,?,'N',NULL,NULL)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cb.getCrewNo());
+			pstmt.setString(2, cb.getUserId());
+			pstmt.setString(3, cb.getFeedSubject());
+			pstmt.setString(4, cb.getFeedContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int searchFeedNo(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int feedNo = 0;
+		
+		String query = "SELECT C_F_NO FROM CREW_FEED " + 
+					   "WHERE C_NO=? AND USERID=? AND C_F_SUBJECT=? AND C_F_CONTENT=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cb.getCrewNo());
+			pstmt.setString(2, cb.getUserId());
+			pstmt.setString(3, cb.getFeedSubject());
+			pstmt.setString(4, cb.getFeedContent());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				feedNo = rset.getInt("C_F_NO");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return feedNo;
+	}
+
+	public CrewMember selectCrewMember(Connection conn, String userId, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		CrewMember cm = null;
+		
+		String query = "SELECT CM.*, NICK, P_IMAGE " + 
+					   "FROM CREW_MEMBER CM " + 
+					   "LEFT JOIN MEMBER M ON (CM.USERID=M.USERID) " + 
+					   "WHERE CM.C_NO=? AND CM.USERID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, crewNo);
+			pstmt.setString(2, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				cm = new CrewMember();
+				
+				cm.setUserId(rset.getString("userId"));
+				cm.setCrewNo(rset.getInt("c_no"));
+				cm.setCrewAuthorityId(rset.getString("c_Authority_Id"));
+				cm.setCrewEnrollDate(rset.getDate("c_EnrollDate"));
+				cm.setCrewJoinState(rset.getString("c_Join_State"));
+				cm.setCrewEndYN(rset.getString("c_End_YN").charAt(0));
+				cm.setNick(rset.getString("nick"));
+				cm.setMemberImg(rset.getString("p_image"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return cm;
+	}
+
+	public int updateCrewFeed(Connection conn, CrewBoard cb) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW_FEED SET C_F_SUBJECT=?, C_F_CONTENT=? WHERE C_NO=? AND C_F_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cb.getFeedSubject());
+			pstmt.setString(2, cb.getFeedContent());
+			pstmt.setInt(3, cb.getCrewNo());
+			pstmt.setInt(4, cb.getFeedNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateCrewFeed(Connection conn, int feedNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE CREW_FEED SET C_F_DEL_YN='Y' WHERE C_F_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, feedNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public ArrayList<CrewBoard> selectCrewFeedSearchList(Connection conn, int currentFeedPage, int recordCountPerPage, String keyword, String type, int crewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<CrewBoard> list = new ArrayList<CrewBoard>();
+		
+		int start = currentFeedPage*recordCountPerPage-(recordCountPerPage-1);
+		int end = currentFeedPage*recordCountPerPage;
+		
+		String query = "";
+		
+		switch(type)
+		{
+		case "subject" : 
+			query = "SELECT * FROM ( " + 
+					"SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*,NICK,P_IMAGE " + 
+					"FROM CREW_FEED CF " + 
+					"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+					"WHERE C_NO=? AND C_F_DEL_YN='N' AND C_F_SUBJECT LIKE ?) " + 
+					"WHERE NUM BETWEEN ? AND ?";
+			break;
+			
+		case "writer" :
+			query = "SELECT * FROM ( " + 
+					"SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*,NICK,P_IMAGE " + 
+					"FROM CREW_FEED CF " + 
+					"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+					"WHERE C_NO=? AND C_F_DEL_YN='N' AND NICK LIKE ?) " + 
+					"WHERE NUM BETWEEN ? AND ?";
+			break;
+			
+		case "all" :
+			query = "SELECT * FROM ( " + 
+					"SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CF.*,NICK,P_IMAGE " + 
+					"FROM CREW_FEED CF " + 
+					"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+					"WHERE C_NO=? AND C_F_DEL_YN='N' AND (C_F_SUBJECT LIKE ? OR NICK LIKE ?)) " + 
+					"WHERE NUM BETWEEN ? AND ?";
+			break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all")) {
+				pstmt.setInt(1, crewNo);
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setString(3, "%"+keyword+"%");
+				pstmt.setInt(4, start);
+				pstmt.setInt(5, end);
+			}else {
+				pstmt.setInt(1, crewNo);
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setInt(3, start);
+				pstmt.setInt(4, end);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			
+			while(rset.next()) {
+				
+				CrewBoard cb = new CrewBoard();
+				
+				cb.setCrewNo(rset.getInt("c_no"));
+				cb.setUserId(rset.getString("userId"));
+				cb.setFeedNo(rset.getInt("c_f_no"));
+				cb.setFeedRegdate(rset.getDate("c_f_regdate"));
+				cb.setFeedSubject(rset.getString("c_f_subject"));
+				cb.setFeedContent(rset.getString("c_f_content"));
+				cb.setFeedDelYN(rset.getString("c_f_del_YN").charAt(0));
+				cb.setWriter(rset.getString("nick"));
+				cb.setWriterImg(rset.getString("p_image"));
+				
+				int feedNo = cb.getFeedNo();
+				
+				cb.setFeedLikeCount(selectFeedLikeCount(conn, feedNo));
+				cb.setFeedCommentCount(selectFeedCommentCount(conn, feedNo));
+				
+				list.add(cb);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public String getFeedSearchPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage,
+			int currentFeedPage, String keyword, String type, int crewNo, int currentPage) {
+		
+			//전체 글 개수
+			int recordTotalCount = totalFeedCount(conn, keyword, type, crewNo);
+			
+			//전체 페이지 개수
+			int pageTotalCount = 0;
+			
+			if((recordTotalCount%recordCountPerPage)>0) {
+				pageTotalCount = (recordTotalCount/recordCountPerPage)+1;
+			}else {
+				pageTotalCount = (recordTotalCount/recordCountPerPage);
+			}
+			
+			//네비 시작번호, 끝 번호
+			int startNavi = (((currentFeedPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+			int endNavi = startNavi+(naviCountPerPage-1);
+			
+			//공식으로 구한 endNavi가 총페이지 수 보다 크다면 총 페이지 수로 세팅
+			if(endNavi>pageTotalCount) {
+				endNavi = pageTotalCount;
+			}
+			
+			//pageNavi 모양 만들기
+			StringBuilder sb = new StringBuilder();
+			
+			if(startNavi!=1) {
+				sb.append("<li><a href='/crew/crewOnePage.do?type="+type+"&keyword="+keyword+"crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+			}
+			
+			for(int i=startNavi; i<=endNavi; i++) {
+				
+				if(i==currentFeedPage) {
+					sb.append("<li><a href='/crew/crewOnePage.do?type="+type+"&keyword="+keyword+"crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+i+"' class='page_active'>"+i+"</a></li>");
+				}else {
+					sb.append("<li><a href='/crew/crewOnePage.do?type="+type+"&keyword="+keyword+"crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+i+"'>"+i+"</a></li>");
+				}
+			}
+			
+			if(endNavi!=pageTotalCount) {
+				sb.append("<li><a href='/crew/crewOnePage.do?type="+type+"&keyword="+keyword+"crewNo="+crewNo+"&currentPage="+currentPage+"&currentFeedPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+			}
+			
+			return sb.toString();
+		}
+
+		private int totalFeedCount(Connection conn, String keyword, String type, int crewNo) {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			int count = 0;
+			
+			String query ="";
+			
+			switch(type)
+			{
+			case "subject" : 
+					query = "SELECT COUNT(*)AS COUNT " + 
+							"FROM CREW_FEED CF " + 
+							"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+							"WHERE C_NO=? AND C_F_DEL_YN='N' AND C_F_SUBJECT like ?";
+					break;
+			case "writer" :
+					query = "SELECT COUNT(*)AS COUNT " + 
+							"FROM CREW_FEED CF " + 
+							"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+							"WHERE C_NO=? AND C_F_DEL_YN='N' AND NICK like ?";
+					break;
+			case "all" :
+					query = "SELECT COUNT(*)AS COUNT " + 
+							"FROM CREW_FEED CF " + 
+							"LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) " + 
+							"WHERE C_NO=? AND C_F_DEL_YN='N' AND (C_F_SUBJECT like ? OR NICK like ?);";
+					break;
+			}
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				
+				if(type.equals("all")) {
+					pstmt.setInt(1, crewNo);
+					pstmt.setString(2, "%"+keyword+"%");
+					pstmt.setString(3, "%"+keyword+"%");
+				}else {
+					pstmt.setInt(1, crewNo);
+					pstmt.setString(2, "%"+keyword+"%");
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					count = rset.getInt("count");
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return count;
+		}
+
+		public int withdrawCrew(Connection conn, int crewNo, String userId) {
+			
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "UPDATE CREW_MEMBER SET C_END_YN='Y' WHERE C_NO=? AND USERID=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, crewNo);
+				pstmt.setString(2, userId);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
+		public int joinCrew(Connection conn, int crewNo, String userId) {
+
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			
+			
+			
+			String query = "UPDATE CREW_MEMBER SET C_END_YN='Y' WHERE C_NO=? AND USERID=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, crewNo);
+				pstmt.setString(2, userId);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
+			return result;
+		}
+
+	
+
+
+
+	
 }

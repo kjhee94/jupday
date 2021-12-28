@@ -109,8 +109,9 @@ public class Member {
     public void setEnd_YN(char end_YN) {
         this.end_YN = end_YN;
     }
+		
+	}
     
     
     
 
-}

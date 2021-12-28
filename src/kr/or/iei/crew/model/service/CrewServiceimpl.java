@@ -8,7 +8,9 @@ import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
+import kr.or.iei.file.model.dao.MemberFileDAO;
 
 public class CrewServiceimpl implements CrewService {
 	
@@ -23,16 +25,6 @@ public class CrewServiceimpl implements CrewService {
 		int recordCountPerPage = 8;
 		
 		ArrayList<Crew> list = cDAO.selectCrewAllList(conn, currentPage, recordCountPerPage);
-		
-//		for(Crew c : list) {
-//			System.out.println("크루번호 : "+c.getCrewNo()+"<br>"+
-//							   "크루명 : "+c.getCrewName()+"<br>"+
-//							   "크루생성일 : "+c.getCrewCreateDate()+"<br>"+
-//							   "크루설명 : "+c.getCrewInfo()+"<br>"+
-//							   "크루이미지 : "+c.getCrewImg()+"<br>"+
-//							   "크루삭제여부 : "+c.getCrewDelYN()+"<br>"+
-//							   "크루원수 : "+c.getCrewCount());
-//		}
 		
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
@@ -58,17 +50,7 @@ public class CrewServiceimpl implements CrewService {
 		int recordCountPerPage = 8;
 		
 		ArrayList<Crew> list = cDAO.selectCrewSearchList(conn, currentPage, recordCountPerPage, keyword);
-		
-//		for(Crew c : list) {
-//		System.out.println("크루번호 : "+c.getCrewNo()+"<br>"+
-//						   "크루명 : "+c.getCrewName()+"<br>"+
-//						   "크루생성일 : "+c.getCrewCreateDate()+"<br>"+
-//						   "크루설명 : "+c.getCrewInfo()+"<br>"+
-//						   "크루이미지 : "+c.getCrewImg()+"<br>"+
-//						   "크루삭제여부 : "+c.getCrewDelYN()+"<br>"+
-//						   "크루원수 : "+c.getCrewCount());
-//		}
-		
+
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
 		
@@ -104,6 +86,15 @@ public class CrewServiceimpl implements CrewService {
 			JDBCTemplate.close(conn);
 			return false;
 		}
+	}
+	
+	@Override
+	public int insertFileCreate(CrewFileData cfd) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFileCreate(conn, cfd);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		return result;
 	}
 
 	@Override
@@ -144,6 +135,16 @@ public class CrewServiceimpl implements CrewService {
 		
 		JDBCTemplate.close(conn);
 		
+		return result;
+	}
+	
+	@Override
+	public int insertFileUpdate(CrewFileData cfd) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFileUpdate(conn, cfd);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
 		return result;
 	}
 
@@ -207,7 +208,7 @@ public class CrewServiceimpl implements CrewService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo) {
+	public HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo, int currentPage) {
 
 		Connection conn = JDBCTemplate.getConnection();
 		
@@ -217,9 +218,142 @@ public class CrewServiceimpl implements CrewService {
 		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
 		
 		
-		return null;
+		//pageNavi에서 보여질 Navi 개수를 설정
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getFeedPageNavi(conn, naviCountPerPage, recordCountPerPage, currentFeedPage, crewNo, currentPage);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+	
+		JDBCTemplate.close(conn);
+		
+		return hm;
 	}
-	
-	
+
+	@Override
+	public CrewBoard selectOneCrewFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		CrewBoard cb = cDAO.selectOneCrewFeed(conn, feedNo);
+		JDBCTemplate.close(conn);
+		return cb;
+	}
+
+	@Override
+	public int insertCrewFeed(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertCrewFeed(conn, cb);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int searchFeedNo(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int feedNo = cDAO.searchFeedNo(conn, cb);
+		JDBCTemplate.close(conn);
+		return feedNo;
+	}
+
+	@Override
+	public CrewMember selectCrewMember(String userId, int crewNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		CrewMember cm = cDAO.selectCrewMember(conn, userId, crewNo);
+		JDBCTemplate.close(conn);
+		return cm;
+	}
+
+	@Override
+	public int updateCrewFeed(CrewBoard cb) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewFeed(conn, cb);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteCrewFeed(int feedNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.updateCrewFeed(conn, feedNo);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> selectCrewFeedSearchList(int currentFeedPage, String keyword, String type, int crewNo, int currentPage) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 페이지에서 보여줄 목록의 갯수
+		int recordCountPerPage = 10;
+		
+		ArrayList<CrewBoard> list = cDAO.selectCrewFeedSearchList(conn, currentFeedPage, recordCountPerPage, keyword, type, crewNo);
+		
+		//pageNavi에서 보여질 Navi 개수를 설정
+		int naviCountPerPage = 5;
+		
+		String pageNavi = cDAO.getFeedSearchPageNavi(conn, naviCountPerPage, recordCountPerPage, currentFeedPage, keyword, type, crewNo, currentPage);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("list", list);
+		hm.put("pageNavi", pageNavi);
+		
+		JDBCTemplate.close(conn);
+		
+		return hm;
+	}
+
+	@Override
+	public int withdrawCrew(int crewNo, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.withdrawCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int joinCrew(int crewNo, String userId) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.joinCrew(conn, crewNo, userId);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 	
 }
