@@ -57,22 +57,25 @@ int currentPage =(int)request.getAttribute("currentPage");
 		
 		<div class="area-notice">
 			<div class="box-search">
-				<form action="">
+				<form action="/notice/noticeNewsSearch.do" method="get"><!--  -->
 					<div class="select-search">
-						<select>
-							<option>검색필터</option>
-							<option>글제목</option>
-							<option>글내용</option>
+						<select name="type">
+							<option value="subject">글제목</option>
+							<option value="content">글내용</option>
+							<option value="all">제목+내용</option>
 						</select>
 						<i class="fas fa-chevron-down icon-arrow"></i>
 					</div>
 					<div class="input-search">
-						<i class="fas fa-search icon-search"></i>
+						<i class="fas fa-search icon-search"></i><!--/// 검색 기능 출발점 (1) ///-->
 						<input type="text" name="keyword" placeholder="검색어을 검색하세요">
 					</div>
 					<input type="submit" class="btn-rec" value="검색">
 				</form>
 			 </div>
+			 
+			 
+			 
 	        
 	         <div class="container">
 			    <table>

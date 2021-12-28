@@ -3,14 +3,7 @@ package kr.or.iei.notice.model.vo;
 import java.sql.Date;
 
 public class NoticeCampaign {
-	
-	/*CREATE TABLE NOTICE_CAMPAIGN(
-		    NC_NO NUMBER PRIMARY KEY,
-		    NC_WRITER NVARCHAR2(10),
-			NC_TITLE NVARCHAR2(200),
-		    NC_CONTENT NVARCHAR2(2000),
-		    NC_REGDATE DATE,
-		    NC_HITS number*/
+
 	
 	
 	
@@ -21,6 +14,7 @@ public class NoticeCampaign {
 	private String campaignContent;//4
 	private Date campaignRegDate;//5
 	private int campaignHits;
+	private char delYN;// 6 삭제여부 없어도 되나? 
 	
 	
 	public NoticeCampaign() {
@@ -30,7 +24,7 @@ public class NoticeCampaign {
 
 
 	public NoticeCampaign(int campaignNo, String campaignWriter, String campaignTitle, String campaignContent,
-			Date campaignRegDate, int campaignHits) {
+			Date campaignRegDate, int campaignHits, char delYN) {
 		super();
 		this.campaignNo = campaignNo;
 		this.campaignWriter = campaignWriter;
@@ -38,6 +32,7 @@ public class NoticeCampaign {
 		this.campaignContent = campaignContent;
 		this.campaignRegDate = campaignRegDate;
 		this.campaignHits = campaignHits;
+		this.delYN = delYN;
 	}
 
 
@@ -101,12 +96,27 @@ public class NoticeCampaign {
 	}
 
 
+	public char getDelYN() {
+		return delYN;
+	}
+
+
+	public void setDelYN(char delYN) {
+		this.delYN = delYN;
+	}
+
+
 	@Override
 	public String toString() {
 		return "NoticeCampaign [campaignNo=" + campaignNo + ", campaignWriter=" + campaignWriter + ", campaignTitle="
 				+ campaignTitle + ", campaignContent=" + campaignContent + ", campaignRegDate=" + campaignRegDate
-				+ ", campaignHits=" + campaignHits + "]";
+				+ ", campaignHits=" + campaignHits + ", delYN=" + delYN + "]";
 	}
+	
+	
+
+	
+	
 	
 	
 	
