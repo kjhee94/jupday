@@ -42,7 +42,7 @@ public class CrewFeedValueServlet extends HttpServlet {
 		
 		String crewName = cService.selectCrewName(crewNo);
 		
-		CrewBoard cb = cService.selectOneCrewFeed(feedNo);
+		CrewBoard cb = cService.selectOneCrewFeed(crewNo, feedNo);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateFeed.jsp");
 		

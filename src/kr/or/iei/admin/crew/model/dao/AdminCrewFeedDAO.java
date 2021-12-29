@@ -20,9 +20,10 @@ public class AdminCrewFeedDAO<CrewNo> {
       int end = currentPage * recordCountPerPage;      
       
       String query = " SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO ASC)AS NUM, " + 
-      		"	CF.C_F_NO, C_F_REGDATE, C_F_SUBJECT, C_F_CONTENT, C_F_DEL_YN, NICK " + 
-      		"	FROM CREW_FEED CF LEFT JOIN MEMBER M ON (CF.USERID=M.USERID) WHERE C_NO=?) " + 
-      		"	WHERE NUM BETWEEN ? AND ?";
+      		"CF.C_F_NO, C.C_NAME, CF.C_F_REGDATE, CF.C_F_SUBJECT, CF.C_F_CONTENT, CF.C_F_DEL_YN, M.NICK " + 
+      		"FROM CREW_FEED CF LEFT JOIN CREW C ON (CF.C_NO=C.C_NO) " + 
+      		"JOIN MEMBER M ON (CF.USERID=M.USERID) WHERE CF.C_NO=?) " + 
+      		"WHERE NUM BETWEEN ? AND ? ";
       
       try {
          pstmt = conn.prepareStatement(query);
@@ -35,13 +36,14 @@ public class AdminCrewFeedDAO<CrewNo> {
          while(rset.next()) 
          {
             AdminCrewFeed f = new AdminCrewFeed();
-         
+            
+            f.setAllNum(rset.getInt("num"));
             f.setC_f_No(rset.getInt("c_f_No"));
             f.setC_Name(rset.getString("c_Name"));
             f.setC_f_Subject(rset.getString("c_f_Subject"));
             f.setC_f_Content(rset.getString("c_f_Content"));
             f.setC_f_RegDate(rset.getDate("c_f_RegDate"));
-            f.setnick(rset.getString("nick"));
+            f.setC_Nick(rset.getString("nick"));
             f.setC_f_Del_YN(rset.getString("c_f_Del_YN").charAt(0));
             
             int feedNo = f.getC_f_No();

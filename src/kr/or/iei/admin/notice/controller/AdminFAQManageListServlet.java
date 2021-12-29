@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.model.service.AdminNoticeService;
-import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
+import kr.or.iei.admin.notice.model.service.AdminFAQService;
+import kr.or.iei.admin.notice.model.service.AdminFAQServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
 
 /**
@@ -55,8 +55,8 @@ public class AdminFAQManageListServlet extends HttpServlet {
 		}
 		
 		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminNoticeService adnService = new AdminNoticeServiceImpl();
-		HashMap<String,Object> pageDataMap = adnService.selectAllFAQPageList(currentPage);
+		AdminFAQService adfaqService = new AdminFAQServiceImpl();
+		HashMap<String,Object> pageDataMap = adfaqService.selectAllFAQPageList(currentPage);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeFAQManageList.jsp");
 		request.setAttribute("pageDataMap", pageDataMap);

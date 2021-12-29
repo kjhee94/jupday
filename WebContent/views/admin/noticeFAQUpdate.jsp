@@ -1,3 +1,7 @@
+<%@page import="kr.or.iei.admin.notice.model.vo.AdminFAQ"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -5,7 +9,7 @@
 <head>
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>관리자페이지 - 자주 묻는 질문 관리 : 글쓰기 </title>
+<title>관리자페이지 - 자주 묻는 질문 관리 : 글수정하기 </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
@@ -20,7 +24,10 @@
 
 <body>
     <div id="wrap">
-        
+     
+     <%Member m = (Member)session.getAttribute("member"); %>
+     <%AdminFAQ adfaq = (AdminFAQ)request.getAttribute("adfaq"); %>
+      
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
         
@@ -31,36 +38,53 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
 
         <div id="content">
             <div class="container">
-				<form action="">
-					<div class="box-write">
+				<form action="/admin/AdminFAQUpdate.do" id="updateForm" method="post">
+					<div class="box-write" name="content" id="content">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요" value="아이디는 어떻게 찾나요?">
+							<input type="text" placeholder="제목을 입력하세요"/><%=adfaq.getFaq_Title() %>
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요">관리자에게 문의주세요. 문의주실 곳은 ~~~</textarea>
-						</div>
-						<div class="box-upload">
-							<label for="upload">
-								<i class="far fa-image"></i>
-								<span>사진첨부</span>
-							</label>
-							<input type="file" id="upload">
+							<textarea placeholder="내용을 입력하세요"><%=adfaq.getFaq_Content() %></textarea>
 						</div>
 					</div>
 					<div class="box-button">
-						<input type="submit" value="수정" class="btn-rec">
-						<button class="btn-rec"><a href="./noticeFAQManageList.jsp">목록</a></button>
+						<input type="submit" value="수정" class="btn-rec" id="updateBtn">
+						<input type="submit" value="취소" class="btn-rec" id="cancleBtn">
+						<button class="btn-rec"><a href="/admin/adminFAQManageList.do">목록</a></button>
 					</div>
 				</form>
             </div>
         </div>
+        
+    <script>
+	var updateBtnFlag = false;
+	var boardData;
+	$('#updateBtn').click(function(){
+		if(updateBtnFlag==false)
+			{
+				$('#content').prop('disabled',false);
+				$('#updateBtn').text('수정완료');
+				$('#cancleBtn').css('display','inline');	
+				updateBtnFlag=true;
+				boardData = $('#content').html();
+			}
+		else if(updateBtnFlag==true){
+			$('#updateForm').submit();
+		}
+	});
+	
+	$('#cancleBtn').click(function(){
+		location.replace('/admin/adminFAQSelectContent.do?faq_No=<%=adfaq.getFaq_No()%>');
+	});
+	
+</script>
         
         <footer id="footer">
             <p>2021 ⓒ JUP DAY</p>

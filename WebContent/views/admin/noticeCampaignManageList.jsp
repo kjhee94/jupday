@@ -28,10 +28,10 @@
       Member m = (Member)session.getAttribute("member");
    %>
    
-   <%//페이징 처리 된 데이터 가져오기
+   <%
       HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
       ArrayList<AdminCampaign> list = (ArrayList<AdminCampaign>)pageDataMap.get("list");
-      String pageNavi = (String)pageDataMap.get("pageNavi");
+      String pageCamNavi = (String)pageDataMap.get("pageCamNavi");
    %>
     <div id="wrap">
     
@@ -60,7 +60,7 @@
                     <div class="box-search">
                     	<div class="btn-write">
 							<button class="btn-rec">
-								<a href="./noticeCampaignWrite.jsp">글쓰기</a>
+								<a href="./noticeCampaignWrite.jsp" method="post">글쓰기</a>
 							</button>
 						</div>
                     
@@ -102,12 +102,12 @@
                                 <td><div class="text-ellipsis subject"><%=ac.getNc_Title() %></div></td>
                                 <td><div class="text-ellipsis"><%=ac.getNc_Content() %></div></td>
                                 <td><%=ac.getNc_regDate() %></td>
-                                <td><button class="modify_btn"><a href="./noticeCampaignUpdate.jsp">수정</a></button>
+                                <td><button class="modify_btn"><a href="/admin/adminCampaignSelectContent.do?nc_No=<%=ac.getNc_No()%>">수정</a></button>
                                 <td>
                                 <%if(ac.getNc_Del_YN()=='N') {%>
-                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <a href="/admin/adminCampaignDelYNChange.do?nc_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="del_btn">삭제</button></a>
                                 <%}else {%>
-                                <a href="/admin/noticeCampaignDelYNChange.do?n_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <a href="/admin/adminCampaignDelYNChange.do?nc_No=<%=ac.getNc_No()%>&nc_Del_YN=<%=ac.getNc_Del_YN()%>"><button class="re_btn">복원</button></a>
                                 <%} %>
                                 </td>
                             </tr>
@@ -117,7 +117,7 @@
 
                     <div id="page_wrap">
                         <ul class="page_ul">
-					        <%=pageNavi %>
+					        <%=pageCamNavi %>
                         </ul>
                     </div>                    
                     

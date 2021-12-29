@@ -6,7 +6,7 @@ public class AdminCrewFeed {
 
 	private int c_No;
 	private String c_Name;
-	private String nick;
+	private String c_Nick;
 	private int c_f_No;
 	private Date c_f_RegDate;
 	private String c_f_Subject;
@@ -14,19 +14,20 @@ public class AdminCrewFeed {
 	private char c_f_Del_YN;
 	private char c_f_Like_YN;
 	private int likeCount;
-	
+	private int allNum; //페이징처리할 정렬순서
 	
 	
 	public AdminCrewFeed() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AdminCrewFeed(int c_No, String nick, String c_Name, int c_f_No, Date c_f_RegDate, String c_f_Subject, String c_f_Content,
-			char c_f_Del_YN, char c_f_Like_YN, int likeCount) {
+
+	public AdminCrewFeed(int c_No, String c_Name, String c_Nick, int c_f_No, Date c_f_RegDate, String c_f_Subject,
+			String c_f_Content, char c_f_Del_YN, char c_f_Like_YN, int likeCount, int allNum) {
 		super();
 		this.c_No = c_No;
 		this.c_Name = c_Name;
-		this.nick = nick;
+		this.c_Nick = c_Nick;
 		this.c_f_No = c_f_No;
 		this.c_f_RegDate = c_f_RegDate;
 		this.c_f_Subject = c_f_Subject;
@@ -34,7 +35,9 @@ public class AdminCrewFeed {
 		this.c_f_Del_YN = c_f_Del_YN;
 		this.c_f_Like_YN = c_f_Like_YN;
 		this.likeCount = likeCount;
+		this.allNum = allNum;
 	}
+	
 	public int getC_No() {
 		return c_No;
 	}
@@ -44,15 +47,14 @@ public class AdminCrewFeed {
 	public String getC_Name() {
 		return c_Name;
 	}
-	public void setC_Name(String C_Name) {
+	public void setC_Name(String c_Name) {
 		this.c_Name = c_Name;
 	}
-	
-	public String getnick() {
-		return nick;
+	public String getC_Nick() {
+		return c_Nick;
 	}
-	public void setnick(String nick) {
-		this.nick = nick;
+	public void setC_Nick(String c_Nick) {
+		this.c_Nick = c_Nick;
 	}
 	public int getC_f_No() {
 		return c_f_No;
@@ -95,6 +97,12 @@ public class AdminCrewFeed {
 	}
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
+	}
+	public int getAllNum() {
+		return allNum;
+	}
+	public void setAllNum(int allNum) {
+		this.allNum = allNum;
 	}
 	
 	

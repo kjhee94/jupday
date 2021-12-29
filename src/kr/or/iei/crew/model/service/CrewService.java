@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 
@@ -169,17 +170,31 @@ public interface CrewService {
 	 *
 	 * Description : 크루개별 페이지의 정보를 가져오는 메소드
 	 */
+	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo);
+
+	
+	/**
+	 * 작성자 : 김서후
+	 * @param currentPage
+	 * @param userId
+	 * @return HashMap<String,Object>
+	 * 작성일 : 2021. 12. 27.
+	 *
+	 * Description : 마이페이지에서 크루의 정보를 가져오는 메소드
+	 */
+	/*HashMap<String, Object> myCrewList(int currentPage, String userId);*/
 	HashMap<String, Object> selectAllCrewFeed(int currentFeedPage, int crewNo, int currentPage);
 
 	/**
 	 * 작성자 : 강주희
+	 * @param crewNo
 	 * @param feedNo
 	 * @return CrewBoard
 	 * 작성일 : 2021. 12. 27.
 	 *
 	 * Description : 크루 피드의 정보를 가져오는 메소드
 	 */
-	CrewBoard selectOneCrewFeed(int feedNo);
+	CrewBoard selectOneCrewFeed(int crewNo, int feedNo);
 
 	/**
 	 * 작성자 : 강주희
@@ -268,12 +283,14 @@ public interface CrewService {
 	 */
 	int joinCrew(int crewNo, String userId);
 
-	
-
-	
-	
-
-
-	
+	/**
+	 * 작성자 : 강주희
+	 * @param cbc
+	 * @return int
+	 * 작성일 : 2021. 12. 29.
+	 *
+	 * Description : 피드에 댓글을 작정하는 메소드
+	 */
+	int insertFeedComment(CrewBoardComment cbc);
 
 }

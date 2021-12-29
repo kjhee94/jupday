@@ -16,13 +16,13 @@
 	
 	<script>
 		<%if(withDrawResult) {%>
-			if(prompt("정말로 크루에서 탈퇴하시겠습니까?")){
+			if(confirm("정말로 크루에서 탈퇴하시겠습니까?")){
 				alert("크루에서 탈퇴했습니다")
 				location.replace("/crew/crewJoinList.do");
 			}
 		<%}else {%>	
 			alert("크루탈퇴에 실패했습니다 \n -지속적인 문제 발생시 관리자에게 문의해주세요")
-			location.replace("/crew/crewOnePage.do?crewNo="+<%=crewNo%>+"&currentPage="+<%=currentPage%>+"currentFeedPage=1");
+			location.replace("/crew/crewOnePage.do?crewNo="+<%=crewNo%>+"&currentPage="+<%=currentPage%>+"&currentFeedPage=1");
 		<%} %>	
 		
 	</script>

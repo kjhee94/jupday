@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
 import kr.or.iei.admin.notice.model.service.AdminNoticeService;
 import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
 import kr.or.iei.common.MemberAuthorityCheck;
@@ -55,8 +57,8 @@ public class AdminCampaignManageListServlet extends HttpServlet {
 		}
 		
 		//요청한 page(currentPage)를 가지고 비즈니스 로직 처리
-		AdminNoticeService adnService = new AdminNoticeServiceImpl();
-		HashMap<String,Object> pageDataMap = adnService.selectAllCampaignPageList(currentPage);
+		AdminCampaignService adcService = new AdminCampaignServiceImpl();
+		HashMap<String,Object> pageDataMap = adcService.selectAllCampaignPageList(currentPage);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeCampaignManageList.jsp");
 		request.setAttribute("pageDataMap", pageDataMap);

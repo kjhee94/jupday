@@ -39,6 +39,7 @@ public interface ReviewService {
 
 	int searchReviewNo(Review review);
 
+<<<<<<< HEAD
 	int updatePost(Review review);
 
 	HashMap<String, Object> selectSearchPost(int currentPage, String keyword, String type);
@@ -50,4 +51,7 @@ public interface ReviewService {
 	
 
 	
+=======
+	ArrayList<Review> selectMonthStamp(String userId, String startDate, String endDate);
+>>>>>>> ed2d77d93f49a4d7cc6fdf84eaceff5ca9051930
 }

@@ -36,12 +36,6 @@
     left: 0;
 }
 
-.box-review {
-	width: 100%;
-	height: auto;
-	overflow: hidden;
-	padding-bottom: 80px;
-}
 .box-one-review {
 	width: 29.3%;
 	height: 19vh;
@@ -65,4 +59,12 @@
 }
 #page_wrap {
 	padding: 30px 0 80px;
+}
+
+.review-empty {
+	font-family: 'Noto Sans KR', sans-serif;
+	text-align: center;
+}
+.review-area-empty {
+	padding-top: 35vh;
 }
