@@ -28,6 +28,7 @@
                         <ul class="lnb-list">
                             <li><a href="/views/notice/noticeNewsAllSelect.do">줍데이 소식</a></li>
                             <li><a href="/notice/noticeFAQSelect.do">자주묻는 질문</a></li>
+                            <li><a href="/notice/noticeFAQSelect.do">자주묻는 질문</a></li><!--여기서부터 FAQ 작업 시작 -->
                         </ul>
                     </li>
                     <li><a href="/views/member/myPage.jsp">마이줍데이</a>
