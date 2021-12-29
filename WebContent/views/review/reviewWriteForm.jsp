@@ -45,7 +45,7 @@
 			</div>
 		
 			<div id="review_writing">
-				<form action="/review/reviewWrite.do" method="post">
+				<form action="/review/reviewWrite.do" method="post" enctype="multipart/form-data">
 					
 					<div class="box-write">
 						<div class="box-subject">
@@ -58,11 +58,8 @@
 							<label for="upload">
 								<i class="far fa-image"></i>
 								<span>사진첨부</span>
-							</label>
-							<form action="/file/reviewFileUpload.do" method="post" display="none">
-								<input type="file" id="upload"/>
-								<input type="submit"/>
-							</form>
+							</label>					
+								<input type="file" id="upload" name="reviewimg"/>
 						</div>
 						<div class="box-map">
 							<div class="map-top">

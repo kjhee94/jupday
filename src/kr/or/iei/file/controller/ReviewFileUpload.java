@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,8 +43,6 @@ public class ReviewFileUpload extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		
 		// 실제 업로드 되어야 하는 경로
 		String uploadFilePath = request.getServletContext().getRealPath("/upload");
@@ -114,6 +113,14 @@ public class ReviewFileUpload extends HttpServlet {
 				
 		ReviewFileService rfs = new ReviewFileServiceImpl();
 		int result = rfs.uploadFile(rfd);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewWriteForm.jsp");
+		if(result>0) {
+			request.setAttribute("result", true);
+		}else {
+			request.setAttribute("result", false);
+		}
+		view.forward(request, response);
 		
 	}
 

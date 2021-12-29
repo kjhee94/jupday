@@ -49,10 +49,15 @@ public class ReviewAllSelectServlet extends HttpServlet {
 		//요청한 페이지값을 가지고 service로 감 (리뷰 부분 페이징 된거)	
 		ReviewService rService = new ReviewServiceImpl();
 		ArrayList<Review> list2 = rService.selectAllBestReview();
+		
+		
+
+		
 		HashMap<String, Object> pageDataMap = rService.selectAllPostList(currentPage);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewSelectAllListPage.jsp");
 		
+		request.setAttribute("list2", list2);
 		request.setAttribute("pageDataMap", pageDataMap);
 		request.setAttribute("currentPage", currentPage);
 		

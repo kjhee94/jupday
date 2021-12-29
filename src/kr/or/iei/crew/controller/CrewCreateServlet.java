@@ -103,6 +103,7 @@ public class CrewCreateServlet extends HttpServlet {
 		//비즈니스로직2(파일 업로드)
 		CrewFileData cfd = new CrewFileData();
 		
+		// 위의 5가지 정보를 이용해서 객체 만들기
 		cfd.setCrewProfileOriginal(originalFileName);
 		cfd.setCrewProfileChange(changedFileName);
 		cfd.setCrewProfilePath(filePath);

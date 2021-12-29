@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.file.model.vo.ReviewFileData"%>
 <%@page import="kr.or.iei.review.model.vo.ReviewComment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="kr.or.iei.review.model.vo.Review"%>
@@ -52,6 +53,7 @@
 			<%
 				Review review = (Review)request.getAttribute("review");
 				int currentPage = (int)request.getAttribute("currentPage");	
+				//ReviewFileData rfd = (ReviewFileData).request.getAttribute("");
 			%>
 
 			<div id="review_writing">
@@ -61,7 +63,7 @@
 					</div>
 					<div class="box-writer">
 						<div class="user-img">
-							<img alt="" src="/assets/images/profile.png">
+							<img alt="" src="/upload/gramnotebook_1640736448800_jupday.png">
 						</div>
 						<div class="user-name">
 							<p><%=review.getNick() %></p>
@@ -74,6 +76,7 @@
 					<div class="box-content">
 						<div class="box-content-img">
 							<img alt="" src="/assets/images/플로깅리뷰7.jpg">
+							
 						</div>
 						<p>
 						<%=review.getPostContent() %>
