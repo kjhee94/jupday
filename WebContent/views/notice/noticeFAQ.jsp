@@ -1,3 +1,6 @@
+<%@page import="kr.or.iei.notice.model.vo.BoxFAQ"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +22,16 @@
 </head>
 <body>
 
+<%
+
+
+HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
+
+ArrayList<BoxFAQ> list = (ArrayList<BoxFAQ>)pageDataMap.get("list");//꺼내준다.
+String pageNavi = (String)pageDataMap.get("pageNavi");//꺼내준다
+int currentPage =(int)request.getAttribute("currentPage");
+%>
+
 	<div id="wrap">
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
@@ -30,112 +43,22 @@
 			</div>
 			
 			<div class="faq-all-box">
-		   
+		   <%for(BoxFAQ boxFAQ : list){%>		
 		        <div class="faq-box">
 		       		<div class="question-box">
 			          	<i class="fas fa-chevron-down"></i> 
-			            <p>크루 가입시 어떻게 해야 하나요?</p>
+			            <p><%=boxFAQ.getBoxAnswerFAQTitle() %></p>
 					</div>
 		            <div class="answer-box">
-			          	<p>원하는 크루를 검색해서 가입하기 버튼을 누른 뒤<br>
-			          	크루장의 승인을 받으면 크루에 가입할 수 있습니다.</p>
+			          	<p><%=boxFAQ.getBoxFAQContent() %></p>
 		            </div>
 				</div>
-		       
-			    <div class="faq-box">
-					<div class="question-box">
-						<i class="fas fa-chevron-down"></i> 
-						<p>크루 생성은 어떻게 하나요?</p>
-					</div>
-					<div class="answer-box">
-						<p>[줍데이크루]에 들어가신 후 <br>
-						원하시는 크루를 생성해주시면 됩니다. :)</p>
-					</div>
-				</div>
-		
-		       
-				<div class="faq-box">  
-		       		<div class="question-box">
-		          		<i class="fas fa-chevron-down"></i> 
-		             	<p>비밀번호를 변경하려면 어떻게 해야 하나요?</p>
-		            </div>
-		        	<div class="answer-box">
-		          		<p>[마이페이지]에 들어가시면 비밀번호를 변경할 수 있습니다.</p>
-		          	</div>
-		        </div>
-		
-				<div class="faq-box">  	      
-		       		<div class="question-box">
-		          		<i class="fas fa-chevron-down"></i> 
-		             	<p>크루 생성시 어떻게 해야 하나요?</p>
-		            </div>
-		          	<div class="answer-box">
-		          		<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-		          	</div>
-		       </div>
-		    
-		    	<div class="faq-box">  	      
-		       		<div class="question-box">
-		          		<i class="fas fa-chevron-down"></i> 
-		             	<p>크루장은 회원탈퇴를 어떻게 하나요?</p>
-		            </div>
-		          	<div class="answer-box">
-		          		<p>탈퇴시 [크루장]이 아닌 상태여야하기에 [크루탈퇴]를 하시거나 [크루삭제] 후 탈퇴가 가능합니다.</p>
-		           	</div>
-				</div>
-		     
-		    	<div class="faq-box">  	         
-		      		<div class="question-box">
-		          		<i class="fas fa-chevron-down"></i> 
-		             	<p>캠페인을 직접 열 수 있나요?</p>
-		            </div>
-		          	<div class="answer-box">
-		          		<p>원하신다면 직접 주최가 가능합니다.</p>
-		          	</div>
-		       	</div>
-		    
-				<div class="faq-box">   
-		       		<div class="question-box">
-		          		<i class="fas fa-chevron-down"></i>
-		              	<p>크루 가입시 어떻게 해야 하나요?</p>
-		          	</div>
-		          	<div class="answer-box">
-		          		<p>원하는 크루를 검색해서 가입하기 버튼을 누른 뒤 크루장의 승인을 받으면 크루에 가입할 수 있습니다.</p>
-		          	</div>
-				</div>	         
-		
-		    	<div class="faq-box">  
-		       		<div class="question-box">
-		        		<i class="fas fa-chevron-down"></i> 
-		             	<p>질문8</p>
-		           	</div>
-		          	<div class="answer-box">
-		          		<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-		          	</div>
-		       	</div>	         
+		        <% }%> 
 			  
-				<div class="faq-box">  
-		       		<div class="question-box">
-		        		<i class="fas fa-chevron-down"></i> 
-		             	<p>질문8</p>
-		           	</div>
-		          	<div class="answer-box">
-		          		<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-		          	</div>
-		       </div>	
-		 	  
-				<div class="faq-box">  
-		       		<div class="question-box">
-		        		<i class="fas fa-chevron-down"></i> 
-		             	<p>질문8</p>
-		           	</div>
-		          	<div class="answer-box">
-		          		<p>[줍데이크루]에 들어가신 후 원하시는 크루를 생성해주시면 됩니다. :)</p>
-		          	</div>
-		       </div>	
       
    			</div>
 		</div>   
+							
 		
       	<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>

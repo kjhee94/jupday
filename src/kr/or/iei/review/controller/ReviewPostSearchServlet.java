@@ -1,27 +1,29 @@
 package kr.or.iei.review.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.member.model.vo.Member;
 import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
 
 /**
- * Servlet implementation class ReviewCommentDeleteServlet
+ * Servlet implementation class ReviewPostSearchServlet
  */
-@WebServlet("/review/deletePostComment.do")
-public class ReviewCommentDeleteServlet extends HttpServlet {
+@WebServlet("/review/reviewPostSearch.do")
+public class ReviewPostSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewCommentDeleteServlet() {
+    public ReviewPostSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +33,29 @@ public class ReviewCommentDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int r_c_no = Integer.parseInt(request.getParameter("commentNo"));
-		int postNum = Integer.parseInt(request.getParameter("postNum"));
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		int currentPage;
 		
-		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
-		
-		ReviewService bService = new ReviewServiceImpl();
-		int result = bService.deleteReviewComment(r_c_no,userId);
-		
-		if(result>0) {
-			response.sendRedirect("/review/reviewSelectContent.do?postNum="+postNum+"&currentPage="+currentPage);
+		if(request.getParameter("currentPage")==null) {
+			currentPage = 1;
 		}else {
-			response.sendRedirect("/views/commons/error.jsp");
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String keyword = request.getParameter("keyword");
+		String type = request.getParameter("type");
+		
+		ReviewService rService = new ReviewServiceImpl();
+		HashMap<String,Object> map = rService.selectSearchPost(currentPage,keyword,type);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/review/reviewSelectAllListPage.jsp");
+		
+		request.setAttribute("pageDataMap", map);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("keyword", keyword);
+		
+		view.forward(request, response);
 	}
 
 	/**

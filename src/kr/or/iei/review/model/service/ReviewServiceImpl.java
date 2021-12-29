@@ -147,11 +147,60 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
+	public int updatePost(Review review) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.updatePost(conn,review);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> selectSearchPost(int currentPage, String keyword, String type) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int recordCountPerPage = 8;
+		ArrayList<Review> list = rDAO.selectSearchPostList(conn,currentPage,recordCountPerPage,keyword,type);
+		
+		int naviCountPerPage = 5;
+		String pageNavi = rDAO.getSearchPageNavi(conn,naviCountPerPage,recordCountPerPage,currentPage,keyword,type);
+		
+		JDBCTemplate.close(conn);
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("list", list);
+		map.put("pageNavi", pageNavi);
+		
+		return map;
+	}
+
+	@Override
+	public int deletePost(int postNum, String userId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = rDAO.deletePost(conn,postNum,userId);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Review> selectAllBestReview() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Review> list2 = rDAO.selectAllBestReview(conn);
+		JDBCTemplate.close(conn);
+		return list2;
+	}
+	
 	public ArrayList<Review> selectMonthStamp(String userId, String startDate, String endDate) {
 		Connection conn = JDBCTemplate.getConnection();
 		ArrayList<Review> list = rDAO.selectMonthStamp(conn, userId, startDate, endDate);
 		JDBCTemplate.close(conn);
 		return list;
+
 	}
 	
 }
