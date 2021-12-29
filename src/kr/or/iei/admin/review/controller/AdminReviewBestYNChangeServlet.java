@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.model.service.AdminMemberService;
-import kr.or.iei.admin.model.service.AdminMemberServiceImpl;
 import kr.or.iei.admin.review.model.service.AdminReviewService;
 import kr.or.iei.admin.review.model.service.AdminReviewServiceImpl;
 
 /**
- * Servlet implementation class AdminReviewDelYNChangeServlet
+ * Servlet implementation class AdminReviewBestYNChangeServlet
  */
-@WebServlet("/admin/reviewDelYNChange.do")
-public class AdminReviewDelYNChangeServlet extends HttpServlet {
+@WebServlet("/admin/reviewBestYNChange.do")
+public class AdminReviewBestYNChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminReviewDelYNChangeServlet() {
+    public AdminReviewBestYNChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +31,24 @@ public class AdminReviewDelYNChangeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				//인코딩
-				request.setCharacterEncoding("UTF-8");
-				
-				int postnum = Integer.parseInt(request.getParameter("postnum"));
-				char delYN = request.getParameter("del_YN").charAt(0);
-				
-				if(delYN=='Y') delYN='N';
-				else			delYN='Y';
-				AdminReviewService adrService = new AdminReviewServiceImpl();
-				int result = adrService.updateReviewDelYN(postnum,delYN);
-				
-				RequestDispatcher view = request.getRequestDispatcher("/views/admin/updateReviewDelYN.jsp");
-				if(result>0) request.setAttribute("result", true);
-				else request.setAttribute("result", false);
-				
-				view.forward(request, response);
+		
+		//인코딩
+		request.setCharacterEncoding("UTF-8");
+		
+		int postnum = Integer.parseInt(request.getParameter("postnum"));
+		char bestYN = request.getParameter("best_YN").charAt(0);
+		
+		if(bestYN=='Y') bestYN='N';
+		else			bestYN='Y';
+		AdminReviewService adrService = new AdminReviewServiceImpl();
+		int result = adrService.updateReviewBestYN(postnum,bestYN);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/updateReviewBestYN.jsp");
+		if(result>0) request.setAttribute("result", true);
+		else request.setAttribute("result", false);
+		
+		view.forward(request, response);
+		
 	}
 
 	/**
@@ -57,7 +57,6 @@ public class AdminReviewDelYNChangeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
 	}
 
 }
