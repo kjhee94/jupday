@@ -17,7 +17,7 @@ public class NoticeCampaignDAO {
 		ArrayList<NoticeCampaign> list = new ArrayList<NoticeCampaign>();
 		
 		String query =  "SELECT * FROM ( " +
-                		"SELECT ROW_NUMBER() OVER(ORDER BY NC_NO ASC)AS NUM, NOTICE_CAMPAIGN.* " +
+                		"SELECT ROW_NUMBER() OVER(ORDER BY NC_NO DESC)AS NUM, NOTICE_CAMPAIGN.* " +
                 		"FROM NOTICE_CAMPAIGN " +
                 		"WHERE NC_DEL_YN='N') " +
                 		"WHERE NUM BETWEEN 1 AND 3";

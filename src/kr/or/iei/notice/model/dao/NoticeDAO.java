@@ -517,7 +517,7 @@ public ArrayList<Notice> showNotice(Connection conn) {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		
 		String query =  "SELECT * FROM ( " +
-                		"SELECT ROW_NUMBER() OVER(ORDER BY N_NO ASC)AS NUM, NOTICE.* " +
+                		"SELECT ROW_NUMBER() OVER(ORDER BY N_NO DESC)AS NUM, NOTICE.* " +
                 		"FROM NOTICE " +
                 		"WHERE N_DEL_YN='N') " +
                 		"WHERE NUM BETWEEN 1 AND 3";
