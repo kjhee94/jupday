@@ -61,7 +61,7 @@
                     <div class="box-search">
                     	<div class="btn-write">
 							<button class="btn-rec">
-								<a href="./noticeWrite.jsp">글쓰기</a>
+								<a href="/views/admin/noticeWrite.jsp" method="post">글쓰기</a>
 							</button>
 						</div>
 						

@@ -57,6 +57,10 @@ public class MemberDAO {
 		//MEMBER_SEQ.NEXTVAL,SYSDATE,'N'는 고정값이라 위치 홀더를 쓰지 않는다.
 		String query= "INSERT INTO MEMBER VALUES('user',?,?,?,?,NULL,SYSDATE,'N')";
 
+				//"INSERT INTO MEMBER VALUES(DEFAULT,?,?,?,?,NULL,SYSDATE,'N')";
+
+
+
 		
 		try {
 			pstmt = conn.prepareStatement(query);

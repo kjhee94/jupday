@@ -141,8 +141,9 @@ public class AdminNoticeDAO {
 		int start = currentPage * recordCountPerPage - (recordCountPerPage-1);
 		int end = currentPage * recordCountPerPage;		
 		
-		String query = " SELECT NC_NO, NC_TITLE, NC_CONTENT, NC_REGDATE, NC_DEL_YN FROM NOTICE_CAMPAIGN " + 
-						" WHERE NC_NO BETWEEN ? AND ? ";
+		String query = " SELECT NC_NO, NC_TITLE, NC_CONTENT, NC_REGDATE, NC_DEL_YN " + 
+					"	FROM NOTICE_CAMPAIGN " + 
+					"	WHERE NC_NO BETWEEN ? AND ? order by nc_no ASC ";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -596,9 +597,139 @@ public class AdminNoticeDAO {
 			JDBCTemplate.close(pstmt);			
 		}return result;
 		
+	}
+
+	public int insertCampaignPostWrite(Connection conn, AdminCampaign adcwrite) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO NOTICE_CAMPAIGN VALUES (NC_NO_SEQ.NEXTVAL,'admin',?,?,SYSDATE,0,'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adcwrite.getNc_Title());
+			pstmt.setString(2, adcwrite.getNc_Content());
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		} return result;
+		
 		
 		
 	}
+
+	public int searchCampaignPostNo(Connection conn, AdminCampaign adcwrite) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int ncNo = 0;
+		
+		String query = "SELECT NC_NO FROM " + 
+				"	(SELECT ROW_NUMBER() OVER(ORDER BY NC_NO ASC) AS NUM,NOTICE_CAMPAIGN.* FROM NOTICE_CAMPAIGN " + 
+				"	WHERE NC_TITLE=? AND NC_CONTENT=?) WHERE NUM = 1 ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adcwrite.getNc_Title());
+			pstmt.setString(2, adcwrite.getNc_Content());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				ncNo = rset.getInt("nc_No");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return ncNo;
+		
+		
+	}
+
+	public int updateFAQPost(Connection conn, AdminFAQ adfaq) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE FAQBOX SET FAQ_TITLE= ? , FAQ_CONTENT= ?  WHERE FAQ_NO=? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adfaq.getFaq_Title());
+			pstmt.setString(2, adfaq.getFaq_Content());
+			pstmt.setInt(3, adfaq.getFaq_No());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);			
+		}return result;
+	}
+
+	public int insertNoticePostWrite(Connection conn, AdminNotice adnwrite) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = " INSERT INTO NOTICE VALUES(N_NO_SEQ.NEXTVAL,'admin',?,?,sysdate,0,'N') ";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, adnwrite.getN_Title());
+			pstmt.setString(2, adnwrite.getN_Content());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int searchNoticePostNo(Connection conn, AdminNotice adnwrite) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int nNo = 0;
+		
+		String query = " SELECT N_NO FROM " + 
+				"		(SELECT ROW_NUMBER() OVER(ORDER BY N_NO ASC) AS NUM,NOTICE.* FROM NOTICE " + 
+				"		WHERE N_TITLE=? AND N_CONTENT=?) WHERE NUM = 1 ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adnwrite.getN_Title());
+			pstmt.setString(2, adnwrite.getN_Content());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				nNo = rset.getInt("n_No");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		} 
+		return nNo;
+
+	} 
 
 
 	}

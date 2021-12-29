@@ -65,10 +65,10 @@
                                     <a href="/admin/noticeManageList.do">· 공지사항 관리</a>
                                 </li>
                                 <li>
-                                    <a href="/views/admin/noticeCampaignManageList.jsp">· 캠페인 안내 관리</a>
+                                    <a href="/admin/adminCampaignManageList.do">· 캠페인 안내 관리</a>
                                 </li>
                                 <li>
-                                    <a href="/views/admin/noticeFAQManageList.jsp">· 자주 묻는 질문 관리</a>
+                                    <a href="/admin/adminFAQManageList.do">· 자주 묻는 질문 관리</a>
                                 </li>
                             </ul>
                         </ul>

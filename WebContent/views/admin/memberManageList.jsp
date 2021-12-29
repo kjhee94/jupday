@@ -103,14 +103,10 @@
                                 <td>
                                 <%if(!mem.getAuthority_Id().equals("root")) { //관리자일 경우 탈퇴버튼 제거%>
                                    <%if(mem.getEnd_YN()=='N') {%>
-                                    <button type="button" class="del_btn" onclick="deleteMember('<%=mem.getUserId()%>')">탈퇴</button>
-                                        <!-- <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
-                                        </a> -->
+                                    <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button class="del_btn">탈퇴</button></a> 
                                    <%}else {%>
-                                    <button type="button" class="re_btn" onclick="reMember('<%=mem.getUserId()%>')">복원</button>
-                                      <!-- <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>">
-                                      </a> -->
-                                   <%} %>
+                                   <a href="/admin/memberEndYNChange.do?userId=<%=mem.getUserId()%>&endYN=<%=mem.getEnd_YN()%>"><button type="button" class="re_btn">복원</button></a> 
+                                   <%} %>                                
                                 <%} %>
                                 </td>
                             </tr>
@@ -133,10 +129,10 @@
             <p>2021 ⓒ JUP DAY</p>
         </footer>
     </div>
-
+  <%--
     <script>
 	
-    
+  
     // 회원탈퇴
     function deleteMember(userId) {
       
@@ -188,6 +184,6 @@
 //       }
 //       return false;
 //    });
-    </script>
+    </script>--%>
 </body>
 </html>

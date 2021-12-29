@@ -8,19 +8,21 @@
 </head>
 <body>
 
-	<% boolean result = (boolean)request.getAttribute("result"); %>
+
+	<%
+		boolean result = (boolean)request.getAttribute("result");
+	%>
 	
+
 	<script>
-	<%if(result){%>
-		alert('성공')
-	<%}else{%>
-	alert('실패')
-	<%}%>
-	
-	location.replace("/");
+	<%if(result) {%>
+		alert('정상적으로 처리가 완료되었습니다. :)');
+	<%}else {%>
+		alert('정상적으로 처리되지않았습니다.');
+	<%} %>
+	location.replace("/admin/MemberManageList.do");
 	</script>
-	
-	
+
 	
 
 

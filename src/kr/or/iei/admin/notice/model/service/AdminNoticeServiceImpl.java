@@ -68,5 +68,23 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		
 	}
 
+	@Override
+	public int insertNoticePostWrite(AdminNotice adnwrite) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adnDAO.insertNoticePostWrite(conn, adnwrite);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int searchNoticePostNo(AdminNotice adnwrite) {
+		Connection conn = JDBCTemplate.getConnection();
+		int nNo = adnDAO.searchNoticePostNo(conn, adnwrite);
+		JDBCTemplate.close(conn);
+		return nNo;
+	}
+
 
 }
