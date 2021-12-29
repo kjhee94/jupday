@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,6 +20,7 @@
 </head>
 
 <body>
+<%Member m = (Member)session.getAttribute("member");%>
     <div id="wrap">
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
@@ -30,7 +32,7 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
 
             </div>
@@ -40,13 +42,13 @@
 
         <div id="content">
             <div class="container">
-				<form action="">
+				<form action="/admin/adminCampaignWrite.do" method="post">
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요">
+							<input type="text" placeholder="제목을 입력하세요" name="title">
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"></textarea>
+							<textarea placeholder="내용을 입력하세요" name="content"></textarea>
 						</div>
 						<div class="box-upload">
 							<label for="upload">
@@ -58,7 +60,7 @@
 					</div>
 					<div class="box-button">
 						<input type="submit" value="완료" class="btn-rec">
-						<button class="btn-rec"><a href="./noticeCampaignManageList.jsp">목록</a></button>
+						<button class="btn-rec"><a href="/admin/adminCampaignManageList.do">목록</a></button>
 					</div>
 				</form>
             </div>

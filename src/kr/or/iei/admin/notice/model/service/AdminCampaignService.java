@@ -13,5 +13,9 @@ public interface AdminCampaignService {
 	AdminCampaign selectOneCampaignContent(int ncNo);
 
 	int updateCampaignPost(AdminCampaign adc);
+
+	int insertCampaignPostWrite(AdminCampaign adcwrite);
+
+	int searchCampaignPostNo(AdminCampaign adcwrite);
 	
 }
