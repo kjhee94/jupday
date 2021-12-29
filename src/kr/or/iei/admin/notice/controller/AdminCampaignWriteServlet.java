@@ -13,16 +13,16 @@ import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
 import kr.or.iei.admin.notice.model.vo.AdminCampaign;
 
 /**
- * Servlet implementation class AdminCampaignPostUpdateServlet
+ * Servlet implementation class AdminCampaignWriteServlet
  */
-@WebServlet("/admin/adminCampaignPostUpdate.do")
-public class AdminCampaignPostUpdateServlet extends HttpServlet {
+@WebServlet("/admin/adminCampaignWrite.do")
+public class AdminCampaignWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminCampaignPostUpdateServlet() {
+    public AdminCampaignWriteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,32 +31,31 @@ public class AdminCampaignPostUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩
 		request.setCharacterEncoding("UTF-8");
 		
-		//데이터 가져오기
-		int ncNo = Integer.parseInt(request.getParameter("campaignNo"));
-		String title = request.getParameter("subjectArea");
-		String content = request.getParameter("contentArea");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
-		//데이터 한 번에 보낼 객체 생성
-		AdminCampaign adc = new AdminCampaign();
-		adc.setNc_No(ncNo);
-		adc.setNc_Title(title); 
-		adc.setNc_Content(content);
+		//검증코드
+		//System.out.println(title);
+		//System.out.println(content);
 		
-		//수정 비즈니스로직
+		AdminCampaign adcwrite = new AdminCampaign();
+		adcwrite.setNc_Title(title);
+		adcwrite.setNc_Content(content);
+		
 		AdminCampaignService adcService = new AdminCampaignServiceImpl();
-		int result = adcService.updateCampaignPost(adc);
+		int result = adcService.insertCampaignPostWrite(adcwrite);
 		
-		//정상 및 오류 페이지
 		if(result>0)
 		{
-			response.sendRedirect("/admin/adminCampaignSelectContent.do?nc_No="+ncNo);
+			int ncNo = adcService.searchCampaignPostNo(adcwrite);
+			response.sendRedirect("/admin/adminCampaignSelectContent.do?nc_No="+ncNo+"&currentPage=1");
 		}else
 		{
 			response.sendRedirect("/views/commons/error.jsp");
 		}
+		
 	}
 
 	/**

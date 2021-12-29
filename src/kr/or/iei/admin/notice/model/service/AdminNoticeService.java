@@ -14,4 +14,8 @@ public interface AdminNoticeService {
 
 	int updateNoticePost(AdminNotice adnoup);
 
+	int insertNoticePostWrite(AdminNotice adnwrite);
+
+	int searchNoticePostNo(AdminNotice adnwrite);
+
 }

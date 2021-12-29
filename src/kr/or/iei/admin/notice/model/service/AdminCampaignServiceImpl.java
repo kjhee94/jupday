@@ -65,4 +65,22 @@ public class AdminCampaignServiceImpl implements AdminCampaignService {
 		return result;
 	}
 
+	@Override
+	public int insertCampaignPostWrite(AdminCampaign adcwrite) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adnDAO.insertCampaignPostWrite(conn, adcwrite);
+		if(result>0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	@Override
+	public int searchCampaignPostNo(AdminCampaign adcwrite) {
+		Connection conn = JDBCTemplate.getConnection();
+		int ncNo = adnDAO.searchCampaignPostNo(conn, adcwrite);
+		JDBCTemplate.close(conn);
+		return ncNo;
+	}
+
 }

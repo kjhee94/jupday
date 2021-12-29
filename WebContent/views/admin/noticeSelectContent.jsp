@@ -82,35 +82,27 @@
        </script>
        <%} %>
        
-       <!-- 수정버튼 클릭시 동작하는 코드 -->
+        <!-- 수정버튼 클릭시 동작하는 코드 -->
        <script>
-     
        $('#updateBtn').click(function(){
-    	  alert($(this).val());
-       });
-    	  
-    	<%-- 
-    	if(text=='수정')
-    	{
-    		$(this).text('완료');
-    		$('#subjectArea').prop('disabled',false);
+    	   if($(this).val()=='수정'){
+
+    		$(this).val('완료');
+       		$('#subjectArea').prop('disabled',false);
     		$('#contentArea').prop('disabled',false);
-    		
-    	}else if(text=='완료')
-    	{
-    		$(this).text('수정');
-    		$('#subjectArea').prop('disabled',true);
-    		$('#contentArea').prop('disabled',true);
+    	   
+    	   }else if($(this).val()=='완료'){
+   		  	$(this).val('수정');
     		$('#textUpdateForm').submit();
-    	}
-    		  });--%>
+    	   }     	  
+       });
        
-       <%--
        $('#cancleBtn').click(function(){
     	  location.reload(); 
-       });--%>
+       });
        
-       </script>
+       </script>      
+       
       
 </body>
 </html>
