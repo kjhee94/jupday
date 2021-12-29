@@ -1,5 +1,6 @@
 package kr.or.iei.notice.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.or.iei.notice.model.vo.Notice;
@@ -34,5 +35,7 @@ public interface NoticeService {
 	
 
 	NoticeCampaign selectOneCampaignPost(int campaignNo);
+
+	ArrayList<Notice> showNotice();
 
 }

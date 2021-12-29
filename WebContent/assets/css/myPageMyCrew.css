@@ -26,17 +26,10 @@
 	height: 100%;
 	object-fit: cover;
 }
-
-
 div {
 	font-family: 'Noto Sans KR', sans-serif;
 	vertical-align :middle;
-	color: #2A2A2A;
 }
-
-
-
-
 .crew-image {
 	width: 18%;
 	height: 12vh;

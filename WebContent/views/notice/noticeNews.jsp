@@ -24,7 +24,6 @@
 <body>
 <%
 
-
 HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");
 
 ArrayList<Notice> list = (ArrayList<Notice>)pageDataMap.get("list");//꺼내준다.

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
+import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.notice.model.vo.Notice;
 import kr.or.iei.notice.model.vo.NoticeCampaign;
 
@@ -497,6 +498,46 @@ public class NoticeDAO {
 		}
 		 
 		 return noticeCampaign;
+	}
+
+	public ArrayList<Notice> showNotice(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		
+		String query =  "SELECT * FROM ( " +
+                		"SELECT ROW_NUMBER() OVER(ORDER BY N_NO ASC)AS NUM, NOTICE.* " +
+                		"FROM NOTICE " +
+                		"WHERE N_DEL_YN='N') " +
+                		"WHERE NUM BETWEEN 1 AND 3";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Notice n = new Notice();
+		
+				n.setNoticeNo(rset.getInt("n_no"));
+				n.setNoticeTitle(rset.getString("n_title"));
+				n.setNoticeContent(rset.getString("n_content"));
+				n.setNoticeRegDate(rset.getDate("n_regDate"));
+				
+				list.add(n);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+		
 	}
 	
 	

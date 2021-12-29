@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.or.iei.common.JDBCTemplate;
+import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.notice.model.dao.NoticeDAO;
 import kr.or.iei.notice.model.vo.Notice;
 import kr.or.iei.notice.model.vo.NoticeCampaign;
@@ -91,6 +92,14 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return noticeCampaign;
 	
+	}
+
+	@Override
+	public ArrayList<Notice> showNotice() {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Notice> list = nDAO.showNotice(conn);
+		JDBCTemplate.close(conn);
+		return list;
 	}
 
 }
