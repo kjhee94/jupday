@@ -45,7 +45,8 @@
 			</div>
 		
 			<div id="review_writing">
-				<form action="/review/reviewWrite.do" method="post">
+				<form action="/review/reviewWrite.do" method="post" enctype="multipart/form-data">
+					
 					<div class="box-write">
 						<div class="box-subject">
 							<input type="text" placeholder="제목을 입력하세요" name="postTitle"/>
@@ -57,8 +58,8 @@
 							<label for="upload">
 								<i class="far fa-image"></i>
 								<span>사진첨부</span>
-							</label>
-							<input type="file" id="upload">
+							</label>					
+								<input type="file" id="upload" name="reviewimg"/>
 						</div>
 						<div class="box-map">
 							<div class="map-top">
@@ -66,8 +67,8 @@
 								<span>위치추가</span>
 								<i class="fas fa-chevron-down"></i>
 							</div>
-							<div class="map-content" id='map'>
-								<!-- 여기가 지도html부분 -->
+							<div class="map-content">
+								<img alt="" src="/assets/images/kakaomap2.png" style="width:100%; height:100%;">
 							</div>
 						</div>
 					</div>
@@ -91,10 +92,12 @@
 		<!-- footer -->
 		<%@ include file="/views/commons/footer/footer.jsp"%>	
 	</div>
-	
-	
-	
+
 	<!-- 지도 스크립트 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aa153422867c293a7226f0c302b5e6b3"></script>
+	
+	<%-- 나중에 시연시엔  appkey=[aa153422867c293a7226f0c302b5e6b3] 대괄호 부분은 시연하고자 하는 계정의 자바스크립트 키를 가져오고 플랫폼은 127.0.0.1/포트번호 입력하면 됨 --%>
+	
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	    mapOption = { 
@@ -368,6 +371,7 @@
 	    content += '</ul>'
 	
 	    return content;
+	    //이 리턴의 의미가 뭐지? 이게 객체야? 이걸 가지고 보내주려면 어떻게 해야 되는거지?
 	}
 	    
 	</script>

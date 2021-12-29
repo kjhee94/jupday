@@ -37,6 +37,15 @@
 	
 		<!-- header -->
 		<%@ include file="/views/commons/header/header.jsp"%>
+		
+		<%
+			request.setCharacterEncoding("UTF-8");
+			
+			String postContent = request.getParameter("postContent");
+			String postTitle = request.getParameter("postTitle");
+			int postNum = Integer.parseInt(request.getParameter("postNum"));
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));	
+		%>
 			
 		<div id="content">
 			<div class=box-title>
@@ -45,14 +54,16 @@
 			</div>
 			
 			<div id="review_writing">
-				<form action="">
+				<form action="/review/reviewPostUpdate.do" method="post">
+					<input type="hidden" name="postNum" value="<%=postNum %>"/>
+					<input type="hidden" name="currentPage" value="<%=currentPage%>"/>
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" value="제목">
+							<p><%=postTitle%></p>
 						</div>
 						<div class="box-content">
-							<textarea>
-
+							<textarea name="postContent" text-align='left'>
+								<%=postContent %>
 							</textarea>
 						</div>
 						<div class="box-upload">
@@ -77,6 +88,7 @@
 						<input type="submit" value="수정" class="btn-m">
 						<input type="button" value="목록" class="btn-m" onclick="location.replace('/review/reviewAllSelect.do');"/>
 					</div>
+					<%-- 제목까지 수정하도록 구현하려고 했으나, 안타깝게도 제목쪽 DB가 not null 이다 이거 포기하자 --%>
 				</form>
 			</div>
 			

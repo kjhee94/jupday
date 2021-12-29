@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.vo.Member;
@@ -89,17 +88,18 @@ public class ReviewDAO {
 		StringBuilder sb = new StringBuilder();
 		
 		if(startNavi!=1) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");}
-
-        for(int i=startNavi; i<=endNavi; i++) {
-
-            if(i==currentPage) {
-                sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
-            }else {
-                sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"'>"+i+"</a></li>");
-            }
-        }
-
-        if(endNavi!=pageTotalCount) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li> ");}
+		
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentPage) {
+				sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"'>"+i+"</a></li>");			
+			}
+			
+		}
+		
+		if(endNavi!=pageTotalCount) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li> ");}
 		
 		return sb.toString();
 	}
@@ -508,6 +508,287 @@ public class ReviewDAO {
 		
 		return postNum;
 	}
+
+	public int updatePost(Connection conn, Review review) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "update review set POSTCONTENT=? where POSTNUM=? and USERID=?";
+		
+		System.out.println("데이터 확인 : " + review.getPostContent());
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, review.getPostContent());
+			pstmt.setInt(2, review.getPostNum());
+			pstmt.setString(3, review.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Review> selectSearchPostList(Connection conn, int currentPage, int recordCountPerPage,
+			String keyword, String type) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Review> list = new ArrayList<Review>();
+		
+		int start = currentPage * recordCountPerPage - (recordCountPerPage-1);
+		int end = currentPage * recordCountPerPage;
+		
+		String query ="";
+		
+		switch(type)
+		{
+		case "subject" : 
+			query = " SELECT * " + 
+					"		 FROM (SELECT ROW_NUMBER() OVER(order BY POSTNUM DESC) AS NUM, REVIEW.* ,NICK" + 
+					"        FROM REVIEW " + 
+					"        LEFT JOIN MEMBER ON (REVIEW.USERID=MEMBER.USERID)" + 
+					"        WHERE REVIEW.DEL_YN='N' AND POSTTITLE like ?" + 
+					"        ) " + 
+					"		 WHERE NUM BETWEEN ? AND ?";
+				break;
+		case "writer" :
+			query = " SELECT * " + 
+					"		 FROM (SELECT ROW_NUMBER() OVER(order BY POSTNUM DESC) AS NUM, REVIEW.* ,NICK" + 
+					"        FROM REVIEW " + 
+					"        LEFT JOIN MEMBER ON (REVIEW.USERID=MEMBER.USERID)" + 
+					"        WHERE REVIEW.DEL_YN='N' AND NICK like ?" + 
+					"        ) " + 
+					"		 WHERE NUM BETWEEN ? AND ?";
+				break;
+			
+			
+		case "all" :
+			query = " SELECT * " + 
+					"		 FROM (SELECT ROW_NUMBER() OVER(order BY POSTNUM DESC) AS NUM, REVIEW.* ,NICK" + 
+					"        FROM REVIEW " + 
+					"        LEFT JOIN MEMBER ON (REVIEW.USERID=MEMBER.USERID)" + 
+					"        WHERE REVIEW.DEL_YN='N' AND (POSTTITLE like ? OR NICK like ?)" + 
+					"        ) " + 
+					"		 WHERE NUM BETWEEN ? AND ?";
+				break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all")) {
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setInt(3, start);
+				pstmt.setInt(4, end);
+			}else {
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review review = new Review();
+				
+				review.setPostNum(rset.getInt("postNum"));
+				review.setUserId(rset.getString("userId"));
+				review.setRegDate(rset.getDate("regDate"));
+				review.setPostTitle(rset.getString("postTitle"));
+				review.setPostContent(rset.getString("postContent"));
+				review.setHits(rset.getInt("hits"));
+				review.setGood(rset.getInt("good"));
+				review.setBest_YN(rset.getString("best_YN").charAt(0));
+				review.setDel_YN(rset.getString("del_YN").charAt(0));
+				review.setNick(rset.getString("nick"));
+				
+				list.add(review);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public String getSearchPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage,
+			String keyword, String type) {
+		
+		int recordTotalCount = totalCount(conn);
+		
+		int pageTotalCount = 0;
+		
+		if((recordTotalCount % recordCountPerPage) > 0) {
+			pageTotalCount = (recordTotalCount / recordCountPerPage) +1;
+		}else {
+			pageTotalCount = (recordTotalCount / recordCountPerPage);
+		};
+		
+		int startNavi = (((currentPage-1) / naviCountPerPage) * naviCountPerPage) + 1;
+		int endNavi = startNavi + (naviCountPerPage-1);
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(startNavi!=1) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");}
+		
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentPage) {
+				sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+i+"'>"+i+"</a></li>");			
+			}
+			
+		}
+		
+		if(endNavi!=pageTotalCount) {sb.append("<li><a href='/review/reviewAllSelect.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li> ");}
+		
+		return sb.toString();
+		
+	}
+	
+	private int totalSearchCount(Connection conn, String keyword, String type) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query ="";
+		
+		switch(type)
+		{
+		case "subject" : 
+				query = "SELECT COUNT(*) as count FROM REVIEW " + 
+						"    LEFT JOIN MEMBER ON (REVIEW.USERID = MEMBER.USERID) " + 
+						"WHERE REVIEW.DEL_YN='N' AND POSTTITLE like ?";
+				break;
+			
+		case "writer" :
+				query = "SELECT COUNT(*) as count FROM REVIEW " + 
+						"    LEFT JOIN MEMBER ON (REVIEW.USERID = MEMBER.USERID) " + 
+						"WHERE REVIEW.DEL_YN='N' AND NICK like ?";
+				break;
+		
+		case "all" :
+				query = "SELECT COUNT(*) as count FROM REVIEW " + 
+						"    LEFT JOIN MEMBER ON (REVIEW.USERID = MEMBER.USERID) " + 
+						"WHERE REVIEW.DEL_YN='N' AND (POSTTITLE like ? OR NICK LIKE ?)";
+				break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all")) {
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+			}else {
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
+	}
+
+	public int deletePost(Connection conn, int postNum, String userId) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "update review set DEL_YN='Y' where postnum=? and userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNum);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+
+		return result;
+	}
+
+	public ArrayList<Review> selectAllBestReview(Connection conn) {
+	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Review> list2 = new ArrayList<Review>();
+		
+		String query = "select review.*,nick from review " + 
+				"left join member on (review.userid = member.userid) " + 
+				"where BEST_YN='Y' " + 
+				"order by postnum desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review review = new Review();
+				
+				review.setPostNum(rset.getInt("postNum"));
+				review.setUserId(rset.getString("userId"));
+				review.setRegDate(rset.getDate("regDate"));
+				review.setPostTitle(rset.getString("postTitle"));
+				review.setPostContent(rset.getString("postContent"));
+				review.setHits(rset.getInt("hits"));
+				review.setGood(rset.getInt("good"));
+				review.setBest_YN(rset.getString("best_YN").charAt(0));
+				review.setDel_YN(rset.getString("del_YN").charAt(0));
+				review.setNick(rset.getString("nick"));
+				
+				list2.add(review);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list2;
+	}
 	
 	public ArrayList<Review> selectMonthStamp(Connection conn, String userId, String startDate, String endDate) {
 		PreparedStatement pstmt = null;
@@ -540,3 +821,4 @@ public class ReviewDAO {
 		return list;
 	}
 }
+
