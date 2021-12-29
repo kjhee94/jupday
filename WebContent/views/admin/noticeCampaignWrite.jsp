@@ -25,6 +25,8 @@
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
 		
+		
+
         <div id="header">
             <div class="admin-path">
                 <p>줍데이공지</p>
@@ -38,7 +40,7 @@
             </div>
         </div>
         
-        
+ 
 
         <div id="content">
             <div class="container">
