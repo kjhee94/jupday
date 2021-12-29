@@ -12,4 +12,17 @@ public interface AdminMemberService {
 	
 	public int updateMemberEndYN(String userId, char endYN);
 
+	
+	
+	/**
+	 * 남진구
+	 * @param currentPage
+	 * @param keyword
+	 * @param type
+	 * @return
+	 * 
+	 * 실패하면 이 메소드를 삭제할것.
+	 */
+	HashMap<String, Object> adminMemberSearch(int currentPage, String keyword, String type);
+
 }

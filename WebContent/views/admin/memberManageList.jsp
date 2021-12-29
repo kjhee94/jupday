@@ -24,6 +24,7 @@
 
 <body>
 
+
    <%
        //세션에서 멤버가져오기
       Member m = (Member)session.getAttribute("member");
@@ -33,6 +34,8 @@
       HashMap<String,Object> pageDataMap = (HashMap<String,Object>)request.getAttribute("pageDataMap");   
       ArrayList<Member> list = (ArrayList<Member>)pageDataMap.get("list");
       String pageNavi = (String)pageDataMap.get("pageNavi");
+      int currentPage =(int)request.getAttribute("currentPage");//<-이줄만 남진구.작동 안할시 삭제하기
+
    %>
 
     <div id="wrap">
@@ -61,18 +64,17 @@
                     </div>
                     
                     <div class="box-search">
-                  <form action="">
+                  <form action="/admin/adminMemberSearch.do" method="post">
                      <div class="select-search">
-                        <select>
-                           <option>검색필터</option>
-                           <option value="subject">글제목</option>
-                           <option value="writer">작성자</option>
+                        <select name="type">
+                           <option value="id">아이디</option>
+                           <option value="email">이메일</option>
                         </select>
                         <i class="fas fa-chevron-down icon-arrow"></i>
                      </div>
-                     <div class="input-search">
+                     <div class="input-search"><!-- 여기를 시작점으로 삼는다. 아이디 이메일  닉네임을 사용해서 회원을 찾아오는 것으로 한다.-->
                         <i class="fas fa-search icon-search"></i>
-                        <input type="text" name="search" placeholder="검색어를 검색하세요">
+                        <input type="text" name="keyword" placeholder="검색어를 검색하세요">
                      </div>
                      <input type="submit" class="btn-rec" value="검색">
                   </form>

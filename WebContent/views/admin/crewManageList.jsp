@@ -58,9 +58,8 @@
                    	<div class="box-search">
 						<form action="">
 							<div class="select-search">
-								<select>
+								<select name="type">
 									<option>검색필터</option>
-									<option value="userId">아이디</option>
 	                                <option value="nick">크루장닉네임</option>
 	                                <option value="crewName">크루명</option>
 								</select>

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import kr.or.iei.admin.model.dao.AdminMemberDAO;
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.member.model.vo.Member;
+import kr.or.iei.notice.model.vo.NoticeCampaign;
 
 public class AdminMemberServiceImpl implements AdminMemberService{
 	
@@ -48,6 +49,36 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 		
 		
 		
+	}
+
+
+	@Override//삭제시 이 메소드를 삭제
+	public HashMap<String, Object> adminMemberSearch(int currentPage, String keyword, String type) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//하나의 Page에서 몇개의 목록으로 보여줄 것인지에 대한 값이 필요
+		int recordCountPerPage= 10; 
+		
+		ArrayList<Member> list =adDAO.selectSearchAdminMemberList(conn,currentPage,recordCountPerPage,keyword,type);
+		
+		//2.하나의 pageNavi Bar에 보여질 Navi 개수를 설정
+		int naviCountPerPage=5;
+
+
+		String pageNavi=adDAO.getSearchAdminMemberPageNavi(conn,naviCountPerPage,recordCountPerPage,currentPage,keyword,type);
+		
+		//DB 연결 해제 
+		JDBCTemplate.close(conn);
+		
+		// 리턴을 하기 위하여 HashMap 객체를 만들어서 리턴
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("list", list);
+		map.put("pageNavi", pageNavi);
+		
+		return map;
 	}
 
 
