@@ -124,4 +124,13 @@ public class Crew {
 	public void setCrewCount(int crewCount) {
 		this.crewCount = crewCount;
 	}
+
+	@Override
+	public String toString() {
+		return "Crew [crewNo=" + crewNo + ", crewName=" + crewName + ", crewCreateDate=" + crewCreateDate
+				+ ", crewInfo=" + crewInfo + ", crewImg=" + crewImg + ", crewDelYN=" + crewDelYN + ", crewCount="
+				+ crewCount + "]";
+	}
+	
+	
 }

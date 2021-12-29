@@ -1,6 +1,7 @@
 package kr.or.iei.crew.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class CrewBoard {
 
@@ -15,6 +16,7 @@ public class CrewBoard {
 	private int feedLikeCount;
 	private int feedCommentCount;
 	private char feedDelYN;
+	private ArrayList<CrewBoardComment> coList;
 	
 	
 	//생성자
@@ -22,8 +24,23 @@ public class CrewBoard {
 		super();
 	}
 	
+	public CrewBoard(int crewNo, int feedNo, String userId, String writer, String writerImg, Date feedRegdate,
+			String feedSubject, String feedContent, int feedLikeCount, int feedCommentCount, char feedDelYN) {
+		super();
+		this.crewNo = crewNo;
+		this.feedNo = feedNo;
+		this.userId = userId;
+		this.writer = writer;
+		this.writerImg = writerImg;
+		this.feedRegdate = feedRegdate;
+		this.feedSubject = feedSubject;
+		this.feedContent = feedContent;
+		this.feedLikeCount = feedLikeCount;
+		this.feedCommentCount = feedCommentCount;
+		this.feedDelYN = feedDelYN;
+	}
 	
-
+	
 	
 	//getter setter
 	public int getCrewNo() {
@@ -114,8 +131,13 @@ public class CrewBoard {
 		this.feedCommentCount = feedCommentCount;
 	}
 
+	public ArrayList<CrewBoardComment> getCoList() {
+		return coList;
+	}
 
-
+	public void setCoList(ArrayList<CrewBoardComment> coList) {
+		this.coList = coList;
+	}
 
 	@Override
 	public String toString() {

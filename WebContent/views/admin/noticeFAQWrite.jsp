@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.admin.notice.model.vo.AdminFAQ"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,6 +22,8 @@
 <body>
     <div id="wrap">
         
+        <%AdminFAQ adfaq = (AdminFAQ)request.getAttribute("adfaq"); %>
+        
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
         
@@ -41,10 +44,10 @@
 				<form action="">
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요">
+							<input type="text" placeholder="제목을 입력하세요" ><%=adfaq.getFaq_Title() %>
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"></textarea>
+							<textarea placeholder="내용을 입력하세요" <%=adfaq.getFaq_Content() %>></textarea>
 						</div>
 						<div class="box-upload">
 							<label for="upload">

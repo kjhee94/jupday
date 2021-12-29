@@ -8,6 +8,7 @@ import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.dao.CrewDAO;
 import kr.or.iei.crew.model.vo.Crew;
 import kr.or.iei.crew.model.vo.CrewBoard;
+import kr.or.iei.crew.model.vo.CrewBoardComment;
 import kr.or.iei.crew.model.vo.CrewFileData;
 import kr.or.iei.crew.model.vo.CrewMember;
 import kr.or.iei.file.model.dao.MemberFileDAO;
@@ -187,6 +188,7 @@ public class CrewServiceimpl implements CrewService {
 
 	@Override
 	public String selectCrewName(int crewNo) {
+		
 		Connection conn = JDBCTemplate.getConnection();
 		String crewName = cDAO.selectCrewName(conn, crewNo);
 		JDBCTemplate.close(conn);
@@ -217,7 +219,6 @@ public class CrewServiceimpl implements CrewService {
 		
 		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
 		
-		
 		//pageNavi에서 보여질 Navi 개수를 설정
 		int naviCountPerPage = 5;
 		
@@ -234,10 +235,19 @@ public class CrewServiceimpl implements CrewService {
 	}
 
 	@Override
-	public CrewBoard selectOneCrewFeed(int feedNo) {
+	public CrewBoard selectOneCrewFeed(int crewNo, int feedNo) {
 		
 		Connection conn = JDBCTemplate.getConnection();
+		
+		//한개의 게시물 가져오기
 		CrewBoard cb = cDAO.selectOneCrewFeed(conn, feedNo);
+		
+		//해당게시물에 대한 댓글 가져오기
+		ArrayList<CrewBoardComment> coList = cDAO.selectCrewFeedAllComment(conn, crewNo, feedNo);
+		
+		//해당 게시물 객체에 대한 댓글까지 저장
+		cb.setCoList(coList);
+		
 		JDBCTemplate.close(conn);
 		return cb;
 	}
@@ -366,6 +376,20 @@ public class CrewServiceimpl implements CrewService {
 		
 		
 		return null;
+	}
+
+	@Override
+	public int insertFeedComment(CrewBoardComment cbc) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.insertFeedComment(conn, cbc);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 
 	

@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.model.service.AdminNoticeService;
-import kr.or.iei.admin.notice.model.service.AdminNoticeServiceImpl;
+import kr.or.iei.admin.notice.model.service.AdminCampaignService;
+import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminCampaign;
 
 /**
- * Servlet implementation class AdminNoticeDelYNChangeServlet
+ * Servlet implementation class AdminCampaignSelectContentServlet
  */
-@WebServlet("/admin/adminNoticeDelYNChange.do")
-public class AdminNoticeDelYNChangeServlet extends HttpServlet {
+@WebServlet("/admin/adminCampaignSelectContent.do")
+public class AdminCampaignSelectContentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeDelYNChangeServlet() {
+    public AdminCampaignSelectContentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,22 +32,21 @@ public class AdminNoticeDelYNChangeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		//인코딩
 		request.setCharacterEncoding("UTF-8");
-				
-		int nNo = Integer.parseInt(request.getParameter("n_No"));
-		char delYN = request.getParameter("n_Del_YN").charAt(0);
-				
-		if(delYN=='Y') delYN='N';
-		else			delYN='Y';
-		AdminNoticeService adnService = new AdminNoticeServiceImpl();
-		int result = adnService.updateNoticeDelYN(nNo,delYN);
-				
-		RequestDispatcher view = request.getRequestDispatcher("/views/admin/updateNoticeDelYN.jsp");
-		if(result>0) request.setAttribute("result", true);
-		else request.setAttribute("result", false);
-				
+		
+		//페이지에서 보낸 데이터 가져오기
+		int ncNo = Integer.parseInt(request.getParameter("nc_No"));
+		
+		//비즈니스 로직
+		AdminCampaignService acService = new AdminCampaignServiceImpl();
+		AdminCampaign adcam = acService.selectOneCampaignContent(ncNo);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/admin/noticeCampaignContent.jsp");
+		request.setAttribute("adcam", adcam);
 		view.forward(request, response);
+		
 	}
 
 	/**

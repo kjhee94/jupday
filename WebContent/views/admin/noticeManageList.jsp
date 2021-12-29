@@ -99,17 +99,16 @@
                         <%for(AdminNotice an : list) {%>
                         <tbody>
                             <tr>
-                            
                                 <td><%=an.getN_No() %></td>
                                 <td><div class="text-ellipsis subject"><%=an.getN_Title() %></div></td>
                                 <td><div class="text-ellipsis"><%=an.getN_Content() %></div></td>
                                 <td><%=an.getN_regDate() %></td>
-                                <td><button class="modify_btn"><a href="./noticeUpdate.jsp">수정</a></button>
+                                <td><button class="modify_btn"><a href="/admin/adminNoticeSelectContent.do?n_No=<%=an.getN_No()%>">수정</a></button>
                                 <td>
                                 <%if(an.getN_Del_YN()=='N') {%>
-                                <a href="/admin/noticeDelYNChange.do?n_No=<%=an.getN_No()%>&n_Del_YN=<%=an.getN_Del_YN()%>"><button class="del_btn">삭제</button></a>
+                                <a href="/admin/adminNoticeDelYNChange.do?n_No=<%=an.getN_No()%>&n_Del_YN=<%=an.getN_Del_YN()%>"><button class="del_btn">삭제</button></a>
                                 <%}else {%>
-                                <a href="/admin/noticeDelYNChange.do?n_No=<%=an.getN_No()%>&n_Del_YN=<%=an.getN_Del_YN()%>"><button class="re_btn">복원</button></a>
+                                <a href="/admin/adminNoticeDelYNChange.do?n_No=<%=an.getN_No()%>&n_Del_YN=<%=an.getN_Del_YN()%>"><button class="re_btn">복원</button></a>
                                 <%} %>
                                 </td>
                             </tr>

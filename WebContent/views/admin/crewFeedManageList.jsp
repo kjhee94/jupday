@@ -54,7 +54,7 @@
             <div class="container">
                 <div class="container_top">
                     <div class="count-all">
-                    	<p><span id="green">크루명 받아서 넣기</span> > 전체 <span>7,777</span> 건</p>
+                    	<p><span id="green">크루명</span> > 전체 <span>7,777</span> 건</p>
                     </div>
                     
                     
@@ -99,7 +99,7 @@
                                 <td><%=f.getC_f_No() %></td>
                                 <td><div class="text-ellipsis subject"><%=f.getC_f_Subject() %></div></td>
                                 <td><div class="text-ellipsis"><%=f.getC_f_Content() %></div></td>
-                                <td><%=f.getnick() %></td>
+                                <td><%=f.getC_Nick() %></td>
                                 <td><%=f.getLikeCount() %></td>
                                 <td><%=f.getC_f_RegDate() %></td>
                                 <td>

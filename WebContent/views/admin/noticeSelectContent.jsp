@@ -1,4 +1,4 @@
-<%@page import="kr.or.iei.admin.notice.model.vo.AdminFAQ"%>
+<%@page import="kr.or.iei.admin.notice.model.vo.AdminNotice"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.or.iei.member.model.vo.Member"%>
@@ -9,7 +9,7 @@
 <head>
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>관리자페이지 - 자주 묻는 질문 관리 : 글수정하기 </title>
+<title>관리자페이지 - 공지사항 : 글수정하기 </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">    
@@ -21,20 +21,19 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="/assets/js/ui.js"></script>
 </head>
-
 <body>
     <div id="wrap">
-     
-     <%Member m = (Member)session.getAttribute("member"); %>
-     <%AdminFAQ adfaq = (AdminFAQ)request.getAttribute("adfaq"); %>
-      
-        <!-- navigation -->
+	  <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
-        
+
+	<%AdminNotice adnotice = (AdminNotice)request.getAttribute("adnotice"); %>		
+	<%Member m = (Member)session.getAttribute("member"); %>
+	
+       <%if(adnotice!=null) {%>
         <div id="header">
             <div class="admin-path">
                 <p>줍데이공지</p>
-                <p>자주 묻는 질문 관리</p>
+                <p>공지사항 관리</p>
             </div>
 
             <div class="box-user">
@@ -42,53 +41,78 @@
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
-
+        
         <div id="content">
             <div class="container">
-				<form action="/admin/AdminFAQUpdate.do" id="updateForm" method="post">
+				<form action="/admin/adminNoticePostUpdate.do" method="post" id="textUpdateForm">
 					<div class="box-write" name="content" id="content">
-						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요"/><%=adfaq.getFaq_Title() %>
-						</div>
+						<input type="hidden" name="noticeNo" value="<%=adnotice.getN_No() %>">
+							<div class="box-subject">
+							<input type="text" disabled='true' name="subjectArea" id="subjectArea" value="<%=adnotice.getN_Title() %>">
+							</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"><%=adfaq.getFaq_Content() %></textarea>
+							<textarea disabled='true' name="contentArea" id="contentArea"><%=adnotice.getN_Content() %>
+							</textarea>
+						</div>
+						<div class="box-upload">
+							<label for="upload">
+								<i class="far fa-image"></i>
+								<span>사진첨부</span>
+							</label>
+							<input type="file" id="upload">
 						</div>
 					</div>
 					<div class="box-button">
-						<input type="submit" value="수정" class="btn-rec" id="updateBtn">
-						<input type="submit" value="취소" class="btn-rec" id="cancleBtn">
-						<button class="btn-rec"><a href="/admin/adminFAQManageList.do">목록</a></button>
+						<input type="button" class="btn-rec" id="updateBtn" value="수정">
+						<button class="btn-rec"><a href="/admin/noticeManageList.do">목록</a></button>
+						<input type="button" class="btn-rec" id="cancleBtn" value="취소">						
 					</div>
 				</form>
             </div>
         </div>
         
-    <script>
-	var updateBtnFlag = false;
-	var boardData;
-	$('#updateBtn').click(function(){
-		if(updateBtnFlag==false)
-			{
-				$('#content').prop('disabled',false);
-				$('#updateBtn').text('수정완료');
-				$('#cancleBtn').css('display','inline');	
-				updateBtnFlag=true;
-				boardData = $('#content').html();
-			}
-		else if(updateBtnFlag==true){
-			$('#updateForm').submit();
-		}
-	});
-	
-	$('#cancleBtn').click(function(){
-		location.replace('/admin/adminFAQSelectContent.do?faq_No=<%=adfaq.getFaq_No()%>');
-	});
-	
-</script>
-        
         <footer id="footer">
             <p>2021 ⓒ JUP DAY</p>
         </footer>
-    </div>
+    </div>       
+    
+       <%}else {%>
+       <script>
+       	에러
+       </script>
+       <%} %>
+       
+       <!-- 수정버튼 클릭시 동작하는 코드 -->
+       <script>
+     
+       $('#updateBtn').click(function(){
+    	  alert($(this).val());
+       });
+    	  
+    	<%-- 
+    	if(text=='수정')
+    	{
+    		$(this).text('완료');
+    		$('#subjectArea').prop('disabled',false);
+    		$('#contentArea').prop('disabled',false);
+    		
+    	}else if(text=='완료')
+    	{
+    		$(this).text('수정');
+    		$('#subjectArea').prop('disabled',true);
+    		$('#contentArea').prop('disabled',true);
+    		$('#textUpdateForm').submit();
+    	}
+    		  });--%>
+       
+       <%--
+       $('#cancleBtn').click(function(){
+    	  location.reload(); 
+       });--%>
+       
+       </script>
+      
+</body>
+</html>
 </body>
 </html>

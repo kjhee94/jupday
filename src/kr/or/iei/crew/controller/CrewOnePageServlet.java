@@ -62,6 +62,7 @@ public class CrewOnePageServlet extends HttpServlet {
 			
 			//크루멤버정보 가져오기
 			String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
+			
 			CrewMember cm = cService.selectCrewMember(userId, crewNo);
 			
 			//페이징처리

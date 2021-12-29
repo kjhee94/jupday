@@ -135,14 +135,15 @@
     </div>
 
     <script>
-
+	
+    
     // 회원탈퇴
     function deleteMember(userId) {
       
         var confirm = window.confirm(userId + " 회원을 탈퇴처리하시겠습니까?");
     
         if(confirm) {
-            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=Y";
+            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=N";
         } else {
             
         return false;
@@ -157,7 +158,7 @@
         var confirm = window.confirm(userId + " 회원을 복원하시겠습니까?");
         
         if (confirm) {
-            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=N";
+            location.href = "/admin/memberEndYNChange.do?userId="+userId+"&endYN=Y";
         } else {
     
             return false;
@@ -171,8 +172,7 @@
       
 //       if(data=='Y')
 //       {
-//          window.confirm(<%=m.getUserId() %> + " 회원을 탈퇴처리하시겠습니까?");
-         
+	
 //       }
 //       return false;
 //    });
@@ -184,7 +184,7 @@
       
 //       if(data=='Y')
 //       {
-//          window.confirm(<%=m.getUserId() %> + " 회원을 복원하시겠습니끼?");   
+	
 //       }
 //       return false;
 //    });
