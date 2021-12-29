@@ -8,8 +8,11 @@ import java.util.ArrayList;
 
 import kr.or.iei.common.JDBCTemplate;
 import kr.or.iei.crew.model.vo.Crew;
+import kr.or.iei.notice.model.vo.AnswerFAQ;
+import kr.or.iei.notice.model.vo.BoxFAQ;
 import kr.or.iei.notice.model.vo.Notice;
 import kr.or.iei.notice.model.vo.NoticeCampaign;
+import kr.or.iei.notice.model.vo.QuestionFAQ;
 
 public class NoticeDAO {
 
@@ -50,11 +53,11 @@ public class NoticeDAO {
 		
 		
 		
-		String query = "SELECT * " + 
-				"FROM(SELECT ROW_NUMBER() OVER(ORDER BY N_NO DESC)AS NUM, NOTICE.* " + 
-				"FROM NOTICE" + 
-				") " + 
-				"WHERE NUM BETWEEN ? AND ?";
+		String query ="select *" + 
+				"		from (select row_number() over(order by n_no desc)as num, NOTICE.* " + 
+				"		from NOTICE " + 
+				"		where NOTICE.N_DEL_YN='N') " + 
+				"		where num between ? and ?";
 		
 		
 		try {
@@ -74,6 +77,8 @@ public class NoticeDAO {
 				notice.setNoticeContent(rset.getString("N_CONTENT"));
 				notice.setNoticeRegDate(rset.getDate("N_REGDATE"));
 				notice.setNoticeHits(rset.getInt("N_HITS"));
+				notice.setDelYN(rset.getString("N_DEL_YN").charAt(0));
+
 				
 				list.add(notice);
 			}
@@ -202,7 +207,7 @@ public class NoticeDAO {
 		
 		int count = 0;
 		//as count 컬럼 이름을 붙인것
-		String query = "SELECT COUNT(*) as count FROM NOTICE ";
+		String query = "select count(*) as count from NOTICE where N_DEL_YN='N'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -231,7 +236,7 @@ public class NoticeDAO {
 		 
 		 Notice notice = null;
 		 
-		 String query = "SELECT NOTICE.*FROM NOTICE WHERE N_NO=?";
+		 String query = "SELECT NOTICE.*FROM NOTICE WHERE N_NO=? and NOTICE.N_DEL_YN='N'";
 		
 		 try {
 			pstmt = conn.prepareStatement(query);		
@@ -249,6 +254,8 @@ public class NoticeDAO {
 				notice.setNoticeContent(rset.getString("N_CONTENT"));
 				notice.setNoticeRegDate(rset.getDate("N_REGDATE"));
 				notice.setNoticeHits(rset.getInt("N_HITS"));
+				notice.setDelYN(rset.getString("N_DEL_YN").charAt(0));
+
 
 				
 			}
@@ -284,11 +291,12 @@ public class NoticeDAO {
 		
 		
 		
-		String query = "SELECT * " + 
-				"FROM(SELECT ROW_NUMBER() OVER(ORDER BY NC_NO DESC)AS NUM, NOTICE_CAMPAIGN.* " + 
-				"FROM NOTICE_CAMPAIGN" + 
-				") " + 
-				"WHERE NUM BETWEEN ? AND ?";
+		String query = "select *" + 
+				"		from (select row_number() over(order by NC_NO desc)as num, NOTICE_CAMPAIGN.* " + 
+				"		from NOTICE_CAMPAIGN " + 
+				"		where NOTICE_CAMPAIGN.NC_DEL_YN='N' " + 
+				"       ) " +
+				"		where num between ? and ?";
 		
 		
 		try {
@@ -308,6 +316,7 @@ public class NoticeDAO {
 				noticeCampaign.setCampaignContent(rset.getString("NC_CONTENT"));
 				noticeCampaign.setCampaignRegDate(rset.getDate("NC_REGDATE"));
 				noticeCampaign.setCampaignHits(rset.getInt("NC_HITS"));
+				noticeCampaign.setDelYN(rset.getString("NC_DEL_YN").charAt(0));
 				
 				list.add(noticeCampaign);
 			}
@@ -437,7 +446,7 @@ public class NoticeDAO {
 		
 		int count = 0;
 		//as count 컬럼 이름을 붙인것
-		String query = "SELECT COUNT(*) as count FROM NOTICE_CAMPAIGN ";
+		String query = "select count(*) as count from NOTICE_CAMPAIGN where NC_DEL_YN='N'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -467,7 +476,7 @@ public class NoticeDAO {
 		 
 		 NoticeCampaign noticeCampaign = null;
 		 
-		 String query = "SELECT NOTICE_CAMPAIGN.*FROM NOTICE_CAMPAIGN WHERE NC_NO=?";
+		 String query = "SELECT NOTICE_CAMPAIGN.*FROM NOTICE_CAMPAIGN WHERE NC_NO=? and NOTICE_CAMPAIGN.NC_DEL_YN='N'";
 		
 		 try {
 			pstmt = conn.prepareStatement(query);		
@@ -485,6 +494,7 @@ public class NoticeDAO {
 				noticeCampaign.setCampaignContent(rset.getString("NC_CONTENT"));
 				noticeCampaign.setCampaignRegDate(rset.getDate("NC_REGDATE"));
 				noticeCampaign.setCampaignHits(rset.getInt("NC_HITS"));
+				noticeCampaign.setDelYN(rset.getString("NC_DEL_YN").charAt(0));
 
 				
 			}
@@ -500,7 +510,7 @@ public class NoticeDAO {
 		 return noticeCampaign;
 	}
 
-	public ArrayList<Notice> showNotice(Connection conn) {
+public ArrayList<Notice> showNotice(Connection conn) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -539,10 +549,537 @@ public class NoticeDAO {
 		return list;
 		
 	}
+public ArrayList<Notice> selectSearchNewsContentList(Connection conn, int currentPage, int recordCountPerPage,
+		String keyword, String type) {
+	
+	PreparedStatement pstmt = null;
+	ResultSet rset=null;
+	ArrayList<Notice> list = new ArrayList<Notice>();
+	
+	
+	int start = currentPage*recordCountPerPage - (recordCountPerPage-1);
+	int end = currentPage*recordCountPerPage;
+	
+	String query="";
+	
+	switch(type)
+	{//제목-3
+	case "subject" :
+		query=  "select *" + 
+				"		from (select row_number() over(order by N_NO desc)as num, NOTICE.* " + 
+				"		from NOTICE " + 
+				"		where N_TITLE like ? and NOTICE.N_DEL_YN='N') " + 
+				"		where num between ? and ?"; 
+
+		break;
+		//내용-3
+	case "content" :
+		query=  "select *" + 
+				"		from (select row_number() over(order by N_NO desc)as num, NOTICE.* " + 
+				"		from NOTICE " + 
+				"		where N_CONTENT like ? and NOTICE.N_DEL_YN='N') " + 
+				"		where num between ? and ?"; 
+		break;
+		
+	case "all" :
+		 query = "select *" + 
+				 "		from (select row_number() over(order by N_NO desc)as num, NOTICE.* " + 
+				 "		from NOTICE " + 
+				 "		where N_CONTENT like ? or N_Title LIKE ? and NOTICE.N_DEL_YN='N') " + 
+				 "		where num between ? and ?"; 
+		 
+		 break;
+	}
+	
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		
+		if(type.equals("all"))
+		{
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setInt(3, start);
+			pstmt.setInt(4, end);
+			
+		}else 
+		{
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+		}
+
+		
+		rset = pstmt.executeQuery();//실행
+		
+		while(rset.next()) {
+			
+			Notice notice = new Notice();
+			
+			notice.setNoticeNo(rset.getInt("N_NO"));
+			notice.setNoticeWriter(rset.getString("N_WRITER"));
+			notice.setNoticeTitle(rset.getString("N_TITLE"));
+			notice.setNoticeContent(rset.getString("N_CONTENT"));
+			notice.setNoticeRegDate(rset.getDate("N_REGDATE"));
+			notice.setNoticeHits(rset.getInt("N_HITS"));
+			notice.setDelYN(rset.getString("N_DEL_YN").charAt(0));
+
+			
+			list.add(notice);
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		JDBCTemplate.close(rset);
+		JDBCTemplate.close(pstmt);
+	}
+	return list;
+}
+	
+
+	public String getSearchPageNavi(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage,
+			String keyword, String type) {
+
+	   int recordTotalCount = totalSearchCount(conn,keyword,type);
+		
+       int pageTotalCount = 0; //전체 페이지 개수
+
+		
+		if((recordTotalCount % recordCountPerPage)>0) {
+			pageTotalCount = (recordTotalCount / recordCountPerPage)+1;
+		}else {
+			pageTotalCount = (recordTotalCount / recordCountPerPage);
+		}
+		
+		
+		int startNavi = (((currentPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+		int endNavi = startNavi+(naviCountPerPage-1);
+		
+		
+		//만약 공식으로 구한 endNavi가 총페이지 수 보다 크다면 총 페이지 수로 세팅하여라
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		
+			
+		//pageNavi 모양 만들기
+		StringBuilder sb = new StringBuilder();
+
+		if(startNavi!=1) {
+			sb.append("<li><a href='/notice/noticeNewsSearch.do?currentPage="+(startNavi-1)+"&keyword="+keyword+"&type="+type+"'><i class='fas fa-chevron-left'></i></a></li>");
+		}
+
+		for(int i=startNavi; i<=endNavi; i++) {
+			
+			if(i==currentPage) {
+				sb.append("<li><a href='/notice/noticeNewsSearch.do?currentPage="+i+"&keyword="+keyword+"&type="+type+"' class='page_active'>"+i+"</a></li>");
+			}else {
+				sb.append("<li><a href='/notice/noticeNewsSearch.do?currentPage="+i+"&keyword="+keyword+"&type="+type+"'>"+i+"</a></li>");
+			}
+		}
+
+		if(endNavi!=pageTotalCount) {
+			sb.append("<li><a href='/notice/noticeNewsSearch.do?currentPage="+(endNavi+1)+"&keyword="+keyword+"&type="+type+"'><i class='fas fa-chevron-right'></i></a></li>");
+		}
+
+		//System.out.println(sb.toString());
+		
+		return sb.toString();
+	
+	}
+
+	private int totalSearchCount(Connection conn, String keyword, String type) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query ="";
+		
+		switch(type)
+		{
+		case "subject" :
+			   query ="SELECT COUNT(*) as count FROM NOTICE WHERE N_TITLE LIKE ? and NOTICE.N_DEL_YN='N'";			   		
+			   break;
+			   
+		case "content" :
+			   query="SELECT COUNT(*) as count FROM NOTICE WHERE N_CONTENT LIKE ? and NOTICE.N_DEL_YN='N'";
+			   break;
+			   
+		case "all" : 
+			   query="SELECT COUNT(*) as count FROM NOTICE WHERE N_TITLE LIKE ? and NOTICE.N_DEL_YN='N'" +
+			         "  or N_CONTENT LIKE ? and NOTICE.N_DEL_YN='N'";
+			   break;		
+		}
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all"))
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+			}else
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {//count라는 이름의 칼럼을 꺼낸것
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
+
+		
+			}
+
+	public ArrayList<NoticeCampaign> selectSearchCampaignContentList(Connection conn, int currentPage, int recordCountPerPage,
+		String keyword, String type) {
+		PreparedStatement pstmt = null;
+		ResultSet rset=null;
+		ArrayList<NoticeCampaign> list = new ArrayList<NoticeCampaign>();
+		
+		
+		int start = currentPage*recordCountPerPage - (recordCountPerPage-1);
+		int end = currentPage*recordCountPerPage;
+		
+		String query="";
+		
+		switch(type)
+		{//제목-3
+		case "subject" :
+			query=  "select *" + 
+					"		from (select row_number() over(order by NC_NO desc)as num, NOTICE_CAMPAIGN.* " + 
+					"		from NOTICE_CAMPAIGN " + 
+					"		where NC_TITLE like ? and NOTICE_CAMPAIGN.NC_DEL_YN='N') " + 
+					"		where num between ? and ?"; 
+
+			break;
+			//내용-3
+		case "content" :
+			query=  "select *" + 
+					"		from (select row_number() over(order by NC_NO desc)as num, NOTICE_CAMPAIGN.* " + 
+					"		from NOTICE_CAMPAIGN " + 
+					"		where NC_CONTENT like ? and NOTICE_CAMPAIGN.NC_DEL_YN='N') " + 
+					"		where num between ? and ?"; 
+			break;
+			
+		case "all" :
+			 query = "select *" + 
+					 "		from (select row_number() over(order by NC_NO desc)as num, NOTICE_CAMPAIGN.* " + 
+					 "		from NOTICE_CAMPAIGN " + 
+					 "		where NC_CONTENT like ? or NC_TITLE LIKE ? and NOTICE_CAMPAIGN.NC_DEL_YN='N') " + 
+					 "		where num between ? and ?"; 
+			 
+			 break;
+		}
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all"))
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setInt(3, start);
+				pstmt.setInt(4, end);
+				
+			}else 
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}
+
+			
+			rset = pstmt.executeQuery();//실행
+			
+			while(rset.next()) {
+				
+				NoticeCampaign noticeCampaign = new NoticeCampaign();
+				
+				noticeCampaign.setCampaignNo(rset.getInt("NC_NO"));
+				noticeCampaign.setCampaignWriter(rset.getString("NC_WRITER"));
+				noticeCampaign.setCampaignTitle(rset.getString("NC_TITLE"));
+				noticeCampaign.setCampaignContent(rset.getString("NC_CONTENT"));
+				noticeCampaign.setCampaignRegDate(rset.getDate("NC_REGDATE"));
+				noticeCampaign.setCampaignHits(rset.getInt("NC_HITS"));
+				noticeCampaign.setDelYN(rset.getString("NC_DEL_YN").charAt(0));
+
+				
+				list.add(noticeCampaign);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+		
+	
+	}
+
+	public String getSearchPageNavi2(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage,
+			String keyword, String type) {
+		 int recordTotalCount = totalSearchCount2(conn,keyword,type);
+			
+	       int pageTotalCount = 0; //전체 페이지 개수
+
+			
+			if((recordTotalCount % recordCountPerPage)>0) {
+				pageTotalCount = (recordTotalCount / recordCountPerPage)+1;
+			}else {
+				pageTotalCount = (recordTotalCount / recordCountPerPage);
+			}
+			
+			
+			int startNavi = (((currentPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+			int endNavi = startNavi+(naviCountPerPage-1);
+			
+			
+			//만약 공식으로 구한 endNavi가 총페이지 수 보다 크다면 총 페이지 수로 세팅하여라
+			if(endNavi > pageTotalCount) {
+				endNavi = pageTotalCount;
+			}
+			
+			
+				
+			//pageNavi 모양 만들기
+			StringBuilder sb = new StringBuilder();
+
+			if(startNavi!=1) {
+				sb.append("<li><a href='/notice/noticeCampaignSearch.do?currentPage="+(startNavi-1)+"&keyword="+keyword+"&type="+type+"'><i class='fas fa-chevron-left'></i></a></li>");
+			}
+
+			for(int i=startNavi; i<=endNavi; i++) {
+				
+				if(i==currentPage) {
+					sb.append("<li><a href='/notice/noticeCampaignSearch.do?currentPage="+i+"&keyword="+keyword+"&type="+type+"' class='page_active'>"+i+"</a></li>");
+				}else {
+					sb.append("<li><a href='/notice/noticeCampaignSearch.do?currentPage="+i+"&keyword="+keyword+"&type="+type+"'>"+i+"</a></li>");
+				}
+			}
+
+			if(endNavi!=pageTotalCount) {
+				sb.append("<li><a href='/notice/noticeCampaignSearch.do?currentPage="+(endNavi+1)+"&keyword="+keyword+"&type="+type+"'><i class='fas fa-chevron-right'></i></a></li>");
+			}
+
+			
+			return sb.toString();
+	}
+
+
+	
+private int totalSearchCount2(Connection conn, String keyword, String type) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int count = 0;
+		
+		String query ="";
+		
+		switch(type)
+		{
+		case "subject" :
+			   query ="SELECT COUNT(*) as count FROM NOTICE_CAMPAIGN WHERE NC_TITLE LIKE ? and NOTICE_CAMPAIGN.NC_DEL_YN='N'";			   		
+			   break;
+			   
+		case "content" :
+			   query="SELECT COUNT(*) as count FROM NOTICE_CAMPAIGN WHERE NC_CONTENT LIKE ? and NOTICE_CAMPAIGN.NC_DEL_YN='N'";
+			   break;
+			   
+		case "all" : 
+			   query="SELECT COUNT(*) as count FROM NOTICE_CAMPAIGN WHERE NC_TITLE LIKE ?" +
+			         "  or NC_CONTENT LIKE ? and NOTICE_CAMPAIGN.NC_DEL_YN='N'";
+			   break;		
+		}
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			if(type.equals("all"))
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+			}else
+			{
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {//count라는 이름의 칼럼을 꺼낸것
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
+
+		
+			}
+
+public ArrayList<BoxFAQ> selectAllFAQPageList(Connection conn, int currentPage, int recordCountPerPage) {
+
+	PreparedStatement pstmt = null;
+	ResultSet rset=null;
+	
+	ArrayList<BoxFAQ> list = new ArrayList<BoxFAQ>();
+	
+	int start = currentPage*recordCountPerPage - (recordCountPerPage-1);
+	int end = currentPage*recordCountPerPage;
+	
+	
+	
+	String query ="select *" + 
+			"		from (select row_number() over(order by FAQ_NO)as num, FAQBOX.* " + 
+			"		from FAQBOX " + 
+			"		where FAQBOX.FAQ_DEL_YN='N') " + 
+			"		where num between ? and ?";
+	
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, start);
+		pstmt.setInt(2, end);
+		
+		rset = pstmt.executeQuery();//실행
+		
+		while(rset.next()) {
+			
+			BoxFAQ boxFAQ = new BoxFAQ();
+			
+			boxFAQ.setBoxFAQNo(rset.getInt("FAQ_NO"));
+			boxFAQ.setBoxAnswerFAQTitle(rset.getString("FAQ_TITLE"));
+			boxFAQ.setBoxFAQContent(rset.getString("FAQ_CONTENT"));
+			boxFAQ.setDelYN(rset.getString("FAQ_DEL_YN").charAt(0));
+
+			
+			list.add(boxFAQ);
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		JDBCTemplate.close(rset);
+		JDBCTemplate.close(pstmt);
+	}
+	return list;
+}
+
+public String getPageNavi3(Connection conn, int naviCountPerPage, int recordCountPerPage, int currentPage) {
+
+	int recordTotalCount = totalCount3(conn);
+	
+   int pageTotalCount = 0; //전체 페이지 개수
+   //만약 post수가 5개 라면? -> 1page
+   //만약 post수가 6개 라면? -> 2page
+   //만약 post수가 14개라면? -> 2page
+	
+	if((recordTotalCount % recordCountPerPage)>0) {//나머지가 있으면  14%10
+		pageTotalCount = (recordTotalCount / recordCountPerPage)+1;//나머지가 있으니 21+1 22페이지
+	}else {//나머지가 있으면
+		pageTotalCount = (recordTotalCount / recordCountPerPage);//나머지가 없으면
+	}
+	
+
+	
+	int startNavi = (((currentPage-1)/naviCountPerPage)*naviCountPerPage)+1;
+	int endNavi = startNavi+(naviCountPerPage-1);
+	
+	
+	//만약 공식으로 구한 endNavi가 총페이지 수 보다 크다면 총 페이지 수로 세팅하여라
+	if(endNavi > pageTotalCount) {
+		endNavi = pageTotalCount;
+	}
 	
 	
 	
 	
+	
+	//pageNavi 모양 만들기
+	StringBuilder sb = new StringBuilder();
+
+	if(startNavi!=1) {
+		sb.append("<li><a href='/views/notice/noticeNewsAllSelect.do?currentPage="+(startNavi-1)+"'><i class='fas fa-chevron-left'></i></a></li>");
+	}
+
+	for(int i=startNavi; i<=endNavi; i++) {
+		
+		if(i==currentPage) {
+			sb.append("<li><a href='/views/notice/noticeNewsAllSelect.do?currentPage="+i+"' class='page_active'>"+i+"</a></li>");
+		}else {
+			sb.append("<li><a href='/views/notice/noticeNewsAllSelect.do?currentPage="+i+"'>"+i+"</a></li>");
+		}
+	}
+
+	if(endNavi!=pageTotalCount) {
+		sb.append("<li><a href='/views/notice/noticeNewsAllSelect.do?currentPage="+(endNavi+1)+"'><i class='fas fa-chevron-right'></i></a></li>");
+	}
+	
+	return sb.toString();
+	
+}
+public int totalCount3(Connection conn)
+{
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	
+	int count = 0;
+	//as count 컬럼 이름을 붙인것
+	String query = "select count(*) as count from FAQBOX where FAQ_DEL_YN='N'";
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		rset = pstmt.executeQuery();
+		
+		if(rset.next()) {//count라는 이름의 칼럼을 꺼낸것
+			count = rset.getInt("count");
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		JDBCTemplate.close(rset);
+		JDBCTemplate.close(pstmt);
+	}
+	return count;
+
+	
+}
+
+
 }
 
 

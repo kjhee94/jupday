@@ -31,6 +31,7 @@ public class AdminNoticePostUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//인코딩
 		request.setCharacterEncoding("UTF-8");
 		

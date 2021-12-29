@@ -559,6 +559,7 @@ public class ReviewDAO {
 					"        ) " + 
 					"		 WHERE NUM BETWEEN ? AND ?";
 				break;
+				
 		case "writer" :
 			query = " SELECT * " + 
 					"		 FROM (SELECT ROW_NUMBER() OVER(order BY POSTNUM DESC) AS NUM, REVIEW.* ,NICK" + 
@@ -722,6 +723,8 @@ public class ReviewDAO {
 		return count;
 	}
 
+	
+
 	public int deletePost(Connection conn, int postNum, String userId) {
 		
 		PreparedStatement pstmt = null;
@@ -821,4 +824,7 @@ public class ReviewDAO {
 		return list;
 	}
 }
+
+
+
 

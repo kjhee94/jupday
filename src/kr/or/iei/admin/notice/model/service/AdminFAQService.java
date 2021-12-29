@@ -12,4 +12,6 @@ public interface AdminFAQService {
 
 	AdminFAQ selectOneFAQContent(int faqNo);
 
+	int updateFAQPost(AdminFAQ adfaq);
+
 }

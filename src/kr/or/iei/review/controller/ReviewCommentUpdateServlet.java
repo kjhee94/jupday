@@ -34,8 +34,8 @@ public class ReviewCommentUpdateServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String r_c_comment = request.getParameter("r_c_comment"); //jsp에서 parameter 태그의 name을 r_c_comment로 줄 것
-		int r_c_no = Integer.parseInt(request.getParameter("r_c_no"));
+		String comment = request.getParameter("comment"); //jsp에서 parameter 태그의 name을 r_c_comment로 줄 것
+		int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 		int postNum = Integer.parseInt(request.getParameter("postNum")); //여기까지 모두 parameter name을 파란색 글자명으로 줄 것
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
@@ -43,8 +43,8 @@ public class ReviewCommentUpdateServlet extends HttpServlet {
 		
 		ReviewComment co = new ReviewComment();
 		
-		co.setR_c_no(r_c_no);
-		co.setR_c_comment(r_c_comment);
+		co.setR_c_no(commentNo);
+		co.setR_c_comment(comment);
 		co.setUserId(userId);
 		
 		ReviewService bService = new ReviewServiceImpl();
@@ -55,6 +55,7 @@ public class ReviewCommentUpdateServlet extends HttpServlet {
 		}else {
 			response.sendRedirect("/views/commons/error.jsp");
 		}
+		
 	}
 
 	/**

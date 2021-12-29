@@ -8,21 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.iei.admin.notice.model.service.AdminCampaignService;
-import kr.or.iei.admin.notice.model.service.AdminCampaignServiceImpl;
-import kr.or.iei.admin.notice.model.vo.AdminCampaign;
+import kr.or.iei.admin.notice.model.service.AdminFAQService;
+import kr.or.iei.admin.notice.model.service.AdminFAQServiceImpl;
+import kr.or.iei.admin.notice.model.vo.AdminFAQ;
 
 /**
- * Servlet implementation class AdminCampaignPostUpdateServlet
+ * Servlet implementation class AdminFAQPostUpdateServlet
  */
-@WebServlet("/admin/adminCampaignPostUpdate.do")
-public class AdminCampaignPostUpdateServlet extends HttpServlet {
+@WebServlet("/admin/adminFAQPostUpdate.do")
+public class AdminFAQPostUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminCampaignPostUpdateServlet() {
+    public AdminFAQPostUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +31,25 @@ public class AdminCampaignPostUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//인코딩
+		
 		request.setCharacterEncoding("UTF-8");
 		
-		//데이터 가져오기
-		int ncNo = Integer.parseInt(request.getParameter("campaignNo"));
+		int faqNo = Integer.parseInt(request.getParameter("faqNo"));
 		String title = request.getParameter("subjectArea");
 		String content = request.getParameter("contentArea");
 		
-		//데이터 한 번에 보낼 객체 생성
-		AdminCampaign adc = new AdminCampaign();
-		adc.setNc_No(ncNo);
-		adc.setNc_Title(title); 
-		adc.setNc_Content(content);
+		AdminFAQ adfaq = new AdminFAQ();
+		adfaq.setFaq_No(faqNo);
+		adfaq.setFaq_Title(title);
+		adfaq.setFaq_Content(content);
 		
-		//수정 비즈니스로직
-		AdminCampaignService adcService = new AdminCampaignServiceImpl();
-		int result = adcService.updateCampaignPost(adc);
+		AdminFAQService adfService = new AdminFAQServiceImpl();
+		int result = adfService.updateFAQPost(adfaq);
 		
 		//정상 및 오류 페이지
 		if(result>0)
 		{
-			response.sendRedirect("/admin/adminCampaignSelectContent.do?nc_No="+ncNo);
+			response.sendRedirect("/admin/adminFAQSelectContent.do?faqNo="+faqNo);
 		}else
 		{
 			response.sendRedirect("/views/commons/error.jsp");

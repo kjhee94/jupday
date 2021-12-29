@@ -1,3 +1,4 @@
+<%@page import="kr.or.iei.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +21,7 @@
 
 <body>
     <div id="wrap">
-        
+        <%Member m = (Member)session.getAttribute("member");%>
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
 
@@ -31,20 +32,20 @@
             </div>
 
             <div class="box-user">
-                <a href="/">admin님</a>
+                <a href="/"><%=m.getNick() %>님</a>
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
 
         <div id="content">
         	<div class="container">
-        		<form action="">
+        		<form action="/admin/adminNoticeWrite.do" method="post">
 					<div class="box-write">
 						<div class="box-subject">
-							<input type="text" placeholder="제목을 입력하세요">
+							<input type="text" name="title" placeholder="제목을 입력하세요">
 						</div>
 						<div class="box-content">
-							<textarea placeholder="내용을 입력하세요"></textarea>
+							<textarea name="content" placeholder="내용을 입력하세요"></textarea>
 						</div>
 						<div class="box-upload">
 							<label for="upload">
@@ -56,7 +57,7 @@
 					</div>
 					<div class="box-button">
 						<input type="submit" value="완료" class="btn-rec">
-						<button class="btn-rec"><a href="./noticeManageList.jsp">목록</a></button>
+						<button class="btn-rec"><a href="/admin/noticeManageList.do">목록</a></button>
 					</div>
 				</form>
         	</div>

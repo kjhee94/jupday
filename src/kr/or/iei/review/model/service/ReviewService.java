@@ -48,8 +48,5 @@ public interface ReviewService {
 	ArrayList<Review> selectAllBestReview();
 	
 	ArrayList<Review> selectMonthStamp(String userId, String startDate, String endDate);
-
-	
-
 	
 }

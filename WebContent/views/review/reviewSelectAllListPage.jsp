@@ -50,7 +50,7 @@
 						<div class="swiper-slide">
 							<a href="">
 								<div class="box-review-hover">
-									<p class="tit-review"><%--=review.getPostTitle() --%></p>
+									<p class="tit-review"><%=review.getPostTitle() %></p>
 									<i class="far fa-heart"></i><span>1,202</span>
 									<i class="far fa-comment"></i><span>657</span>
 									<!--<i class="far fa-comment-dots"></i>-->
@@ -58,19 +58,31 @@
 								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰1.jpeg">
 							</a>
 						</div>
-					<%} %>	
-					<%--내가 봤을 때, 하나의 서블릿에서 넘어가는 객체는 하나여야 됨, 문제가 그거 같음, 결국 header에서 2개의 서블릿을 호출해야 할 듯 --%>					
 						<div class="swiper-slide">
 							<a href="">
 								<div class="box-review-hover">
-									<p class="tit-review">플로깅 명소 추천합니다!</p>
+									<p class="tit-review"><%=review.getPostTitle() %></p>
 									<i class="far fa-heart"></i><span>1,202</span>
 									<i class="far fa-comment"></i><span>657</span>
 									<!--<i class="far fa-comment-dots"></i>-->
 								</div>
-								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰9.jpg">
+								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰2.png">
 							</a>
 						</div>
+						<div class="swiper-slide">
+							<a href="">
+								<div class="box-review-hover">
+									<p class="tit-review"><%=review.getPostTitle() %></p>
+									<i class="far fa-heart"></i><span>1,202</span>
+									<i class="far fa-comment"></i><span>657</span>
+									<!--<i class="far fa-comment-dots"></i>-->
+								</div>
+								<img alt="베스트리뷰사진" src="/assets/images/플로깅리뷰3.jpg">
+							</a>
+						</div>
+					<%} %>	
+					<%--내가 봤을 때, 하나의 서블릿에서 넘어가는 객체는 하나여야 됨, 문제가 그거 같음, 결국 header에서 2개의 서블릿을 호출해야 할 듯 --%>					
+						
 					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
@@ -121,7 +133,7 @@
 				<div class="box-one-review">
 					<div class="box-img">
 						<a href="/review/reviewSelectContent.do?postNum=<%=review.getPostNum()%>&currentPage=<%=currentPage%>">
-							<img alt="" src="">
+							<img alt="" src="/upload/gramnotebook_1640736448800_jupday.png">
 						</a>
 					</div>
 					<div class="box-txt">
@@ -134,7 +146,7 @@
 						<p class="review-date"><%=review.getRegDate() %></p>				
 					</div>
 				</div>
-
+					
 				<%} %>
 				
 				<div id="page_wrap">
@@ -143,7 +155,9 @@
                    </ul>
                	</div>
 			</div>
-
+			
+			
+			
 			
 		</div>
 	

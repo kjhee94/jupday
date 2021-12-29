@@ -1,6 +1,8 @@
 package kr.or.iei.review.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +14,16 @@ import kr.or.iei.review.model.service.ReviewService;
 import kr.or.iei.review.model.service.ReviewServiceImpl;
 
 /**
- * Servlet implementation class ReviewCommentDeleteServlet
+ * Servlet implementation class ReviewPostDeleteServlet
  */
-@WebServlet("/review/deletePostComment.do")
-public class ReviewCommentDeleteServlet extends HttpServlet {
+@WebServlet("/review/reviewPostDelete.do")
+public class ReviewPostDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewCommentDeleteServlet() {
+    public ReviewPostDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +33,22 @@ public class ReviewCommentDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int r_c_no = Integer.parseInt(request.getParameter("commentNo"));
 		int postNum = Integer.parseInt(request.getParameter("postNum"));
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
 		String userId = ((Member)request.getSession().getAttribute("member")).getUserId();
 		
-		ReviewService bService = new ReviewServiceImpl();
-		int result = bService.deleteReviewComment(r_c_no,userId);
+		ReviewService rService = new ReviewServiceImpl();
+		int result = rService.deletePost(postNum, userId);
+		
+		RequestDispatcher view = request.getRequestDispatcher("/views/review/deleteReview.jsp");
 		
 		if(result>0) {
-			response.sendRedirect("/review/reviewSelectContent.do?postNum="+postNum+"&currentPage="+currentPage);
+			request.setAttribute("result", true);
 		}else {
-			response.sendRedirect("/views/commons/error.jsp");
+			request.setAttribute("result", false);
 		}
+		view.forward(request, response);
+		
 	}
 
 	/**
