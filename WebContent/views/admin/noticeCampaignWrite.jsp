@@ -20,8 +20,9 @@
 </head>
 
 <body>
-<%Member m = (Member)session.getAttribute("member");%>
+
     <div id="wrap">
+    <%Member m = (Member)session.getAttribute("member");%>
         <!-- navigation -->
 		<%@ include file="/views/commons/header/navigationAdmin.jsp"%>
 		

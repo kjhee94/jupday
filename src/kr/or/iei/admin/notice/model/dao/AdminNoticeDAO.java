@@ -656,6 +656,81 @@ public class AdminNoticeDAO {
 		
 	}
 
+	public int updateFAQPost(Connection conn, AdminFAQ adfaq) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE FAQBOX SET FAQ_TITLE= ? , FAQ_CONTENT= ?  WHERE FAQ_NO=? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adfaq.getFaq_Title());
+			pstmt.setString(2, adfaq.getFaq_Content());
+			pstmt.setInt(3, adfaq.getFaq_No());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);			
+		}return result;
+	}
+
+	public int insertNoticePostWrite(Connection conn, AdminNotice adnwrite) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = " INSERT INTO NOTICE VALUES(N_NO_SEQ.NEXTVAL,'admin',?,?,sysdate,0,'N') ";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, adnwrite.getN_Title());
+			pstmt.setString(2, adnwrite.getN_Content());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int searchNoticePostNo(Connection conn, AdminNotice adnwrite) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int nNo = 0;
+		
+		String query = " SELECT N_NO FROM " + 
+				"		(SELECT ROW_NUMBER() OVER(ORDER BY N_NO ASC) AS NUM,NOTICE.* FROM NOTICE " + 
+				"		WHERE N_TITLE=? AND N_CONTENT=?) WHERE NUM = 1 ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, adnwrite.getN_Title());
+			pstmt.setString(2, adnwrite.getN_Content());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+			{
+				nNo = rset.getInt("n_No");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		} 
+		return nNo;
+
+	} 
+
 
 	}
 

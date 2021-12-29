@@ -54,5 +54,16 @@ public class AdminFAQServiceImpl implements AdminFAQService {
 		
 	}
 
+	@Override
+	public int updateFAQPost(AdminFAQ adfaq) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adnDAO.updateFAQPost(conn,adfaq);
+		if(result>0)JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 
 }

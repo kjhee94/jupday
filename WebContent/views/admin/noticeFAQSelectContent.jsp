@@ -41,26 +41,36 @@
                 <a href="/member/logout.do">로그아웃</a>
             </div>
         </div>
-        <div id="content">
+        
+         <div id="content">
             <div class="container">
-				<form action="">
-					<div class="box-write" name="content" id="content">
-						<div class="box-subject">
-							<%=admfaq.getFaq_Title() %>
-						</div>
+				<form action="/admin/adminFAQPostUpdate.do" method="post" id="textUpdateForm">
+					<div class="box-write">
+						<input type="hidden" name="faqNo" value="<%=admfaq.getFaq_No() %>">
+							<div class="box-subject">
+							<input type="text" disabled='true' name="subjectArea" id="subjectArea" value="<%=admfaq.getFaq_Title() %>">
+							</div>
 						<div class="box-content">
-							<%=admfaq.getFaq_Content() %>
+							<textarea disabled='true' name="contentArea" id="contentArea"><%=admfaq.getFaq_Content() %>
+							</textarea>
+						</div>
+						<div class="box-upload">
+							<label for="upload">
+								<i class="far fa-image"></i>
+								<span>사진첨부</span>
+							</label>
+							<input type="file" id="upload">
 						</div>
 					</div>
 					<div class="box-button">
-						<input type="submit" value="수정" class="btn-rec" id="updateBtn">
-						<input type="submit" value="취소" class="btn-rec" id="cancleBtn">
+						<input type="button"  value="수정" class="btn-rec" id="updateBtn">
 						<button class="btn-rec"><a href="/admin/adminFAQManageList.do">목록</a></button>
+						<input type="button" value="취소" class="btn-rec" id="cancleBtn">
 					</div>
 				</form>
             </div>
-        </div>
-        
+        </div>       
+
         <footer id="footer">
             <p>2021 ⓒ JUP DAY</p>
         </footer>
@@ -70,6 +80,28 @@
        	에러
        </script>
        <%} %>
+
+        <!-- 수정버튼 클릭시 동작하는 코드 -->
+       <script>
+       $('#updateBtn').click(function(){
+    	   if($(this).val()=='수정'){
+
+    		$(this).val('완료');
+       		$('#subjectArea').prop('disabled',false);
+    		$('#contentArea').prop('disabled',false);
+    	   
+    	   }else if($(this).val()=='완료'){
+   		  	$(this).val('수정');
+    		$('#textUpdateForm').submit();
+    	   }     	  
+       });
+       
+       $('#cancleBtn').click(function(){
+    	  location.reload(); 
+       });
+       
+       </script>      
+       
       
 </body>
 </html>
