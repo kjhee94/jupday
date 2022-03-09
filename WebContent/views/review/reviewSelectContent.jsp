@@ -62,7 +62,7 @@
 					</div>
 					<div class="box-writer">
 						<div class="user-img">
-							<img alt="" src="/upload/gramnotebook_1640736448800_jupday.png">
+							<img alt="" src="/assets/images/profile.png">
 						</div>
 						<div class="user-name">
 							<p><%=review.getNick() %></p>
@@ -75,7 +75,6 @@
 					<div class="box-content">
 						<div class="box-content-img">
 							<img alt="" src="/assets/images/review_default.jpg">
-							
 						</div>
 						<p>
 						<%=review.getPostContent() %>

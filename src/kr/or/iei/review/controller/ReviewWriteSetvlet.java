@@ -103,7 +103,7 @@ public class ReviewWriteSetvlet extends HttpServlet {
 		
 		if(request.getSession().getAttribute("member")==null)
 		{
-			System.out.println("여기로 가지 않을까?");
+			//System.out.println("여기로 가지 않을까?");
 			response.sendRedirect("/views/commons/error.jsp");
 			return;
 		}

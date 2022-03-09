@@ -516,7 +516,7 @@ public class ReviewDAO {
 		
 		String query = "update review set POSTCONTENT=? where POSTNUM=? and USERID=?";
 		
-		System.out.println("데이터 확인 : " + review.getPostContent());
+		//System.out.println("데이터 확인 : " + review.getPostContent());
 		
 		try {
 			pstmt = conn.prepareStatement(query);

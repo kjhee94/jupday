@@ -82,30 +82,13 @@ public class CrewUpdateServlet extends HttpServlet {
 		File reFile = new File(filePath);
 		long fileSize = reFile.length();
 		
-		//확인
-//		System.out.println("파일이름(원본) : "+originalFileName);
-//		System.out.println("파일이름(수정) : "+changedFileName);
-//		System.out.println("파일경로(수정) : "+filePath);
-//		System.out.println("파일사이즈 : "+fileSize);
-//		System.out.println("업로드 유저 ID : "+fileUser);
-//		System.out.println("업로드 시간 : "+uploadTime);
 		
+		//비즈니스로직1(정보 수정)
+		//파일 업로드 안할시 기본값
+		if(originalFileName==null) {
+			changedFileName=null;
+		}
 		
-		//비즈니스로직1(파일 업로드)
-		CrewFileData cfd = new CrewFileData();
-		
-		cfd.setCrewProfileOriginal(originalFileName);
-		cfd.setCrewProfileChange(changedFileName);
-		cfd.setCrewProfilePath(filePath);
-		cfd.setCrewProfileSize(fileSize);
-		cfd.setUserId(fileUser);
-		cfd.setCrewNo(Integer.parseInt(multi.getParameter("crewNo")));
-		cfd.setCrewProfileUpdateTime(uploadTime);
-		
-		CrewService cService = new CrewServiceimpl();
-		int uplodeResult = cService.insertFileUpdate(cfd);
-		
-		//비즈니스로직2(정보 수정)
 		//인코딩
 		request.setCharacterEncoding("UTF-8");
 		
@@ -117,22 +100,50 @@ public class CrewUpdateServlet extends HttpServlet {
 		
 		Crew c = new Crew(crewNo, crewName, crewInfo, crewImg);
 		
+		CrewService cService = new CrewServiceimpl();
 		int updateResult = cService.UpdateOneCrew(c);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateResult.jsp");
 		
-		if(uplodeResult > 0 && updateResult>0) {
-			System.out.println("성공");
-			request.setAttribute("updateResult", true);
+		//비즈니스로직2(파일 업로드)
+		if(originalFileName!=null) {
+			CrewFileData cfd = new CrewFileData();
+			
+			cfd.setCrewProfileOriginal(originalFileName);
+			cfd.setCrewProfileChange(changedFileName);
+			cfd.setCrewProfilePath(filePath);
+			cfd.setCrewProfileSize(fileSize);
+			cfd.setUserId(fileUser);
+			cfd.setCrewNo(Integer.parseInt(multi.getParameter("crewNo")));
+			cfd.setCrewProfileUpdateTime(uploadTime);
+			
+			int uplodeResult = cService.insertFileUpdate(cfd);
+			
+			//성공실패 페이지 보내기
+			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateResult.jsp");
+			
+			if(uplodeResult > 0 && updateResult>0) {
+				request.setAttribute("updateResult", true);
+			}else {
+				request.setAttribute("updateResult", false);
+			}
+			
+			request.setAttribute("crewNo", crewNo);
+			
+			view.forward(request, response);
 		}else {
-			System.out.println("실패");
-			request.setAttribute("updateResult", false);
+			//성공실패 페이지 보내기
+			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewUpdateResult.jsp");
+			
+			if(updateResult>0) {
+				request.setAttribute("updateResult", true);
+			}else {
+				request.setAttribute("updateResult", false);
+			}
+			
+			request.setAttribute("crewNo", crewNo);
+			
+			view.forward(request, response);
 		}
-		
-		request.setAttribute("crewNo", crewNo);
-		
-		view.forward(request, response);
-		
 	}
 
 	/**

@@ -347,7 +347,7 @@ public class CrewDAO {
 		
 		int crewNo = selectCrewNo(conn, cfd);
 		
-		String query = "INSERT INTO CREW_PROFILE VALUES(C_F_FILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
+		String query = "INSERT INTO CREW_PROFILE VALUES(C_PROFILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -552,7 +552,7 @@ public class CrewDAO {
 		
 		int crewNo = selectCrewNo(conn, cfd);
 		
-		String query = "INSERT INTO CREW_PROFILE VALUES(C_F_FILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
+		String query = "INSERT INTO CREW_PROFILE VALUES(C_PROFILE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -965,7 +965,7 @@ public class CrewDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "INSERT INTO CREW_FEED VALUES(?,?,FEED_SEQ.NEXTVAL,SYSDATE,?,?,'N',NULL,NULL)";
+		String query = "INSERT INTO CREW_FEED VALUES(?,?,FEED_SEQ.NEXTVAL,SYSDATE,?,?,'N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -1028,7 +1028,7 @@ public class CrewDAO {
 					   "SELECT ROW_NUMBER() OVER(ORDER BY C_F_NO DESC)AS NUM, CC.*, NICK, P_IMAGE " + 
 					   "FROM CREW_COMMENT CC " + 
 					   "LEFT JOIN MEMBER M ON (CC.USERID=M.USERID) " + 
-					   "WHERE C_NO=? AND C_F_NO=?)";
+					   "WHERE C_NO=? AND C_F_NO=? AND C_C_DEL_YN='N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -1422,6 +1422,28 @@ public class CrewDAO {
 				JDBCTemplate.close(pstmt);
 			}
 			
+			return result;
+		}
+
+		public int deleteOneComment(Connection conn, int commentNo) {
+			
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "UPDATE CREW_COMMENT SET C_C_DEL_YN='Y' WHERE C_C_NO=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, commentNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
+			}
 			return result;
 		}
 

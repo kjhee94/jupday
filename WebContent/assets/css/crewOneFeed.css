@@ -77,6 +77,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 16px;
 	color: #2A2A2A;
+	display: inline-block;
 }
 .user-comment>p>span {
 	margin: 5px 0 0 10px;
@@ -92,20 +93,19 @@
 	color: #2A2A2A;
 	margin-top: 5px;
 }
-.btn-comment {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	left: 87%;
-}
-.btn-comment>button {
+.user-comment>span {
+	font-size: 12px;
+	color: #AEAEAE;
+} 
+.user-comment>button {
 	border: 0;
-	border-radius: 100px;
-	background-color: #AFD485;
+	background-color: #fff;
+	cursor: pointer;
+}
+.user-comment>button>a {
 	font-family: 'Noto Sans KR', sans-serif;
-	font-size: 16px;
-	color: #fff;
-	padding: 10px 15px;
+	font-size: 12px;
+	color: #AEAEAE;
 }
 
 .box-write-comment {

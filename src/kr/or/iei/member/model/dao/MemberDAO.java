@@ -282,7 +282,7 @@ public class MemberDAO {
 	}
 
 	public int updateOneMember(Member m, Connection conn) {
-		System.out.println("updateOneMember m : " + m.toString());
+		//System.out.println("updateOneMember m : " + m.toString());
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "UPDATE MEMBER SET p_image=?, nick=?, email=? WHERE userId=?";
@@ -399,7 +399,7 @@ public class MemberDAO {
 	}
 
 	public int insertFileUpdate2(Member m, Connection conn) {
-		System.out.println("m : " + m.toString());
+		//System.out.println("m : " + m.toString());
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -412,7 +412,7 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 			
-			System.out.println("result : " + result);
+			//System.out.println("result : " + result);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

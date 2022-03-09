@@ -82,8 +82,8 @@ public class MyPageMyReviewServlet extends HttpServlet {
 			month = Integer.toString(date.getMonth()+1);
 		}
 		
-		System.out.println(" year : " + year);
-		System.out.println(" month : " + month);
+		//System.out.println(" year : " + year);
+		//System.out.println(" month : " + month);
 		
 		// month가 한자리일 때 [ 1월, 2월 ... ]
 		if(month.length() == 1) {
@@ -125,8 +125,8 @@ public class MyPageMyReviewServlet extends HttpServlet {
 		
 		
 		
-		System.out.println("start Date : " + startDate);
-		System.out.println("end Date : " + endDate);
+		//System.out.println("start Date : " + startDate);
+		//System.out.println("end Date : " + endDate);
 		
 		// 원하는 달의 리뷰 전체
 		ArrayList<Review> list = rService.selectMonthStamp(userId, startDate, endDate);

@@ -37,8 +37,6 @@
 		
 		String keyword = (String)request.getAttribute("keyword");
 		String type = (String)request.getAttribute("type");
-	
-		System.out.println(c+"/"+cm+"/"+"/"+currentPage+"/"+currentFeedPage+"/"+list+"/"+pageNavi);
 	%>
 
 	<div id="wrap">

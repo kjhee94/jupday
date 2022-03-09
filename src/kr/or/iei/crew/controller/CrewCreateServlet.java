@@ -82,8 +82,12 @@ public class CrewCreateServlet extends HttpServlet {
 		File reFile = new File(filePath);
 		long fileSize = reFile.length();
 		
-		
 		//비즈니스로직1(정보 입력)
+		//파일 업로드 안할시 기본값
+		if(originalFileName==null) {
+			changedFileName=null;
+		}
+				
 		//인코딩
 		request.setCharacterEncoding("UTF-8");
 		
@@ -99,28 +103,39 @@ public class CrewCreateServlet extends HttpServlet {
 		boolean createResult = cService.crewCreate(c, userId);
 		
 		
-		
 		//비즈니스로직2(파일 업로드)
-		CrewFileData cfd = new CrewFileData();
+		if(originalFileName!=null) {
+			CrewFileData cfd = new CrewFileData();
+			
+			cfd.setCrewProfileOriginal(originalFileName);
+			cfd.setCrewProfileChange(changedFileName);
+			cfd.setCrewProfilePath(filePath);
+			cfd.setCrewProfileSize(fileSize);
+			cfd.setUserId(fileUser);
+			cfd.setCrewProfileUpdateTime(uploadTime);
+			
+			int uplodeResult = cService.insertFileCreate(cfd);
 		
-		cfd.setCrewProfileOriginal(originalFileName);
-		cfd.setCrewProfileChange(changedFileName);
-		cfd.setCrewProfilePath(filePath);
-		cfd.setCrewProfileSize(fileSize);
-		cfd.setUserId(fileUser);
-		cfd.setCrewProfileUpdateTime(uploadTime);
-		
-		int uplodeResult = cService.insertFileCreate(cfd);
-		
-		//성공실패 페이지 보내기
-		RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewCreateResult.jsp");
-		
-		if(createResult && uplodeResult>0) {
-			request.setAttribute("result", true);
+			//성공실패 페이지 보내기
+			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewCreateResult.jsp");
+			
+			if(createResult && uplodeResult>0) {
+				request.setAttribute("result", true);
+			}else {
+				request.setAttribute("result", false);
+			}
+			view.forward(request, response);
 		}else {
-			request.setAttribute("result", false);
+			//성공실패 페이지 보내기
+			RequestDispatcher view = request.getRequestDispatcher("/views/crew/crewCreateResult.jsp");
+			
+			if(createResult) {
+				request.setAttribute("result", true);
+			}else {
+				request.setAttribute("result", false);
+			}
+			view.forward(request, response);
 		}
-		view.forward(request, response);
 	}
 
 	/**

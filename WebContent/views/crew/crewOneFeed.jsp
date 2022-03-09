@@ -90,6 +90,9 @@
 							<div class="right-comment">
 								<div class="user-comment">
 									<p><%=cbc.getNick() %><span><%=cbc.getCommentRegdate() %></span></p>
+									<%if(m!=null && m.getUserId().equals(cbc.getUserId())) {%>
+										<span>·</span><button><a href="/crew/crewCommentDelete.do?crewNo=<%=cb.getCrewNo() %>&currentPage=<%=currentPage %>&feedNo=<%=cb.getFeedNo()%>&currentFeedPage=<%=currentFeedPage%>&commentNo=<%=cbc.getCommentNo() %>">삭제</a></button>
+									<%} %>
 								</div>
 								<div class="txt-comment">
 									<p><%=cbc.getCommentContent() %></p>
@@ -98,12 +101,6 @@
 									
 								</div>
 							</div>
-							<%if(m!=null && m.getUserId().equals(cbc.getUserId())) {%>
-								<div class="btn-comment">
-									<button>수정</button>  
-									<button>삭제</button>
-								</div>
-							<%} %>>
 						</div>
 					<%} %>
 				<%} %>

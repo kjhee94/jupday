@@ -293,4 +293,14 @@ public interface CrewService {
 	 */
 	int insertFeedComment(CrewBoardComment cbc);
 
+	/**
+	 * 작성자 : 강주희
+	 * @param commentNo
+	 * @return int
+	 * 작성일 : 2022. 02. 19.
+	 *
+	 * Description : 피드에 댓글을 삭제하는 메소드
+	 */
+	int deleteOneComment(int commentNo);
+
 }

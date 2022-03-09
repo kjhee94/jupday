@@ -46,8 +46,8 @@ public class MyPageMyCrewServlet extends HttpServlet {
 			CrewService cService = new CrewServiceimpl();
 			ArrayList<Crew> manageList = cService.selectManageCrew(userId);
 			ArrayList<Crew> joinList = cService.selectJoinedCrew(userId);
-			System.out.println(manageList.toString());
-			System.out.println(joinList.toString());
+			//System.out.println(manageList.toString());
+			//System.out.println(joinList.toString());
 			RequestDispatcher view = request.getRequestDispatcher("/views/member/myPageMyCrew.jsp");
 			
 			request.setAttribute("manageList", manageList);

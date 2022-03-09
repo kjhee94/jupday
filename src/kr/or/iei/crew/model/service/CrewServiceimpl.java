@@ -374,7 +374,6 @@ public class CrewServiceimpl implements CrewService {
 		
 		ArrayList<CrewBoard> list = cDAO.selectAllPostList(conn, currentFeedPage, recordCountPerPage, crewNo);
 		
-		
 		return null;
 	}
 
@@ -383,6 +382,20 @@ public class CrewServiceimpl implements CrewService {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int result = cDAO.insertFeedComment(conn, cbc);
+		
+		if(result>0) JDBCTemplate.commit(conn);
+		else		 JDBCTemplate.rollback(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteOneComment(int commentNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = cDAO.deleteOneComment(conn, commentNo);
 		
 		if(result>0) JDBCTemplate.commit(conn);
 		else		 JDBCTemplate.rollback(conn);

@@ -45,13 +45,6 @@
 					<div class="box-content">
 						<textarea name="feedContent" placeholder="내용을 입력하세요"><%=cb.getFeedContent() %></textarea>
 					</div>
-					<div class="box-upload">
-						<label for="upload">
-							<i class="far fa-image"></i>
-							<span>사진첨부</span>
-						</label>
-						<input type="file" id="upload">
-					</div>
 					<input type="hidden" name="crewNo" value="<%=cb.getCrewNo()%>">
 					<input type="hidden" name="currentPage" value="<%=currentPage%>">
 					<input type="hidden" name="feedNo" value="<%=cb.getFeedNo()%>">

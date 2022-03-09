@@ -39,15 +39,15 @@
 						<td>사진</td>
 						<td class="profile-img">
 							<%
-								System.out.println(m);
+								//System.out.println(m);
 								if(m.getP_Image() == null || m.getP_Image() =="") {
-									System.out.println("Null");
+									//System.out.println("Null");
 							%>
 							
 									<img class="profile-img2" src="/assets/images/profile.png">
 							<%
 								} else {
-									System.out.println("Not Null");
+									//System.out.println("Not Null");
 							%>
 									<img class="profile-img2" src="/upload/<%=m.getP_Image() %>.png">
 							<%

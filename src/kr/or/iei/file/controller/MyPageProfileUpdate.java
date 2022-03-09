@@ -109,13 +109,9 @@ public class MyPageProfileUpdate extends HttpServlet {
 		mfd.setUserId(fileUser);
 		mfd.setM_P_File_UpdateTime(uploadTime);
 		
-		System.out.println("originalFileName : " + originalFileName);
-		
 		//비즈니스로직처리
-		System.out.println("1번 비즈니스로직 전");
 		MemberFileService mfService = new MemberFileServiceImpl();
 		result = mfService.insertFileUpdate(mfd);
-		System.out.println("1번 비즈니스로직 후");
 		}
 		
 		request.setCharacterEncoding("UTF-8");
@@ -133,22 +129,17 @@ public class MyPageProfileUpdate extends HttpServlet {
 		m2.setNick(nick);
 		m2.setP_Image(p_image);
 		m2.setEmail(email);
-				System.out.println("3번 객체만들기 후");
-				System.out.println("m2 : " + m2.toString());
-				System.out.println("3번 비즈니스로직 전");
+		
 		MemberService mService2 = new MemberServiceImpl();              
-		int result3 = mService2.updateOneMember(m2);					
-		System.out.println("3번 비즈니스로직 후");
+		int result3 = mService2.updateOneMember(m2);
 		
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/member/memberUpdateResult.jsp");
 			result = originalFileName == null ? 1 : result;
-			System.out.println("result : " + result);
+			
 			if(result > 0 && result3 > 0) {
-				System.out.println("성공");
 				request.setAttribute("result", true);
 			} else {
-				System.out.println("실패");
 				request.setAttribute("result", false);
 			}
 		view.forward(request, response);
